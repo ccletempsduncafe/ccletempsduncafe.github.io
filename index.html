@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les prompts du livre Claude Code pour les professionnels</title>
+<meta name="description" content="Les 17 prompts du livre, prêts à copier, chapitre par chapitre.">
+<style>
+:root {
+  --encre: #16202b;
+  --encre-douce: #51637a;
+  --papier: #eaeef4;
+  --carte: #ffffff;
+  --trait: #ccd5e0;
+  --surligneur: #f2e34a;
+  --lien: #1c4c8c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.bandeau {
+  background: var(--encre);
+  color: var(--papier);
+  padding: 44px 24px 40px;
+}
+
+.dedans { max-width: 940px; margin: 0 auto; }
+
+.bandeau h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 5vw, 42px);
+  letter-spacing: -0.022em;
+  line-height: 1.12;
+}
+
+.bandeau p { margin: 0; max-width: 60ch; color: #b9c6d6; }
+
+.adresse {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 7px 14px;
+  border: 1px solid #3b4c60;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  color: var(--papier);
+}
+
+.mode-emploi {
+  max-width: 940px;
+  margin: 34px auto 0;
+  padding: 0 24px;
+}
+
+.mode-emploi p { max-width: 68ch; margin: 0 0 14px; }
+
+.raccourcis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+.raccourcis a {
+  display: block;
+  min-width: 46px;
+  padding: 8px 10px;
+  text-align: center;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  color: var(--lien);
+  font-weight: 600;
+  text-decoration: none;
+}
+.raccourcis a:hover { border-color: var(--lien); }
+.raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+
+main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
+
+.fiche {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  align-items: start;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  margin-top: 22px;
+  overflow: hidden;
+}
+
+/* L'onglet reprend l'intercalaire d'un classeur : c'est par le numero de
+   chapitre que le lecteur cherche, puisqu'il arrive du livre imprime. */
+.onglet {
+  background: var(--encre);
+  color: var(--papier);
+  padding: 16px 16px 18px;
+  text-align: center;
+  border-bottom-right-radius: 4px;
+}
+
+.onglet .mot { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.onglet .rang { display: block; font-size: 40px; font-weight: 700; line-height: 1.1; }
+
+.corps { padding: 20px 24px 24px; min-width: 0; }
+
+.corps h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  letter-spacing: -0.012em;
+}
+
+/* Le surlignage marque ce qui vient d'etre copie, comme on surligne une page. */
+.corps h2 mark {
+  background: transparent;
+  color: inherit;
+  padding: 1px 3px;
+  transition: background 160ms ease-in;
+}
+.fiche.copiee .corps h2 mark { background: var(--surligneur); }
+
+.sous-titre { margin: 0 0 16px; color: var(--encre-douce); font-size: 15px; }
+
+.copier {
+  font: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--carte);
+  background: var(--lien);
+  border: 1px solid var(--lien);
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.copier:hover { background: #163d70; }
+.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.fiche.copiee .copier { background: var(--encre); border-color: var(--encre); }
+
+pre {
+  margin: 16px 0 0;
+  padding: 16px 18px;
+  background: #f6f8fb;
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+footer {
+  border-top: 1px solid var(--trait);
+  padding: 28px 24px 60px;
+  color: var(--encre-douce);
+  font-size: 15px;
+}
+footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
+
+@media (max-width: 620px) {
+  .fiche { grid-template-columns: 1fr; }
+  .onglet { display: flex; align-items: baseline; gap: 8px; padding: 12px 18px; text-align: left; }
+  .onglet .rang { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corps h2 mark { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="bandeau">
+  <div class="dedans">
+    <h1>Les prompts du livre, prêts à copier</h1>
+    <p>Claude Code pour les professionnels. Automatisez votre travail sans écrire une seule ligne de code.</p>
+    <span class="adresse">ccletempsduncafe.github.io</span>
+  </div>
+</header>
+
+<section class="mode-emploi">
+  <p>Chaque prompt du livre est ici, dans l'ordre des chapitres. Repérez le numéro du chapitre que vous lisez, appuyez sur « Copier le prompt », puis collez-le dans Claude Code. Rien à installer, rien à créer comme compte.</p>
+  <p>Les passages entre crochets sont des cases à remplir : remplacez-les entièrement, crochets compris, par vos informations. Un crochet oublié et votre assistant travaillera pour une entreprise qui s'appelle « Nom de l'entreprise ».</p>
+  <ul class="raccourcis">
+    <li class="intitule">Aller au chapitre</li>
+    <li><a href="#chapitre-4">4</a></li>
+    <li><a href="#chapitre-6">6</a></li>
+    <li><a href="#chapitre-7">7</a></li>
+    <li><a href="#chapitre-8">8</a></li>
+    <li><a href="#chapitre-9">9</a></li>
+    <li><a href="#chapitre-10">10</a></li>
+    <li><a href="#chapitre-11">11</a></li>
+    <li><a href="#chapitre-12">12</a></li>
+    <li><a href="#chapitre-13">13</a></li>
+    <li><a href="#chapitre-14">14</a></li>
+    <li><a href="#chapitre-15">15</a></li>
+    <li><a href="#chapitre-16">16</a></li>
+    <li><a href="#chapitre-17">17</a></li>
+    <li><a href="#chapitre-18">18</a></li>
+    <li><a href="#chapitre-19">19</a></li>
+    <li><a href="#chapitre-21">21</a></li>
+  </ul>
+</section>
+
+<main>
+      <article class="fiche" id="chapitre-4">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">4</span></div>
+        <div class="corps">
+          <h2><mark>Les quatre principes d&#x27;un bon prompt</mark></h2>
+          <p class="sous-titre">Assembler les quatre principes : un exercice complet</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Je suis consultante indépendante en transformation
+organisationnelle.
+Mon client est le directeur des opérations d&#x27;une PME
+industrielle de 80 personnes.
+
+Tu es un expert en rédaction de propositions de conseil.
+
+À partir du brief client et de mes notes d&#x27;appel (fichiers dans
+ce dossier), produis une proposition commerciale structurée avec
+:
+- un résumé exécutif de 5 lignes
+- le diagnostic de la situation actuelle
+- l&#x27;approche méthodologique proposée
+- le planning prévisionnel
+- le budget détaillé par phase
+
+Contraintes :
+- Maximum 4 pages
+- Ton professionnel mais pas distant
+- Ne mentionne pas de tarif horaire, uniquement des forfaits par
+  phase
+- Rédige en français</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-6">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">6</span></div>
+        <div class="corps">
+          <h2><mark>Rapport consolidé depuis vos systèmes métier</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un analyste de gestion expérimenté.
+
+J&#x27;ai trois fichiers dans ce dossier :
+- ventes.csv : export de mes données de ventes [Nom de votre
+  CRM] pour le mois de [mois]
+- couts.csv : export des coûts par équipe depuis [Nom de votre
+  ERP] pour le mois de [mois]
+- satisfaction.csv : résultats de satisfaction client fournis
+  par [Nom du prestataire]
+
+Produis un rapport de performance mensuelle structuré ainsi :
+1. Résumé exécutif (5 lignes maximum)
+2. Performance commerciale : chiffre d&#x27;affaires total, top 3
+   produits/services, comparaison avec [mois précédent] si mes
+   fichiers contiennent les deux mois
+3. Coûts : total par équipe, variation par rapport au mois
+   précédent, poste de dépense principal
+4. Satisfaction client : score global, top 3 des motifs
+   positifs, top 3 des points d&#x27;amélioration
+5. Points d&#x27;attention et recommandations (3 maximum)
+
+Règles :
+- Utilise uniquement les données présentes dans les fichiers.
+  N&#x27;invente aucun chiffre.
+- Si une donnée est manquante ou ambiguë, indique-le clairement
+  avec [DONNÉE MANQUANTE].
+- Le rapport est en français, style professionnel mais
+  accessible.
+- Format de sortie : fichier rapport-[mois]-[année].md dans ce
+  dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-7">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">7</span></div>
+        <div class="corps">
+          <h2><mark>Fiche compte complète depuis vos sources dispersées</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un consultant commercial expérimenté qui prépare une revue
+de compte.
+
+Mon client s&#x27;appelle [Nom du client]. J&#x27;ai une réunion avec eux
+dans [durée].
+
+Lis tous les fichiers présents dans ce dossier. Ils contiennent
+:
+- les fichiers email-01.pdf et suivants : nos échanges email des
+  18 derniers mois
+- contrat-2024.pdf : contrat en cours, valable jusqu&#x27;au [date de
+  fin]
+- historique-commandes.csv : export CRM des commandes depuis le
+  début de la relation
+- notes-reunions.pdf : mes notes scannées des réunions de suivi
+
+Produis une fiche de compte avec les sections suivantes :
+1. Contexte en deux phrases (secteur, taille, enjeux principaux
+   du client)
+2. Historique commercial (chiffre d&#x27;affaires annuel, évolution,
+   produits/services achetés)
+3. Relation et engagements (décisions prises lors des dernières
+   réunions, engagements de notre part)
+4. Points d&#x27;attention (problèmes signalés, insatisfactions,
+   risques identifiés)
+5. Interlocuteurs clés (noms et rôles mentionnés dans les
+   documents)
+6. Opportunités et prochaine action
+
+Règles :
+- Appuie-toi uniquement sur ce qui est écrit dans les documents.
+  N&#x27;invente rien.
+- Si une information est absente, note [NON TROUVÉ DANS LES
+  SOURCES].
+- Pour chaque information, indique entre parenthèses le fichier
+  d&#x27;où elle provient, et la date du document quand elle est
+  connue.
+- Deux pages maximum. Va à l&#x27;essentiel : cette fiche se relit en
+  cinq minutes avant d&#x27;entrer en réunion.
+- Format de sortie : fiche-[nom du client]-[date].md dans ce
+  dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-8">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">8</span></div>
+        <div class="corps">
+          <h2><mark>Du compte-rendu Teams aux livrables opérationnels</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un assistant de direction expérimenté.
+
+Voici le compte-rendu d&#x27;une réunion de [type de réunion] du
+[date], qui a réuni [liste des participants].
+
+[COLLEZ ICI LE TEXTE DU COMPTE-RENDU]
+
+Produis les trois livrables suivants :
+
+Livrable 1 — Tableau de suivi des actions
+Fichier : actions-[date].csv
+Colonnes : Action | Responsable | Date limite | Statut (par
+défaut : À faire) | Notes
+Une ligne par action identifiée dans le compte-rendu.
+
+Livrable 2 — Email de relance pour les absents
+Fichier : email-absents-[date].txt
+Format : email professionnel, ton concis. Inclure : objet de la
+réunion, décisions principales, actions qui les concernent.
+Destinataires : [noms des absents si connus]
+
+Livrable 3 — Brief pour la direction
+Fichier : brief-direction-[date].txt
+Format : une page maximum. Sections : Contexte (2 lignes),
+Décisions prises, Points d&#x27;attention, Prochaines étapes.
+
+Règles :
+- N&#x27;invente aucune information non présente dans le
+  compte-rendu.
+- Si une action n&#x27;a pas de responsable clairement désigné,
+  marque la colonne Responsable avec [À ASSIGNER].
+- Si une date limite n&#x27;est pas mentionnée, marque [DATE À
+  PRÉCISER].</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-9">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">9</span></div>
+        <div class="corps">
+          <h2><mark>Votre synthèse de veille du lundi en dix minutes</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un analyste de veille professionnelle.
+
+Ce dossier contient les sources que j&#x27;ai mises de côté cette
+semaine : des pages web enregistrées en PDF, des newsletters,
+des captures d&#x27;écran et un fichier de liens.
+Lis-les toutes.
+
+Je suis [votre métier en une ligne] et mes clients sont [type de
+clients].
+
+Produis un document de veille avec :
+
+1. Les actualités les plus pertinentes pour moi et pour mes
+   clients, dix au maximum, classées de la plus importante à la
+   moins importante. S&#x27;il y en a moins de dix qui méritent
+   d&#x27;être retenues, donne-m&#x27;en moins : n&#x27;ajoute jamais une
+   actualité faible pour atteindre le compte. Pour chacune : le
+   titre exact de l&#x27;article, sans le reformuler, la source, un
+   résumé de 50 mots maximum, et le lien vers l&#x27;article s&#x27;il
+   figure dans le document.
+
+2. En fin de document, sous le titre « Écarté cette semaine »,
+   la liste en une ligne de tout ce que tu n&#x27;as pas retenu, avec
+   la raison en trois mots.
+
+Règles :
+- Appuie-toi uniquement sur le contenu des fichiers de ce
+  dossier. N&#x27;ajoute aucune actualité de ta propre connaissance,
+  même si elle te paraît importante.
+- Ignore les fichiers dont le nom commence par « veille » : ce
+  sont mes synthèses précédentes, pas des sources.
+- Le fichier liens.txt contient des adresses que je n&#x27;ai pas eu
+  le temps d&#x27;enregistrer. Ne les consulte pas : recopie-les
+  telles quelles en fin de document, sous le titre « À lire, non
+  traité cette semaine ».
+- Si une information chiffrée figure dans un article,
+  reprends-la telle quelle et n&#x27;arrondis pas.
+- Si un fichier est illisible ou vide, signale-le en fin de
+  document au lieu de l&#x27;ignorer.
+- Format de sortie : un fichier veille suivi de la date du
+  lundi, par exemple veille-2026-09-14.md, enregistré dans ce
+  dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-10">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">10</span></div>
+        <div class="corps">
+          <h2><mark>Détecter et qualifier des prospects à partir de signaux publics</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un assistant de prospection commerciale B2B.
+
+Voici ma liste de comptes cibles (nom et site web) :
+[Colle ici ta liste, une entreprise par ligne]
+
+Pour chaque entreprise, cherche sur des sources publiques les
+signaux indiquant un projet ou un besoin en cours, par exemple :
+- offres d&#x27;emploi récentes (un recrutement = un besoin et un
+  budget)
+- communiqués de presse, actualités sur leur site
+- levée de fonds, résultats financiers, acquisition
+- changement de dirigeant, ouverture de site, expansion
+
+Règles :
+- Utilise uniquement des sources publiques accessibles
+  librement.
+- Pour chaque signal, cite la source avec son adresse web
+  complète et une date au format JJ/MM/AAAA.
+- Si tu ne peux pas fournir une adresse web précise et une date
+  pour un signal, ne le mentionne pas.
+- Si tu ne trouves aucun signal pour une entreprise, indique-le
+  clairement. N&#x27;invente jamais un signal.
+- Ne cherche pas d&#x27;adresses email personnelles ni de données
+  privées.
+
+Produis un tableau avec les colonnes suivantes :
+Entreprise | Signal détecté | Source (URL + date) | Score 1 à 5
+| Angle d&#x27;approche
+
+Le score reflète l&#x27;urgence du besoin pour mon offre, qui est :
+[Décris ton offre en une phrase]
+
+Trie le tableau du score le plus élevé au plus faible.
+Sauvegarde le résultat dans prospects-priorises-[date].md dans
+ce dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-10">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">10</span></div>
+        <div class="corps">
+          <h2><mark>Détecter et qualifier des prospects à partir de signaux publics</mark></h2>
+          <p class="sous-titre">Pas à pas : de la liste au tableau de priorités</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Pour les trois premiers prospects du tableau, rédige pour chacun
+une analyse d&#x27;une à deux pages : leur situation actuelle d&#x27;après
+les signaux trouvés, les enjeux que cela soulève, et trois
+pistes concrètes que mon offre pourrait adresser. Ton : utile et
+factuel, pas commercial. C&#x27;est un document que je leur enverrai
+pour ouvrir le dialogue, pas une publicité.
+
+Règles strictes :
+- N&#x27;avance que des faits sourcés. N&#x27;invente aucun chiffre, aucun
+  projet, aucune citation, aucun nom de personne.
+- Distingue ce qui est établi (« d&#x27;après leur offre d&#x27;emploi du
+  JJ/MM ») de ce qui est une hypothèse (« cela suggère
+  peut-être... »).
+- S&#x27;il te manque des éléments pour une partie, écris-le plutôt
+  que de combler.
+
+Un fichier par prospect : analyse-[nom].md</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-11">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">11</span></div>
+        <div class="corps">
+          <h2><mark>Proposition commerciale structurée en 20 minutes</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un consultant commercial expérimenté qui rédige des
+propositions pour des missions de conseil.
+
+Lis d&#x27;abord tous les fichiers présents dans ce dossier : ils
+contiennent le brief du client, mes notes d&#x27;échanges et les
+informations publiques que j&#x27;ai rassemblées sur lui.
+Utilise-les comme sources.
+
+Client : [Nom de l&#x27;entreprise]
+Secteur : [Secteur d&#x27;activité]
+Interlocuteur principal : [Prénom, Nom, Titre]
+Situation du client : [2-3 lignes sur le contexte et le problème
+identifié]
+Ce que nous proposons : [Description de la mission ou du
+service]
+Budget évoqué : [Montant ou fourchette]
+Délai de la mission : [Durée estimée]
+Références pertinentes que nous pouvons citer : [2-3 références
+de missions similaires]
+Nos conditions commerciales habituelles : [modalités de
+paiement, durée de validité de l&#x27;offre, conditions d&#x27;annulation.
+N&#x27;invente aucune clause, aucun délai et aucun engagement que je
+ne t&#x27;ai pas donnés ici]
+Coordonnées à faire figurer : [nom, société, email, téléphone]
+Ton attendu : [Professionnel / Chaleureux / Formel / Neutre]
+
+Structure de la proposition :
+1. Page de garde (titre de la proposition, nom du client, date,
+   mes coordonnées)
+2. Notre compréhension de votre situation (900 mots, montrer que
+   nous avons compris le problème)
+3. Notre approche (1 400 mots, comment nous allons résoudre le
+   problème, étape par étape)
+4. Livrables et jalons (450 mots, ce que le client recevra, et
+   quand)
+5. Notre équipe (450 mots, profils des intervenants, références
+   de missions similaires)
+6. Conditions et tarification (450 mots, prix, modalités de
+   paiement, conditions)
+7. Prochaine étape (200 mots, appel à l&#x27;action clair)
+
+Règles :
+- Personnalise chaque section pour ce client spécifique. Évite
+  les formules génériques.
+- Utilise « vous » et nomme le client par son nom dans le texte.
+- Intègre les références fournies de façon naturelle dans la
+  narration.
+- Le montant total doit tenir dans le budget évoqué. Détaille le
+  chiffrage en jours par intervenant et en taux journaliers,
+  pour que je puisse le vérifier.
+- Format de sortie : proposition-[nom-client]-[date].md dans ce
+  dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-12">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">12</span></div>
+        <div class="corps">
+          <h2><mark>Appel d&#x27;offres : extraire les critères importants en 1 heure</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un expert en réponses aux appels d&#x27;offres avec 15 ans
+d&#x27;expérience.
+
+J&#x27;ai un appel d&#x27;offres à analyser. Tous les documents du dossier
+de consultation sont dans ce dossier : lis-les tous, y compris
+les annexes et l&#x27;avis de publicité. Commence ton rapport par la
+liste des fichiers que tu as trouvés, avec le nombre de pages de
+chacun.
+
+Produis ensuite un rapport d&#x27;analyse stratégique avec les
+sections suivantes :
+
+1. Fiche de synthèse (1 page)
+   - Acheteur : nom, type d&#x27;organisme
+   - Objet du marché : description en 3 lignes
+   - Montant estimé / enveloppe budgétaire si mentionnée
+   - Date limite de dépôt
+   - Critères de sélection des candidatures (si différents des
+     critères d&#x27;attribution)
+
+2. Critères d&#x27;attribution et pondérations (tableau)
+   - Pour chaque critère : intitulé exact, pondération,
+     sous-critères si précisés
+   - Indique dans quel document et à quel article figure la
+     grille que tu retiens
+   - Si le marché est alloti, fais un tableau par lot : les
+     pondérations peuvent différer d&#x27;un lot à l&#x27;autre
+
+3. Pièces obligatoires à fournir
+   - Liste exhaustive avec format requis pour chacune (PDF,
+     original, copie...)
+   - Date limite par pièce si différente de la date générale
+
+4. Points de vigilance et risques
+   - Formulations susceptibles d&#x27;entraîner une irrégularité
+   - Exigences atypiques ou inhabituelles
+   - Conditions restrictives à vérifier avant de déposer
+
+5. Axes de différenciation possibles
+   - Sur quels critères peut-on se démarquer ?
+   - Quelles sont les formulations qui ouvrent des marges de
+     manœuvre ?
+
+6. Questions à poser avant le dépôt (si le délai le permet)
+   - Points flous qui justifient une demande de clarification
+
+7. Contradictions entre les documents du dossier
+   - Compare les dates limites, les pondérations, les listes de
+     pièces et les délais entre tous les documents.
+   - Signale chaque écart en citant les deux sources.
+   - Si le dossier précise lui-même l&#x27;ordre de priorité entre
+     les pièces, cite l&#x27;article qui l&#x27;établit et indique quel
+     document l&#x27;emporte. Sinon, écris que la hiérarchie n&#x27;est
+     pas déterminable à partir des pièces fournies et range le
+     point dans les questions à poser à l&#x27;acheteur. Ne tranche
+     jamais de toi-même.
+
+Règles :
+- Cite systématiquement le document, l&#x27;article et la page source
+  pour chaque information.
+- Pour chaque citation, donne le numéro de page imprimé sur le
+  document et, s&#x27;il diffère, le numéro de page du fichier PDF.
+- Si une information n&#x27;est pas dans le dossier, indique-le
+  explicitement.
+- Format de sortie : un fichier Markdown nommé analyse-AO suivi
+  du nom de l&#x27;acheteur et de la date du jour, par exemple
+  analyse-AO-Region-Nouvelle-Aquitaine-2026-09-15.md, enregistré
+  dans ce dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-13">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">13</span></div>
+        <div class="corps">
+          <h2><mark>Benchmark concurrentiel depuis des sources externes</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un analyste stratégique spécialisé dans les études
+concurrentielles.
+
+J&#x27;analyse mes concurrents dans le secteur [votre secteur].
+
+Dans ce dossier, j&#x27;ai organisé les sources ainsi :
+- /concurrent-A/ : dossier contenant les documents sur [Nom
+  Concurrent A]
+- /concurrent-B/ : dossier contenant les documents sur [Nom
+  Concurrent B]
+- /concurrent-C/ : dossier contenant les documents sur [Nom
+  Concurrent C]
+
+Ma société s&#x27;appelle [Nom de votre société]. Notre
+positionnement actuel : [2 lignes sur ce que vous proposez et à
+qui].
+
+Analyse toutes ces sources et produis un benchmark structuré
+avec :
+
+1. Tableau comparatif (format tableau Markdown) Critères en
+   lignes, concurrents en colonnes. Critères à couvrir :
+   – Positionnement et cible client principale
+   – Offres et services proposés
+   – Arguments commerciaux principaux (promesses,
+     différenciateurs revendiqués)
+   – Tarification publique (si elle figure dans mes fichiers,
+     sinon : « Absent de mes sources »)
+   – Points forts identifiés dans les sources
+   – Points faibles explicitement documentés dans les sources
+
+2. Analyse narrative par concurrent (1 page par concurrent) Pour
+   chaque concurrent : qui sont-ils, comment se
+   positionnent-ils, qu&#x27;est-ce qui semble fonctionner dans leur
+   approche, et quelles limites leurs propres documents
+   reconnaissent ou laissent voir. Ne me propose pas de
+   faiblesse que les sources ne documentent pas.
+
+3. Opportunités de différenciation pour [Nom de votre société]
+   Compte tenu du positionnement de [Nom de votre société]
+   décrit plus haut et des profils des concurrents, quels axes
+   de différenciation émergent clairement ? Chaque axe doit
+   s&#x27;appuyer sur ce que les sources disent, pas sur ce qu&#x27;elles
+   taisent. Si un axe repose sur le fait qu&#x27;un concurrent ne
+   propose pas quelque chose, écris-le ainsi : « à confirmer,
+   mes sources ne le mentionnent pas ».
+
+4. Limites de cette analyse Quelles informations importantes
+   manquent dans les sources disponibles ? Pour chaque
+   concurrent, liste les critères sur lesquels mes fichiers ne
+   disent rien.
+
+Règles :
+- Cite systématiquement les sources (nom du fichier, section)
+  pour chaque affirmation.
+- Ne fais pas de suppositions non étayées par les documents.
+- Ne conclus jamais qu&#x27;un concurrent ne communique pas sur un
+  sujet, ne le propose pas ou s&#x27;y montre faible au seul motif
+  que mes fichiers n&#x27;en parlent pas. Une absence dans mes
+  fichiers est une lacune de ma collecte, pas un fait sur le
+  concurrent. Écris dans ce cas « absent de mes sources » et
+  range le point dans la section 4.
+- Une page produit ou une page tarifaire ne présente souvent
+  qu&#x27;une gamme. Ne généralise jamais une limite constatée sur
+  une gamme à toute l&#x27;offre du concurrent : précise à quelle
+  gamme se rapporte chaque chiffre, et signale quand tu ne peux
+  pas le déterminer.
+- Termine par la liste des cinq affirmations les plus décisives
+  du benchmark, celles que je serais tenté de citer en réunion.
+  Pour chacune : l&#x27;affirmation, le fichier source, et l&#x27;adresse
+  de la page d&#x27;origine si elle figure dans le fichier ou dans
+  sources.txt.
+- Format de sortie : benchmark-[secteur]-[date].md dans ce
+  dossier, par exemple benchmark-visioconference-2026-09-15.md.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-14">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">14</span></div>
+        <div class="corps">
+          <h2><mark>Tableau de bord interactif dans votre navigateur, sans logiciel payant</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un développeur web expert en visualisation de données.
+
+J&#x27;ai un fichier projets.csv dans ce dossier qui contient les
+données de suivi de mes projets.
+
+Crée un tableau de bord HTML complet avec les éléments suivants
+:
+
+1. En-tête
+   - Titre : « Tableau de bord projets : [Votre nom / Votre
+     équipe] »
+   - Date de génération, écrite en dur (voir les règles)
+
+2. Résumé en cartes colorées (en haut de page)
+   - Nombre de projets dont le statut est « En cours » (bleu)
+   - Nombre de projets en retard (rouge)
+   - Total des actions en attente, tous projets confondus
+     (orange)
+   - Prochaine échéance critique (gris)
+
+3. Tableau de bord principal Pour chaque projet : nom, statut
+   (avec code couleur : vert/orange/rouge), responsable, barre
+   de progression, prochaine échéance, nombre d&#x27;actions en
+   attente. Tri par défaut : projets en retard en premier.
+
+4. Liste des échéances proches Les projets dont la prochaine
+   échéance est dépassée ou tombe dans les 7 prochains jours,
+   classés par date. N&#x27;invente aucune action ni aucune date :
+   n&#x27;utilise que les colonnes du fichier.
+
+5. Filtre par responsable Un menu déroulant au-dessus du
+   tableau principal, qui n&#x27;affiche que les projets du
+   responsable choisi, et « Tous les responsables » par défaut.
+
+6. Style Design propre et professionnel. Police sans-serif.
+   Couleurs sobres. Compatible avec tous les navigateurs
+   modernes. Aucune dépendance externe (pas de CDN, pas de
+   JavaScript externe) : le fichier doit fonctionner hors
+   connexion.
+
+Règles :
+- Utilise uniquement les données présentes dans projets.csv. Le
+  séparateur est le point-virgule.
+- Couleur des pastilles de statut : vert pour « En cours »,
+  rouge pour « En retard », orange pour « En pause », gris pour
+  « Terminé ».
+- Barres de progression : vert au-dessus de 70 %, orange entre
+  40 et 70 %, rouge en dessous de 40 %. La couleur de la barre
+  dépend de l&#x27;avancement et celle de la pastille dépend du
+  statut : les deux peuvent différer sur une même ligne.
+- Ignore les projets dont le statut est « Terminé » dans la
+  carte de prochaine échéance et dans la liste des échéances
+  proches.
+- Trie le tableau principal en faisant remonter les projets en
+  retard.
+- La date de mise à jour affichée est [date du jour], écrite en
+  dur dans la page : elle ne doit pas se recalculer à chaque
+  ouverture du fichier.
+- Le fichier HTML doit être autonome (tout le CSS et le
+  JavaScript inclus dans le fichier).
+- Format de sortie : tableau-de-bord-[date].html dans ce
+  dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-15">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">15</span></div>
+        <div class="corps">
+          <h2><mark>Dossier d&#x27;accueil personnalisé pour chaque nouvel arrivant</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un directeur des ressources humaines expérimenté
+spécialisé dans l&#x27;intégration.
+
+Je prépare l&#x27;arrivée d&#x27;un nouveau collaborateur et j&#x27;ai besoin
+d&#x27;un pack d&#x27;intégration complet.
+
+Informations sur la personne recrutée :
+- Prénom : [Prénom]
+- Poste : [Intitulé du poste]
+- Prise de poste : [Date]
+- Expérience : [Description en 2 lignes]
+
+Informations sur l&#x27;équipe :
+- Taille de l&#x27;équipe : [Nombre de personnes]
+- Contacts clés : [Liste des noms, prénoms, rôles]
+- Projets en cours : [Liste avec 2 lignes de contexte par
+  projet]
+- Outils utilisés : [Liste des principaux outils]
+
+Particularités à intégrer :
+[Informations spécifiques à votre organisation, culture
+d&#x27;équipe, points d&#x27;attention]
+
+Produis les documents suivants dans un seul fichier :
+
+Document 1 — Planning de la première semaine
+Format : tableau par jour (lundi à vendredi), avec créneaux
+matin/après-midi.
+Contenu : réunions d&#x27;introduction à planifier, documents à lire,
+activités d&#x27;immersion, temps de prise en main des outils.
+
+Document 2 — Annuaire des contacts clés
+Pour chaque contact : nom, rôle, comment [Prénom] interagira
+avec lui/elle, conseil pour bien travailler avec cette personne.
+
+Document 3 — Résumé des projets en cours
+Pour chaque projet : contexte, où en est-on, quel est le rôle de
+[Prénom], quels sont les points d&#x27;attention.
+
+Document 4 — FAQ des premiers jours
+20 questions que [Prénom] va probablement se poser dans ses
+premières semaines, avec les réponses.
+
+Règles :
+- Lis tous les fichiers présents dans ce dossier et sers-t&#x27;en
+  comme sources.
+- N&#x27;invente aucune information factuelle : ni nom, ni numéro de
+  téléphone, ni adresse, ni horaire, ni intitulé d&#x27;outil, ni
+  procédure interne. Si une réponse suppose une information que
+  je ne t&#x27;ai pas donnée, écris [À PRÉCISER] à la place.
+- Les questions de la FAQ peuvent être proposées librement, mais
+  leurs réponses respectent la règle ci-dessus.
+- Ne supprime jamais un champ demandé faute d&#x27;information :
+  écris le champ et mets [À PRÉCISER] à sa place. Une rubrique
+  absente est plus dangereuse qu&#x27;une rubrique incomplète, parce
+  que je ne la verrai pas.
+- Termine le fichier par la liste de toutes les mentions [À
+  PRÉCISER], avec le document et la question où elles se
+  trouvent.
+
+Format de sortie : accueil-[Prénom]-[date].md dans ce dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-16">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">16</span></div>
+        <div class="corps">
+          <h2><mark>Préparer une négociation difficile en 30 minutes</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un négociateur expérimenté spécialisé dans les contrats de
+service B2B.
+
+J&#x27;ai une négociation importante dans [X jours]. Voici le
+contexte.
+
+Client : [Nom du client]
+Relation : [Depuis combien de temps, type de contrat]
+Demande du client : [Ce que le client veut, formulé comme vous
+l&#x27;avez compris]
+Raison probable de la demande selon moi : [Votre interprétation
+des motivations]
+
+Ma situation :
+- Valeur actuelle du contrat : [Montant]
+- Marge actuelle : [Fourchette ou estimation]
+- Alternatives commerciales disponibles si ce contrat ne se
+  renouvelle pas : [Description]
+
+Ce que je suis prêt à accepter (en privé) : [Vos limites
+réelles]
+Ce qui est non négociable pour moi : [Vos lignes rouges]
+
+Lis tous les fichiers présents dans ce dossier : ils contiennent
+le contexte détaillé
+(contrat en cours, échanges récents, mes notes). Le format n&#x27;a
+pas d&#x27;importance.
+
+Produis une fiche de préparation de négociation avec :
+
+1. Analyse des enjeux des deux parties
+   - Ce que je veux obtenir et pourquoi
+   - Ce que le client veut probablement obtenir et pourquoi
+     (interprétation)
+
+2. Cinq objections probables du client Pour chaque objection :
+   formulation probable, contre-argument précis, donnée ou
+   exemple à citer.
+
+3. Mon BATNA Que se passe-t-il si je ne cède pas ? Quelle est ma
+   meilleure alternative à un accord ? Est-elle réaliste ?
+
+4. Concessions possibles classées par impact Pour chaque
+   concession envisageable : impact sur ma marge, impact sur la
+   relation, valeur perçue par le client.
+
+5. Proposition d&#x27;ouverture recommandée Comment ouvrir la réunion
+   pour prendre le leadership de la négociation ?
+
+6. Points non négociables, comment les tenir Comment refuser
+   sans fermer la porte.
+
+Règles :
+- Sépare les faits des hypothèses. Un fait vient d&#x27;un de mes
+  fichiers ou de ce que je t&#x27;ai écrit ci-dessus, et tu cites sa
+  source. Tout le reste s&#x27;écrit au conditionnel et commence par
+  « hypothèse : ».
+- N&#x27;invente aucun chiffre, aucun nom de concurrent, aucun
+  montant, aucune date et aucune situation concernant le client.
+  Si un contre-argument a besoin d&#x27;une donnée que je ne t&#x27;ai pas
+  fournie, écris [DONNÉE À VÉRIFIER] plutôt que de produire un
+  chiffre plausible.
+- 1 400 mots maximum, titres et tableaux compris. Cette fiche se
+  relit avant d&#x27;entrer en réunion.
+
+Format de sortie : negociation-[nom-client]-[date au format
+2026-06-25].md dans ce dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-17">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">17</span></div>
+        <div class="corps">
+          <h2><mark>Tableau de bord de portefeuille depuis vos comptes-rendus Teams</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es une directrice de portefeuille projets qui prépare son
+bilan hebdomadaire.
+
+J&#x27;ai [N] projets en cours. Leurs comptes-rendus de la semaine
+sont dans ce dossier :
+- cr-[NomProjet]-[date].txt : compte-rendu du projet [Nom du
+  projet] (une ligne par projet, avec le nom exact de chacun de
+  vos fichiers)
+
+Produis un tableau de bord de portefeuille hebdomadaire avec les
+sections suivantes :
+
+1. Résumé exécutif (5 lignes maximum) Situation globale du
+   portefeuille. Alertes principales. Ce qui nécessite
+   l&#x27;attention de la direction cette semaine.
+
+2. Tableau de bord par projet Format : tableau avec colonnes —
+   Projet | Statut | Avancement | Responsable | Prochaine
+   échéance | Points d&#x27;attention Code couleur texte : [EN
+   RETARD] / [EN COURS] / [À RISQUE] / [À JOUR]
+
+3. Actions en retard ou sans responsable désigné Toutes les
+   actions dont la date était dépassée ou pour lesquelles aucun
+   responsable n&#x27;est identifié dans les comptes-rendus.
+
+4. Décisions en attente d&#x27;arbitrage Toutes les décisions
+   mentionnées dans les comptes-rendus qui nécessitent une
+   réponse de la direction.
+
+5. Prochaines échéances critiques (14 prochains jours) Classées
+   par date.
+
+Règles :
+- Appuie-toi uniquement sur ce qui est dans les comptes-rendus.
+  N&#x27;invente pas de statuts.
+- Nous sommes le [date du jour] : c&#x27;est cette date qui sert de
+  référence pour juger qu&#x27;une échéance est dépassée.
+- Un statut déclaré par le compte-rendu s&#x27;écrit tel quel. Un
+  statut que tu déduis d&#x27;un fait écrit (une échéance dépassée,
+  un arbitrage bloqué) s&#x27;écrit suivi de la mention « déduit »,
+  avec le fait sur lequel tu t&#x27;appuies. Même règle pour un nom
+  de responsable déduit d&#x27;une signature.
+- Si une information est manquante dans un compte-rendu, indique
+  [INFO MANQUANTE — vérifier avec le chef de projet].
+- Ne lis que les fichiers dont le nom commence par cr-.
+- Format de sortie : portefeuille-[date].md dans ce dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-18">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">18</span></div>
+        <div class="corps">
+          <h2><mark>10 CVs comparés sur les mêmes critères en 15 minutes</mark></h2>
+          <p class="sous-titre">Le prompt : les mots exacts à taper</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un assistant d&#x27;extraction documentaire. Tu ne juges pas
+les candidatures, tu en extrais les informations.
+
+J&#x27;ai reçu des CVs pour un poste de [intitulé du poste]. Les
+fichiers PDF sont dans ce dossier.
+
+Description du poste :
+[2 à 3 lignes : secteur, responsabilités principales, taille de
+l&#x27;équipe managée si applicable]
+
+Critères du poste :
+1. [critère 1] — obligatoire
+2. [critère 2] — obligatoire
+3. [critère 3] — souhaitable
+4. [critère 4] — souhaitable
+5. [critère 5] — souhaitable
+
+Règles, à respecter avant tout le reste :
+- N&#x27;utilise aucune information de sexe, d&#x27;âge, de date de
+  naissance, de photo, d&#x27;origine, de nationalité, de patronyme,
+  d&#x27;adresse, de situation de famille, de grossesse, de santé, de
+  handicap, de religion ou d&#x27;appartenance syndicale. Ne les
+  recopie nulle part dans ta sortie, même si elles figurent dans
+  le CV.
+- N&#x27;évalue que sur les cinq critères listés ci-dessus. N&#x27;ajoute
+  aucun critère de ton propre chef.
+- Ne classe pas les candidats, ne les note pas, ne les compare
+  pas entre eux, ne recommande personne et n&#x27;écarte personne.
+  Contente-toi de restituer ce que chaque CV dit.
+- Appuie-toi uniquement sur ce qui est écrit dans les CVs. Ne
+  suppose pas d&#x27;expériences non mentionnées. Si une information
+  manque, écris [NON MENTIONNÉ].
+- Remplace les noms des candidats par « Candidat A », « Candidat
+  B », etc. Le fichier d&#x27;analyse ne doit contenir aucun nom de
+  personne, ni dans le texte, ni dans un tableau de
+  correspondance, ni dans un nom de fichier cité.
+- Écris la correspondance entre les étiquettes et les fichiers
+  de CV dans un fichier séparé, nommé
+  correspondance-candidats.md. C&#x27;est le seul fichier qui porte
+  les noms, et c&#x27;est le seul que je ne partagerai pas.
+- N&#x27;accorde ni les intitulés de poste ni les pronoms, même si le
+  CV le fait : écris « chef de projet » et « ce candidat » dans
+  tous les cas. Un accord révèle le sexe aussi sûrement qu&#x27;un
+  prénom.
+- Ne commente ni les interruptions de parcours, ni les périodes
+  sans emploi : elles renseignent sur la vie privée, pas sur les
+  compétences.
+- Ne recalcule pas les durées d&#x27;expérience. Reprends la durée
+  telle qu&#x27;elle est écrite dans le CV. Si elle n&#x27;y est pas
+  écrite, cite les dates de début et de fin sans faire la
+  soustraction.
+
+Produis :
+
+1. Tableau comparatif Format : tableau Markdown. Lignes =
+   candidats. Colonnes = les cinq critères. Pour chaque cellule
+   : l&#x27;information extraite du CV, en reprenant ses termes, ou
+   [NON MENTIONNÉ] si elle est absente.
+
+2. Fiche par candidat Quatre à six lignes. Ce que le CV dit sur
+   chacun des cinq critères, et ce qu&#x27;il n&#x27;en dit pas. Si le CV
+   est peu lisible ou très succinct, signale-le.
+
+3. Couverture des critères obligatoires Deux listes : les
+   candidats dont le CV renseigne les deux critères
+   obligatoires, et ceux dont le CV en laisse au moins un vide,
+   avec lequel.
+
+Termine le fichier par la ligne : « Extraction automatique à
+vérifier. Aucune candidature ne doit être écartée sur la seule
+base de ce document. »
+
+Format de sortie : analyse-candidats-[poste]-[date].md dans ce
+dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-19">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">19</span></div>
+        <div class="corps">
+          <h2><mark>Le fichier CLAUDE.md : la mémoire permanente de votre assistant</mark></h2>
+          <p class="sous-titre">Laissez Claude Code vous interviewer</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Je veux créer mon fichier CLAUDE.md, celui que tu liras
+au début de chacune de nos sessions.
+
+Interroge-moi pour le construire. Couvre mon métier et
+mon organisation, mes interlocuteurs réguliers, les
+documents que je produis le plus souvent, le ton et les
+formats que je préfère, et les règles que tu devras
+toujours respecter.
+
+Comment mener l&#x27;entretien :
+- une seule question à la fois, et tu attends ma réponse
+  avant la suivante ;
+- quand une réponse est prévisible pour mon métier,
+  propose-la et demande-moi de la valider ou de la
+  corriger, plutôt que de me laisser devant une question
+  ouverte ;
+- n&#x27;invente rien. Si je réponds que je ne sais pas,
+  écris [À COMPLÉTER] et passe à la suite ;
+- une quinzaine de questions au maximum.
+
+Quand l&#x27;entretien est fini, montre-moi le fichier
+complet à l&#x27;écran et attends mon accord. Ensuite
+seulement, enregistre-le sous le nom CLAUDE.md dans ce
+dossier.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="chapitre-21">
+        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">21</span></div>
+        <div class="corps">
+          <h2><mark>Les agents : donnez un objectif complexe, Claude Code fait tout le reste</mark></h2>
+          <p class="sous-titre">Formuler un bon objectif d&#x27;agent</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Tu es un [rôle spécifique].
+
+Objectif : [ce que tu dois produire à la fin].
+
+Sources disponibles :
+- [Fichier ou dossier 1] : [ce qu&#x27;il contient]
+- [Fichier ou dossier 2] : [ce qu&#x27;il contient]
+
+Étapes à suivre :
+1. [Étape 1 avec critère de réussite]
+2. [Étape 2 avec critère de réussite]
+3. [Étape 3 avec critère de réussite]
+
+Contraintes :
+- Ne pas modifier les fichiers sources. Produire uniquement de
+  nouveaux fichiers.
+- Si une information manque, noter [À VÉRIFIER] plutôt que de
+  supposer.
+- Arrêter et signaler si [condition d&#x27;arrêt spécifique].
+
+Format de sortie : [description précise du livrable attendu et
+de son nom de fichier].</pre>
+        </div>
+      </article>
+</main>
+
+<footer>
+  <div class="dedans">
+    <p>Page mise à jour le 11/08/2026. Les prompts sont repris mot pour mot du livre.</p>
+    <p>Une erreur, une question, un prompt qui ne se comporte plus comme le livre l'annonce ? Les corrections apparaissent ici, dans cette page, au fur et à mesure.</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copier').forEach(function (bouton) {
+  bouton.addEventListener('click', function () {
+    var fiche = bouton.closest('.fiche');
+    var texte = fiche.querySelector('pre').textContent;
+    var fait = function () {
+      fiche.classList.add('copiee');
+      bouton.textContent = 'Copié, collez-le dans Claude Code';
+      window.setTimeout(function () {
+        fiche.classList.remove('copiee');
+        bouton.textContent = 'Copier le prompt';
+      }, 4000);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(texte).then(fait, selectionner);
+    } else {
+      selectionner();
+    }
+    // Si le presse-papiers est refuse par le navigateur, on selectionne le
+    // texte : il reste un Ctrl+C a faire, et on le dit.
+    function selectionner() {
+      var plage = document.createRange();
+      plage.selectNodeContents(fiche.querySelector('pre'));
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(plage);
+      bouton.textContent = 'Texte sélectionné, faites Ctrl+C ou Cmd+C';
+    }
+  });
+});
+</script>
+</body>
+</html>
