@@ -167,6 +167,24 @@ pre {
   word-break: break-word;
 }
 
+/* Le cas bonus n'est pas dans le livre : il se signale donc autrement qu'une
+   fiche de prompt, sans quoi le lecteur le prend pour un chapitre oublie. */
+.bonus {
+  display: block;
+  margin-top: 34px;
+  padding: 22px 24px;
+  background: var(--encre);
+  color: var(--papier);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.bonus .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.bonus h2 { margin: 6px 0 8px; font-size: 21px; letter-spacing: -0.014em; }
+.bonus p { margin: 0; max-width: 62ch; color: #b9c6d6; }
+.bonus .fleche { display: inline-block; margin-top: 12px; color: var(--papier); font-weight: 600; }
+.bonus:hover .fleche { text-decoration: underline; }
+.bonus:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+
 footer {
   border-top: 1px solid var(--trait);
   padding: 28px 24px 60px;
@@ -1127,6 +1145,13 @@ Format de sortie : [description précise du livrable attendu et
 de son nom de fichier].</pre>
         </div>
       </article>
+
+      <a class="bonus" href="bonus-questionnaire-securite.html">
+        <span class="mot">Cas bonus, hors livre</span>
+        <h2>Le questionnaire sécurité d'un client rempli depuis vos réponses passées</h2>
+        <p>Trente-sept questions, vos documents pour seules sources, et aucune réponse inventée. Un quatorzième cas d'usage, produit et testé comme les treize du livre, et qui n'est pas dans les pages imprimées.</p>
+        <span class="fleche">Lire le cas →</span>
+      </a>
 </main>
 
 <footer>

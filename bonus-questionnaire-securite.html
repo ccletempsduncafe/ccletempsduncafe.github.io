@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cas bonus : le questionnaire sécurité d'un client</title>
+<meta name="description" content="Un quatorzième cas d'usage, testé comme les treize du livre : remplir un questionnaire sécurité client depuis vos documents, sans inventer une seule réponse.">
+<style>
+:root {
+  --encre: #16202b;
+  --encre-douce: #51637a;
+  --papier: #eaeef4;
+  --carte: #ffffff;
+  --trait: #ccd5e0;
+  --surligneur: #f2e34a;
+  --lien: #1c4c8c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+.bandeau { background: var(--encre); color: var(--papier); padding: 40px 24px 36px; }
+.dedans { max-width: 760px; margin: 0 auto; }
+.bandeau .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.bandeau h1 { margin: 8px 0 10px; font-size: clamp(26px, 4.6vw, 38px); line-height: 1.14; letter-spacing: -0.02em; }
+.bandeau p { margin: 0; max-width: 60ch; color: #b9c6d6; }
+.bandeau a { color: var(--papier); }
+.retour { display: inline-block; margin-top: 20px; font-size: 15px; color: #b9c6d6; }
+
+article { max-width: 760px; margin: 34px auto 60px; padding: 0 24px; }
+article > h1 { display: none; }
+article h2 { margin: 40px 0 12px; font-size: 23px; letter-spacing: -0.014em; }
+article h3 { margin: 30px 0 10px; font-size: 19px; }
+article p { margin: 0 0 16px; }
+article ol, article ul { margin: 0 0 16px; padding-left: 22px; }
+article li { margin-bottom: 8px; }
+article hr { border: 0; border-top: 1px solid var(--trait); margin: 30px 0; }
+
+/* Les encadres du livre (les lignes commencant par un pictogramme) deviennent
+   des blocs a filet : c'est leur rendu dans la version imprimee. */
+.encadre {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-left: 4px solid var(--encre);
+  border-radius: 4px;
+  padding: 18px 22px 4px;
+  margin: 26px 0;
+}
+.encadre p:last-child { margin-bottom: 18px; }
+
+table { width: 100%; border-collapse: collapse; margin: 22px 0; background: var(--carte); font-size: 15.5px; }
+th, td { border: 1px solid var(--trait); padding: 10px 12px; text-align: left; vertical-align: top; }
+th { background: #f6f8fb; }
+.tableau { overflow-x: auto; }
+
+.bloc-prompt { margin: 24px 0; }
+.copier {
+  font: inherit; font-weight: 600; font-size: 16px; color: var(--carte);
+  background: var(--lien); border: 1px solid var(--lien); border-radius: 3px;
+  padding: 10px 20px; cursor: pointer;
+}
+.copier:hover { background: #163d70; }
+.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+
+pre {
+  margin: 14px 0 0; padding: 16px 18px; background: #f6f8fb;
+  border: 1px solid var(--trait); border-radius: 3px; overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14.5px; line-height: 1.55; white-space: pre-wrap; word-break: break-word;
+}
+
+footer { border-top: 1px solid var(--trait); padding: 26px 24px 60px; color: var(--encre-douce); font-size: 15px; }
+footer .dedans p { margin: 0 0 10px; }
+footer a { color: var(--lien); }
+</style>
+</head>
+<body>
+<header class="bandeau">
+  <div class="dedans">
+    <span class="mot">Cas bonus, hors livre</span>
+    <h1>Le questionnaire sécurité d'un client rempli depuis vos réponses passées</h1>
+    <p>Un quatorzième cas d'usage, produit et testé selon la même méthode que les treize du livre. Il n'est pas dans les pages imprimées.</p>
+    <a class="retour" href="index.html">← Revenir aux prompts du livre</a>
+  </div>
+</header>
+
+<article>
+<h1 id="cas-bonus">Cas bonus</h1>
+<h1
+id="le-questionnaire-sécurité-dun-client-rempli-depuis-vos-réponses-passées">Le
+questionnaire sécurité d’un client rempli depuis vos réponses
+passées</h1>
+<p>Ce cas ne figure pas dans le livre imprimé. Il a été produit et testé
+selon la même méthode que les treize autres, et il est offert aux
+lecteurs qui sont allés jusqu’à cette page.</p>
+<p>Thomas reçoit un email de son contact chez Delcourt Assurances. Le
+contrat est prêt à être signé, il ne manque qu’une formalité : le
+questionnaire fournisseur. Trente-sept questions dans un fichier
+tableur, à retourner sous huit jours. Gouvernance, hébergement,
+chiffrement, gestion des accès, sauvegardes, continuité d’activité,
+sous-traitants, tests d’intrusion, assurance.</p>
+<p>Thomas n’est ni informaticien ni juriste. Il sait deux choses. La
+première est que son entreprise a déjà répondu à ces questions, l’an
+dernier, pour un autre client, et que le fichier dort quelque part. La
+seconde est que la dernière fois, l’exercice a mobilisé trois personnes
+pendant deux jours, et qu’une réponse donnée un peu vite a fini par
+engager l’entreprise sur un délai de notification qu’elle ne tenait
+pas.</p>
+<p>Il rassemble trois fichiers dans un dossier : le questionnaire du
+client, la politique de sécurité interne, et le dossier rempli l’an
+dernier. Il ouvre Claude Code et tape une instruction. Vingt minutes
+plus tard, il a deux fichiers. Le questionnaire est rempli aux deux
+tiers, chaque réponse portant la phrase exacte dont elle sort. Et une
+note d’une page range le tiers restant par personne à solliciter : sept
+questions pour le responsable de la sécurité, deux pour la direction
+technique, trois pour le juridique, une pour les achats.</p>
+<p>Il n’a pas répondu au questionnaire. Il a transformé deux jours de
+réunions en quatre emails précis.</p>
+<div class="encadre"><p>🔄 <strong>Copilot et Claude Code : qui fait quoi ici ?</strong></p>
+<p>Le questionnaire arrive de l’extérieur, en pièce jointe, et repart
+chez le client. Vos réponses de l’an dernier sont dans un dossier
+partagé, votre politique de sécurité est un PDF validé par la direction.
+Copilot sait résumer l’un de ces documents. Il ne sait pas tenir les
+trois ensemble et les confronter question par question, ce qui est
+précisément le travail ici.</p>
+<p>Claude Code lit les trois fichiers depuis votre disque, dans leurs
+formats d’origine, et écrit le fichier de sortie au format du client. Il
+ne produit pas un texte que vous recopieriez : il rend le tableur
+rempli, colonne par colonne.</p>
+</div>
+<hr />
+<h2
+id="b.1-la-situation-le-danger-nest-pas-la-lenteur-cest-la-réponse-plausible">B.1
+La situation : le danger n’est pas la lenteur, c’est la réponse
+plausible</h2>
+<p>Un questionnaire sécurité se remplit lentement pour une bonne raison
+: chaque case est un engagement. Le délai de notification que vous
+annoncez devient opposable. Le montant d’assurance que vous recopiez
+sera vérifié le jour d’un sinistre. La certification que vous mentionnez
+un peu vite se contrôle en trois clics.</p>
+<p>Le risque, quand on automatise ce travail, est donc l’inverse du
+risque habituel. Ce n’est pas que l’assistant réponde trop peu. C’est
+qu’il réponde à tout. Une intelligence artificielle qui lit « démarche
+de certification engagée, audit planifié au quatrième trimestre » et qui
+écrit « certifié ISO 27001 » vous met en défaut contractuel. Une qui lit
+« objectifs de reprise visés » et qui écrit « nous nous engageons sur
+huit heures » aussi.</p>
+<p>Le prompt de ce cas est construit autour de ce danger. Il n’ordonne
+pas de remplir le questionnaire, il ordonne de classer chaque question
+dans l’un de quatre états, et il exige qu’une case sans document reste
+vide.</p>
+<p>Il y a un second gain, moins attendu. Confronter votre politique
+interne à vos réponses de l’an dernier fait apparaître vos propres
+contradictions, celles que personne ne voit parce que les deux documents
+ne sont jamais ouverts en même temps. Au test, ce sont elles qui étaient
+les plus intéressantes.</p>
+<h2 id="b.2-ce-qui-entre-et-ce-qui-sort">B.2 Ce qui entre et ce qui
+sort</h2>
+<p>Vous fournissez trois choses : le questionnaire du client tel qu’il
+est arrivé, votre politique de sécurité, et un ou plusieurs
+questionnaires déjà remplis les années précédentes. Plus vous avez de
+dossiers passés, meilleur est le résultat, à condition qu’ils portent
+leur date.</p>
+<p>Vous récupérez deux fichiers. Le premier est le questionnaire du
+client, dans son ordre et avec ses intitulés, augmenté de deux colonnes
+: la source de chaque réponse et son niveau de fiabilité. Le second est
+une note qui regroupe tout ce qui n’a pas pu être répondu, classé non
+par thème mais par personne à solliciter. C’est ce second fichier qui
+fait gagner les deux jours : il remplace la réunion où l’on cherche
+ensemble qui sait quoi.</p>
+<p>Comptez vingt minutes de production pour un questionnaire de quarante
+questions et trois documents sources. Puis votre relecture, qui reste
+indispensable, mais qui porte sur un tiers des questions au lieu de la
+totalité.</p>
+<h2 id="b.3-ce-dont-vous-avez-besoin-avant-de-commencer">B.3 Ce dont
+vous avez besoin avant de commencer</h2>
+<p>Claude Code installé, et un dossier contenant vos trois fichiers. Le
+questionnaire du client peut être un tableur, un document Word ou un PDF
+: gardez-le tel quel.</p>
+<p>Un conseil de rangement qui change le résultat : renommez vos
+dossiers passés en faisant figurer l’année dans le nom du fichier, par
+exemple « reponses-2025-groupe-tessier ». Le prompt demande à Claude
+Code de tenir compte de l’ancienneté d’une réponse, et il ne peut le
+faire que si la date est visible.</p>
+<h2 id="b.4-le-prompt-les-mots-exacts-à-taper">B.4 Le prompt : les mots
+exacts à taper</h2>
+<div class="bloc-prompt"><button class="copier" type="button">Copier le prompt</button><pre><code>Tu es responsable des réponses aux questionnaires sécurité chez un
+fournisseur de services. Tu réponds à la place de mon entreprise, à
+partir de nos documents, et uniquement à partir d&#39;eux.
+
+Dans ce dossier se trouvent le questionnaire envoyé par le client, notre
+politique de sécurité interne, et les questionnaires que nous avons déjà
+remplis les années précédentes.
+
+Commence par lister les fichiers que tu as trouvés, avec leur date, et ce
+que tu comptes faire de chacun.
+
+Remplis ensuite le questionnaire, question par question, sans en sauter
+aucune, sans en changer l&#39;ordre ni les intitulés.
+
+Pour chaque question, donne :
+- la réponse, formulée pour être lue par le client ;
+- le fichier et la section d&#39;où elle sort ;
+- un niveau parmi ÉTABLI, À CONFIRMER, ABSENT, ARBITRAGE.
+
+ÉTABLI : l&#39;information est dans nos documents et rien ne la contredit.
+À CONFIRMER : deux documents ne disent pas la même chose, ou
+l&#39;information a plus d&#39;un an. Donne les deux versions, avec leur source
+et leur date.
+ABSENT : l&#39;information n&#39;est nulle part. Laisse la réponse vide et écris
+ce qu&#39;il faut aller chercher, et auprès de qui.
+ARBITRAGE : la réponse engage l&#39;entreprise sur un point contractuel,
+juridique ou commercial. Propose une formulation et marque-la comme
+soumise à validation.
+
+Règles :
+- N&#39;invente jamais une réponse. Une case vide marquée ABSENT vaut mieux
+  qu&#39;une réponse plausible.
+- Ne déduis pas une certification, un délai, un montant ni un
+  engagement d&#39;une phrase voisine.
+- Si un document dit qu&#39;une chose est « en cours », « visée » ou
+  « planifiée », ne l&#39;écris pas comme acquise.
+- Si la question du client est plus large que ce que notre document
+  couvre, ne réponds pas : classe-la en À CONFIRMER et dis ce qui
+  manque.
+
+Produis deux fichiers dans ce dossier :
+1. questionnaire-rempli suivi du nom du client et de la date du jour, au
+   format du questionnaire d&#39;origine, avec ses colonnes plus une colonne
+   Niveau.
+2. a-traiter suivi du nom du client et de la date du jour, au format
+   Markdown : les questions ABSENT, À CONFIRMER et ARBITRAGE, regroupées
+   par personne à solliciter, avec pour chacune ce qui manque.</code></pre></div>
+<p>Les quatre niveaux sont le cœur du prompt. Sans eux, vous obtenez un
+questionnaire entièrement rempli, ce qui est exactement le résultat
+dangereux : rien ne distingue plus la réponse qui sort de votre
+politique signée de celle qui sort d’un dossier de l’an dernier
+périmé.</p>
+<p>La dernière règle est celle qui a le plus servi au test. Une question
+de client est souvent plus large que votre document interne. Le client
+demande si vos données quittent l’Union européenne « y compris pour du
+support ou de la supervision », quand votre politique ne parle que de
+stockage. Répondre « non » serait plausible, et faux si un prestataire
+vous supervise depuis un pays tiers.</p>
+<h2 id="b.5-pas-à-pas">B.5 Pas à pas</h2>
+<ol type="1">
+<li><p>Créez un dossier, par exemple « questionnaire-Delcourt-2026 », et
+placez-y le questionnaire reçu, votre politique de sécurité et vos
+dossiers des années précédentes.</p></li>
+<li><p>Ouvrez Claude Code sur ce dossier. Depuis l’application de
+bureau, sélectionnez simplement ce dossier comme dossier de
+projet.</p></li>
+<li><p>Collez le prompt de la section B.4 d’un seul bloc et appuyez sur
+Entrée.</p></li>
+<li><p>Lisez d’abord l’inventaire des fichiers qui s’affiche. Si un de
+vos dossiers passés manque à la liste, arrêtez-vous et vérifiez où il se
+trouve.</p></li>
+<li><p>Ouvrez le fichier « a-traiter » avant le questionnaire lui-même.
+C’est lui qui déclenche vos emails, et ces emails prennent des jours à
+revenir.</p></li>
+<li><p>Relisez ensuite les réponses marquées ÉTABLI. Elles sont
+sourcées, mais c’est vous qui signez.</p></li>
+</ol>
+<p>[Capture d’écran : le questionnaire rempli, colonne Niveau visible,
+avec une ligne À CONFIRMER montrant les deux versions
+contradictoires]</p>
+<h2 id="b.6-ce-que-ce-cas-a-donné-au-test">B.6 Ce que ce cas a donné au
+test</h2>
+<p>Le cas a été exécuté sur un questionnaire de 37 questions et trois
+documents sources : une politique de sécurité de janvier 2026 et un
+dossier client rempli en mars 2025.</p>
+<p>Vingt-trois questions ont été renseignées et sourcées. Quatorze sont
+revenues avec une demande : huit en À CONFIRMER, trois en ABSENT, trois
+en ARBITRAGE.</p>
+<p>Les deux contradictions internes ont été trouvées. La politique de
+janvier 2026 annonce une rétention des sauvegardes de 30 jours, le
+dossier de mars 2025 en annonçait 90. La politique s’engage à notifier
+une violation de données sous 48 heures, le dossier de 2025 disait 72
+heures. Dans les deux cas, une réponse a déjà été envoyée à un autre
+client : ce n’est pas une coquille, c’est un sujet.</p>
+<p>Trois pièges ont été évités, et ce sont eux qui justifient les règles
+du prompt. La certification ISO 27001 est restée une réponse négative
+alors que les documents parlent d’une démarche engagée et d’un audit
+planifié. Le plan de continuité, annoncé « en cours de formalisation »
+en 2025, n’a pas été présenté comme existant. Les objectifs de reprise,
+écrits comme « visés », n’ont pas été transformés en engagements.</p>
+<p>Une limite est apparue, et elle vaut avertissement. Une question
+portait sur la revue de code « par un tiers ». La revue interne par un
+autre développeur a été donnée comme réponse positive, avec une note
+signalant l’ambiguïté. C’est défendable, et c’est peut-être faux selon
+ce que le client entend. Aucune consigne ne remplace votre lecture : le
+classement en quatre niveaux vous dit où regarder en priorité, il ne
+vous dispense pas de lire le reste.</p>
+<h2 id="b.7-adapter-ce-cas-à-votre-situation">B.7 Adapter ce cas à votre
+situation</h2>
+<p>Si le questionnaire est un PDF non modifiable, demandez la sortie au
+format tableur en conservant les intitulés : vous recopierez dans le
+formulaire du client, mais le travail d’analyse sera fait.</p>
+<p>Si vous répondez souvent à ces questionnaires, gardez chaque dossier
+rempli dans un même endroit, daté dans son nom. Au bout de trois
+dossiers, la base de réponses devient plus utile que la politique
+elle-même, parce qu’elle contient les formulations qui sont déjà passées
+chez un client.</p>
+<p>Si votre entreprise est certifiée, ajoutez le certificat et le
+périmètre au dossier. C’est la première pièce que le prompt cherchera,
+et c’est celle qui fait tomber le plus de questions d’un coup.</p>
+<h2 id="b.8-ce-qui-peut-mal-tourner">B.8 Ce qui peut mal tourner</h2>
+<div class="tableau"><table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Ce que vous voyez</th>
+<th>Ce que ça signifie</th>
+<th>Ce que vous faites</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Le questionnaire revient rempli à 100 %</td>
+<td>Les niveaux ont été ignorés, ou vos documents sources sont trop
+maigres pour être confrontés</td>
+<td>Relancez en insistant sur la règle de la case vide. Un questionnaire
+réel produit toujours des ABSENT.</td>
+</tr>
+<tr>
+<td>Une réponse est juste mais ne cite aucune source</td>
+<td>La demande de source a été traitée comme facultative</td>
+<td>Ne la validez pas. Demandez la phrase exacte du document. Sans
+source, vous ne pourrez pas défendre la réponse dans six mois.</td>
+</tr>
+<tr>
+<td>Les niveaux À CONFIRMER sont très nombreux</td>
+<td>Vos documents sont anciens ou se contredisent souvent</td>
+<td>C’est un diagnostic, pas une panne. C’est le moment de mettre à jour
+votre politique.</td>
+</tr>
+<tr>
+<td>L’ordre des questions a changé</td>
+<td>Le format du questionnaire a été réinterprété</td>
+<td>Relancez en exigeant l’ordre et les intitulés d’origine. Un client
+qui reçoit ses questions réordonnées relit tout.</td>
+</tr>
+<tr>
+<td>Un montant ou un délai apparaît sans figurer dans vos documents</td>
+<td>C’est une réponse fabriquée, le cas le plus grave</td>
+<td>Arrêtez-vous, vérifiez toutes les valeurs chiffrées du fichier une
+par une, et relancez avec les documents manquants.</td>
+</tr>
+</tbody>
+</table></div>
+<div class="encadre"><p>✅ À la fin de ce cas, vous avez un questionnaire rempli aux deux
+tiers, chaque réponse portant sa source, et la liste de ce qui manque
+classée par personne à solliciter. Ce que vous n’avez pas, et ne devez
+pas chercher à avoir, c’est un questionnaire prêt à partir sans
+relecture. Temps réel : 20 minutes de production, puis vos
+vérifications, contre deux jours de réunions.</p>
+</div>
+<hr />
+
+</article>
+
+<footer>
+  <div class="dedans">
+    <p>Une erreur, une question, un prompt qui ne se comporte plus comme annoncé ? Les corrections paraissent sur <a href="index.html">ccletempsduncafe.github.io</a>.</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copier').forEach(function (bouton) {
+  bouton.addEventListener('click', function () {
+    var bloc = bouton.parentNode.querySelector('pre');
+    var fait = function () {
+      bouton.textContent = 'Copié, collez-le dans Claude Code';
+      window.setTimeout(function () { bouton.textContent = 'Copier le prompt'; }, 4000);
+    };
+    function selectionner() {
+      var plage = document.createRange();
+      plage.selectNodeContents(bloc);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(plage);
+      bouton.textContent = 'Texte sélectionné, faites Ctrl+C ou Cmd+C';
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(bloc.textContent).then(fait, selectionner);
+    } else {
+      selectionner();
+    }
+  });
+});
+</script>
+</body>
+</html>
