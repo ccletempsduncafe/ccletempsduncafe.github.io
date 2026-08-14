@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les deux feuillets à imprimer — Claude Code le temps d'un café</title>
+<meta name="description" content="Les deux feuillets du livre en version imprimable.">
+<style>
+:root {
+  --encre: #16202b;
+  --encre-douce: #51637a;
+  --papier: #eaeef4;
+  --carte: #ffffff;
+  --trait: #ccd5e0;
+  --surligneur: #f2e34a;
+  --lien: #1c4c8c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.bandeau {
+  background: var(--encre);
+  color: var(--papier);
+  padding: 44px 24px 40px;
+}
+
+.dedans { max-width: 940px; margin: 0 auto; }
+
+.bandeau h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 5vw, 42px);
+  letter-spacing: -0.022em;
+  line-height: 1.12;
+}
+
+.bandeau p { margin: 0; max-width: 60ch; color: #b9c6d6; }
+
+.adresse {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 7px 14px;
+  border: 1px solid #3b4c60;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  color: var(--papier);
+}
+
+.bandeau .maj {
+  margin-top: 14px;
+  font-size: 15px;
+  color: #93a5ba;
+}
+
+.mode-emploi {
+  max-width: 940px;
+  margin: 34px auto 0;
+  padding: 0 24px;
+}
+
+.mode-emploi p { max-width: 68ch; margin: 0 0 14px; }
+
+.raccourcis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+.raccourcis a {
+  display: block;
+  min-width: 46px;
+  padding: 8px 10px;
+  text-align: center;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  color: var(--lien);
+  font-weight: 600;
+  text-decoration: none;
+}
+.raccourcis a:hover { border-color: var(--lien); }
+.raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+
+main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
+
+.fiche {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  align-items: start;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  margin-top: 22px;
+  overflow: hidden;
+}
+
+/* L'onglet reprend l'intercalaire d'un classeur : c'est par le numero de
+   chapitre que le lecteur cherche, puisqu'il arrive du livre imprime. */
+.onglet {
+  background: var(--encre);
+  color: var(--papier);
+  padding: 16px 16px 18px;
+  text-align: center;
+  border-bottom-right-radius: 4px;
+}
+
+.onglet .mot { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.onglet .rang { display: block; font-size: 40px; font-weight: 700; line-height: 1.1; }
+
+.corps { padding: 20px 24px 24px; min-width: 0; }
+
+.corps h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  letter-spacing: -0.012em;
+}
+
+/* Le surlignage marque ce qui vient d'etre copie, comme on surligne une page. */
+.corps h2 mark {
+  background: transparent;
+  color: inherit;
+  padding: 1px 3px;
+  transition: background 160ms ease-in;
+}
+.fiche.copiee .corps h2 mark { background: var(--surligneur); }
+
+.sous-titre { margin: 0 0 16px; color: var(--encre-douce); font-size: 15px; }
+
+.copier {
+  font: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--carte);
+  background: var(--lien);
+  border: 1px solid var(--lien);
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.copier:hover { background: #163d70; }
+.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.fiche.copiee .copier { background: var(--encre); border-color: var(--encre); }
+
+pre {
+  margin: 16px 0 0;
+  padding: 16px 18px;
+  background: #f6f8fb;
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Le cas bonus n'est pas dans le livre : il se signale donc autrement qu'une
+   fiche de prompt, sans quoi le lecteur le prend pour un chapitre oublie. */
+.bonus {
+  display: block;
+  margin-top: 34px;
+  padding: 22px 24px;
+  background: var(--encre);
+  color: var(--papier);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.bonus .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.bonus h2 { margin: 6px 0 8px; font-size: 21px; letter-spacing: -0.014em; }
+.bonus p { margin: 0; max-width: 62ch; color: #b9c6d6; }
+.bonus .fleche { display: inline-block; margin-top: 12px; color: var(--papier); font-weight: 600; }
+.bonus:hover .fleche { text-decoration: underline; }
+.bonus:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+
+/* Les autres rubriques que le livre promet a cette page. Elles ne sont pas des
+   prompts : elles se presentent donc en liste, pas en fiches a onglet. */
+.titre-rubriques { margin: 44px 0 0; font-size: 21px; letter-spacing: -0.014em; }
+
+.rubriques { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.rubriques a {
+  display: block;
+  padding: 16px 18px;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--encre);
+}
+.rubriques a:hover { border-color: var(--lien); }
+.rubriques a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.rubriques strong { display: block; color: var(--lien); font-size: 17px; }
+.rubriques span { display: block; margin-top: 4px; color: var(--encre-douce); font-size: 15.5px; max-width: 66ch; }
+
+footer {
+  border-top: 1px solid var(--trait);
+  padding: 28px 24px 60px;
+  color: var(--encre-douce);
+  font-size: 15px;
+}
+footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
+
+@media (max-width: 620px) {
+  .fiche { grid-template-columns: 1fr; }
+  .onglet { display: flex; align-items: baseline; gap: 8px; padding: 12px 18px; text-align: left; }
+  .onglet .rang { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corps h2 mark { transition: none; }
+}
+
+.texte { max-width: 940px; margin: 0 auto; padding: 0 24px 60px; }
+.texte h2 { margin: 34px 0 8px; font-size: 22px; letter-spacing: -0.014em; }
+.texte h3 { margin: 26px 0 6px; font-size: 18px; }
+.texte p { max-width: 68ch; }
+.texte ul { max-width: 68ch; }
+.texte a { color: var(--lien); }
+
+.feuillet {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  padding: 8px 28px 28px;
+  margin-top: 26px;
+}
+
+.encadre {
+  border-left: 4px solid var(--encre);
+  background: var(--carte);
+  padding: 14px 18px;
+  margin: 22px 0;
+  border-radius: 0 3px 3px 0;
+}
+
+table { border-collapse: collapse; width: 100%; margin: 18px 0 6px; font-size: 15.5px; }
+th, td { border: 1px solid var(--trait); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { background: var(--carte); font-weight: 600; }
+td.chapitre { white-space: nowrap; font-weight: 600; }
+
+.retour { display: inline-block; margin: 22px 0 0; color: var(--lien); font-weight: 600; text-decoration: none; }
+.retour:hover { text-decoration: underline; }
+
+.rien { background: var(--carte); border: 1px solid var(--trait); border-radius: 4px; padding: 22px 24px; margin-top: 24px; }
+
+@media print {
+  .bandeau, .retour, footer { display: none; }
+  body { background: #fff; font-size: 11.5pt; }
+  .feuillet { border: none; padding: 0; margin: 0 0 24pt; page-break-after: always; }
+  .texte { padding: 0; }
+}
+</style>
+</head>
+<body>
+<header class="bandeau">
+  <div class="dedans">
+    <h1>Les deux feuillets à imprimer</h1>
+    <p>Le feuillet de l'équipe et la page du service informatique, repris de l'annexe et de la Conclusion du livre.</p>
+    <span class="adresse">ccletempsduncafe.github.io</span>
+    <p class="maj">Mise à jour du 14/08/2026.</p>
+  </div>
+</header>
+
+<main class="texte">
+<a class="retour" href="index.html">← Retour aux prompts du livre</a>
+<p>Les deux pages que le livre vous invite à imprimer. Elles sont reproduites ici mot pour mot, prêtes à photocopier : la commande d'impression de votre navigateur les sort une par feuille.</p>
+
+<section class="feuillet">
+<h2>Le feuillet à donner à votre équipe</h2>
+<p><strong>Claude Code dans notre équipe : la page à lire avant de commencer</strong></p>
+<p>Cet outil s&#x27;utilise depuis votre poste. Les fichiers que vous lui donnez sont transmis aux serveurs d&#x27;Anthropic pour y être traités, comme lorsque vous déposez une pièce jointe sur un service en ligne. C&#x27;est la seule raison d&#x27;être des cinq règles qui suivent. Il lit les fichiers du dossier depuis lequel vous le lancez, produit des documents et ne remplace aucun des outils que vous utilisez déjà. Cinq règles suffisent, elles sont détaillées au Chapitre 22 du livre.</p>
+<p>Première règle : aucun mot de passe, aucune clé d&#x27;accès, aucun identifiant ne se tape dans une conversation. Si vous devez configurer un accès, il se configure dans un fichier de configuration, jamais dans l&#x27;échange.</p>
+<p>Deuxième règle : avant de transmettre des données personnelles, vérifiez nos obligations. Cela vaut pour les clients, mais aussi pour les collègues nommés dans un dossier d&#x27;intégration, pour les candidats d&#x27;un tri de candidatures et pour les tiers. Dans le doute, remplacez les noms par « Client A », « Client B » avant de transmettre le fichier : le résultat est le même.</p>
+<p>Troisième règle, celle qui tranche en dix secondes : est-ce que j&#x27;enverrais ce document par email à un prestataire de confiance ? Si oui, vous pouvez le donner à Claude Code. Si non, ne le faites pas.</p>
+<p>Quatrième règle : ne lancez pas un agent autonome sur des fichiers que vous ne pouvez pas vous permettre de perdre. Copiez votre dossier de projet avant, cela prend cinq secondes.</p>
+<p>Cinquième règle : tout document destiné à l&#x27;extérieur est relu et validé par vous avant envoi. L&#x27;outil produit un premier jet, vous portez la responsabilité.</p>
+<p>Trois interdits s&#x27;ajoutent dès qu&#x27;un agent travaille seul : il n&#x27;envoie jamais de communication à l&#x27;extérieur sans votre validation, il ne modifie jamais de données dans un système de production, il ne supprime jamais un fichier source. Écrivez ces règles dans votre fichier CLAUDE.md (Chapitre 19) et répétez-les dans chaque objectif d&#x27;agent.</p>
+<p>Enfin, verrouillez votre session quand vous quittez votre poste, même cinq minutes. Une session ouverte est une session utilisable par quelqu&#x27;un d&#x27;autre.</p>
+<p>En cas de doute sur un cas précis, la question se pose avant, pas après.</p>
+</section>
+
+<section class="feuillet">
+<h2>La page à présenter à votre responsable informatique</h2>
+<p>Claude Code s&#x27;exécute localement sur les postes des utilisateurs. Il n&#x27;y a pas d&#x27;installation côté infrastructure de l&#x27;organisation. Les données transmises passent par une connexion HTTPS chiffrée vers les serveurs Anthropic, comme n&#x27;importe quel service cloud en ligne.</p>
+<p>Anthropic propose un accord de traitement de données (DPA) compatible RGPD pour les organisations soumises à cette réglementation. Les formules Team et Enterprise, destinées aux organisations, incluent des garanties supplémentaires sur la confidentialité.</p>
+<p>L&#x27;usage est individuel et traçable : chaque utilisateur travaille avec son propre compte, un abonnement Claude Pro ou Claude Max dans la plupart des cas, ou une clé API à la consommation si votre organisation retient cette formule. Chacun a son propre historique d&#x27;utilisation, et il n&#x27;y a pas de mélange entre utilisateurs. Ce que l&#x27;outil retient de vous reste sur le poste : le fichier de contexte que l&#x27;utilisateur écrit lui-même et les notes de la mémoire automatique sont des fichiers locaux, lisibles et effaçables par lui (Chapitre 19).</p>
+<p>Les cinq règles de sécurité du Chapitre 22 s&#x27;appliquent et sont simples à communiquer à l&#x27;équipe.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="dedans">
+    <p>Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p>
+  </div>
+</footer>
+</body>
+</html>
