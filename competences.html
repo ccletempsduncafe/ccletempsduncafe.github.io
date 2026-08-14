@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ranger une instruction en compétence réutilisable — Claude Code le temps d'un café</title>
+<meta name="description" content="La marche à suivre annoncée par le Chapitre 19 : faire écrire à Claude Code une compétence à partir de votre instruction.">
+<style>
+:root {
+  --encre: #16202b;
+  --encre-douce: #51637a;
+  --papier: #eaeef4;
+  --carte: #ffffff;
+  --trait: #ccd5e0;
+  --surligneur: #f2e34a;
+  --lien: #1c4c8c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.bandeau {
+  background: var(--encre);
+  color: var(--papier);
+  padding: 44px 24px 40px;
+}
+
+.dedans { max-width: 940px; margin: 0 auto; }
+
+.bandeau h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 5vw, 42px);
+  letter-spacing: -0.022em;
+  line-height: 1.12;
+}
+
+.bandeau p { margin: 0; max-width: 60ch; color: #b9c6d6; }
+
+.adresse {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 7px 14px;
+  border: 1px solid #3b4c60;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  color: var(--papier);
+}
+
+.bandeau .maj {
+  margin-top: 14px;
+  font-size: 15px;
+  color: #93a5ba;
+}
+
+.mode-emploi {
+  max-width: 940px;
+  margin: 34px auto 0;
+  padding: 0 24px;
+}
+
+.mode-emploi p { max-width: 68ch; margin: 0 0 14px; }
+
+.raccourcis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+.raccourcis a {
+  display: block;
+  min-width: 46px;
+  padding: 8px 10px;
+  text-align: center;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  color: var(--lien);
+  font-weight: 600;
+  text-decoration: none;
+}
+.raccourcis a:hover { border-color: var(--lien); }
+.raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+
+main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
+
+.fiche {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  align-items: start;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  margin-top: 22px;
+  overflow: hidden;
+}
+
+/* L'onglet reprend l'intercalaire d'un classeur : c'est par le numero de
+   chapitre que le lecteur cherche, puisqu'il arrive du livre imprime. */
+.onglet {
+  background: var(--encre);
+  color: var(--papier);
+  padding: 16px 16px 18px;
+  text-align: center;
+  border-bottom-right-radius: 4px;
+}
+
+.onglet .mot { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.onglet .rang { display: block; font-size: 40px; font-weight: 700; line-height: 1.1; }
+
+.corps { padding: 20px 24px 24px; min-width: 0; }
+
+.corps h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  letter-spacing: -0.012em;
+}
+
+/* Le surlignage marque ce qui vient d'etre copie, comme on surligne une page. */
+.corps h2 mark {
+  background: transparent;
+  color: inherit;
+  padding: 1px 3px;
+  transition: background 160ms ease-in;
+}
+.fiche.copiee .corps h2 mark { background: var(--surligneur); }
+
+.sous-titre { margin: 0 0 16px; color: var(--encre-douce); font-size: 15px; }
+
+.copier {
+  font: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--carte);
+  background: var(--lien);
+  border: 1px solid var(--lien);
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.copier:hover { background: #163d70; }
+.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.fiche.copiee .copier { background: var(--encre); border-color: var(--encre); }
+
+pre {
+  margin: 16px 0 0;
+  padding: 16px 18px;
+  background: #f6f8fb;
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Le cas bonus n'est pas dans le livre : il se signale donc autrement qu'une
+   fiche de prompt, sans quoi le lecteur le prend pour un chapitre oublie. */
+.bonus {
+  display: block;
+  margin-top: 34px;
+  padding: 22px 24px;
+  background: var(--encre);
+  color: var(--papier);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.bonus .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.bonus h2 { margin: 6px 0 8px; font-size: 21px; letter-spacing: -0.014em; }
+.bonus p { margin: 0; max-width: 62ch; color: #b9c6d6; }
+.bonus .fleche { display: inline-block; margin-top: 12px; color: var(--papier); font-weight: 600; }
+.bonus:hover .fleche { text-decoration: underline; }
+.bonus:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+
+/* Les autres rubriques que le livre promet a cette page. Elles ne sont pas des
+   prompts : elles se presentent donc en liste, pas en fiches a onglet. */
+.titre-rubriques { margin: 44px 0 0; font-size: 21px; letter-spacing: -0.014em; }
+
+.rubriques { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.rubriques a {
+  display: block;
+  padding: 16px 18px;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--encre);
+}
+.rubriques a:hover { border-color: var(--lien); }
+.rubriques a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.rubriques strong { display: block; color: var(--lien); font-size: 17px; }
+.rubriques span { display: block; margin-top: 4px; color: var(--encre-douce); font-size: 15.5px; max-width: 66ch; }
+
+footer {
+  border-top: 1px solid var(--trait);
+  padding: 28px 24px 60px;
+  color: var(--encre-douce);
+  font-size: 15px;
+}
+footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
+
+@media (max-width: 620px) {
+  .fiche { grid-template-columns: 1fr; }
+  .onglet { display: flex; align-items: baseline; gap: 8px; padding: 12px 18px; text-align: left; }
+  .onglet .rang { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corps h2 mark { transition: none; }
+}
+
+.texte { max-width: 940px; margin: 0 auto; padding: 0 24px 60px; }
+.texte h2 { margin: 34px 0 8px; font-size: 22px; letter-spacing: -0.014em; }
+.texte h3 { margin: 26px 0 6px; font-size: 18px; }
+.texte p { max-width: 68ch; }
+.texte ul { max-width: 68ch; }
+.texte a { color: var(--lien); }
+
+.feuillet {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  padding: 8px 28px 28px;
+  margin-top: 26px;
+}
+
+.encadre {
+  border-left: 4px solid var(--encre);
+  background: var(--carte);
+  padding: 14px 18px;
+  margin: 22px 0;
+  border-radius: 0 3px 3px 0;
+}
+
+table { border-collapse: collapse; width: 100%; margin: 18px 0 6px; font-size: 15.5px; }
+th, td { border: 1px solid var(--trait); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { background: var(--carte); font-weight: 600; }
+td.chapitre { white-space: nowrap; font-weight: 600; }
+
+.retour { display: inline-block; margin: 22px 0 0; color: var(--lien); font-weight: 600; text-decoration: none; }
+.retour:hover { text-decoration: underline; }
+
+.rien { background: var(--carte); border: 1px solid var(--trait); border-radius: 4px; padding: 22px 24px; margin-top: 24px; }
+
+@media print {
+  .bandeau, .retour, footer { display: none; }
+  body { background: #fff; font-size: 11.5pt; }
+  .feuillet { border: none; padding: 0; margin: 0 0 24pt; page-break-after: always; }
+  .texte { padding: 0; }
+}
+
+.bloc-prompt { margin: 20px 0 6px; }
+.copier {
+  font: inherit; font-weight: 600; font-size: 16px; color: var(--carte);
+  background: var(--lien); border: 1px solid var(--lien); border-radius: 3px;
+  padding: 10px 20px; cursor: pointer;
+}
+.copier:hover { background: #163d70; }
+.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.etapes { max-width: 68ch; }
+.etapes li { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<header class="bandeau">
+  <div class="dedans">
+    <h1>Ranger une instruction en compétence réutilisable</h1>
+    <p>La marche à suivre annoncée à la fin du Chapitre 19, pour l'instruction que vous relancez tous les mois.</p>
+    <span class="adresse">ccletempsduncafe.github.io</span>
+    <p class="maj">Mise à jour du 14/08/2026.</p>
+  </div>
+</header>
+
+<main class="texte">
+<a class="retour" href="index.html">← Retour aux prompts du livre</a>
+<p>Le Chapitre 19 vous a laissé avec un fichier <code>instruction.md</code> qui
+donne le bon résultat. Il vous reste pourtant un geste à faire chaque mois :
+ouvrir le dossier, retrouver le fichier, et demander à Claude Code de le lire.
+Une compétence supprime ce geste. Vous formulez votre demande comme vous la
+formuleriez à un collègue, et la procédure s'applique d'elle-même.</p>
+
+<p>Comptez vingt minutes le premier jour, puis cinq minutes le lendemain pour
+le contrôle. Vous n'avez rien à rédiger : c'est Claude Code qui écrit le
+fichier, à partir de celui que vous avez déjà.</p>
+
+<h2>Ce qu'est une compétence</h2>
+
+<p>Une compétence est un dossier qui porte un fichier nommé <code>SKILL.md</code>.
+Ce fichier commence par un en-tête de deux lignes : un nom, et une description
+qui dit ce que la compétence fait et quand l'utiliser. Sous cet en-tête vient
+le corps du fichier, c'est-à-dire votre procédure, celle que
+<code>instruction.md</code> contient déjà. Claude Code découvre les compétences
+déposées dans ses dossiers et les utilise automatiquement lorsqu'elles
+correspondent à votre demande.</p>
+
+<p>La lecture se fait en deux temps, et c'est ce qui rend la chose économique.
+Au démarrage d'une session, Claude Code ne lit que l'en-tête, le nom et la
+description, ce qu'Anthropic chiffre à une centaine de <em>tokens</em> par
+compétence. Le corps du fichier, lui, n'est lu que le jour où votre demande
+correspond à la description. Deux conséquences pratiques : vous pouvez en
+garder plusieurs sans alourdir vos sessions, et la description est la seule
+partie du fichier qui décide du déclenchement.</p>
+
+<h2>Ce qui la distingue du fichier de contexte</h2>
+
+<p>Le fichier <code>CLAUDE.md</code> du Chapitre 20 est lu au début de chaque
+session, quel que soit le travail du jour. Une compétence n'est consultée que
+le jour où le cas se présente. Cette différence de moment commande ce que vous
+mettez dans l'un et dans l'autre.</p>
+
+<p>Le partage se fait par une question simple. Si l'information doit rester
+vraie pour tout ce que vous faites, votre métier, vos clients, vos conventions
+de rédaction, elle va dans <code>CLAUDE.md</code>. Si elle ne sert que le jour
+du rapport mensuel, elle va dans une compétence. Les deux coexistent sans se
+gêner : le fichier de contexte dit qui vous êtes, la compétence dit comment se
+fait une tâche précise.</p>
+
+<h2>La demande à formuler</h2>
+
+<p>Ouvrez Claude Code dans le dossier où se trouve votre
+<code>instruction.md</code>, puis collez la demande ci-dessous. Le passage
+entre crochets est une case à remplir : remplacez-le entièrement, crochets
+compris.</p>
+
+<div class="bloc-prompt">
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Voici le fichier instruction.md que j&#x27;ai mis au point et qui donne
+maintenant le bon résultat. Transforme-le en compétence : crée le dossier
+et le fichier SKILL.md qui va avec, en reprenant ma procédure telle quelle,
+sans la réécrire ni la résumer.
+
+L&#x27;en-tête du fichier doit porter un nom en minuscules et tirets, et une
+description qui dise à la fois ce que fait la compétence et dans quels cas
+l&#x27;utiliser. Rédige cette description avec les mots que j&#x27;emploie moi-même
+pour demander ce travail, à savoir : [la phrase avec laquelle vous demandez
+cette tâche, telle que vous la diriez à un collègue].
+
+Montre-moi le contenu du fichier avant de l&#x27;écrire, et dis-moi dans quel
+dossier tu le déposes.</pre>
+</div>
+
+<p>Claude Code vous montre le fichier avant de l'écrire. Deux points seulement
+vous concernent à cet instant. Le premier est le corps du fichier : ce doit
+être votre procédure, avec vos phrases. Si elle a été réécrite ou raccourcie,
+demandez qu'elle soit remise telle quelle, car c'est cette rédaction-là que
+vous avez éprouvée au Chapitre 19.</p>
+
+<p>Le second est la description. Relisez-la à voix haute et demandez-vous si
+elle emploie vos mots. Une description écrite dans le vocabulaire de la
+documentation ne se déclenchera pas sur la phrase que vous tapez le lundi
+matin. Le nom, lui, obéit à trois contraintes qu'Anthropic impose : minuscules,
+chiffres et tirets uniquement, soixante-quatre caractères au plus, et ni
+« claude » ni « anthropic » dedans. Claude Code les respecte, mais vous saurez
+pourquoi si un nom vous est refusé.</p>
+
+<h2>Vérifier le lendemain qu'elle se déclenche seule</h2>
+
+<p>Le jour où vous fabriquez la compétence, elle fonctionnera : la conversation
+en cours contient déjà tout ce qu'il faut, et vous ne testez rien. Le contrôle
+qui compte se fait à la session suivante, dans quatre gestes.</p>
+
+<ol class="etapes">
+<li>Ouvrez Claude Code dans le dossier où vous travaillez d'habitude.</li>
+<li>Formulez votre demande avec vos mots, sans nommer le fichier
+<code>instruction.md</code> ni la compétence.</li>
+<li>Regardez la trace à l'écran : avant de produire quoi que ce soit, Claude
+Code doit ouvrir le fichier <code>SKILL.md</code>. Cette ligne est votre
+preuve.</li>
+<li>Comparez le résultat au livrable du mois précédent, comme vous l'aviez fait
+au Chapitre 19.</li>
+</ol>
+
+<p>Si rien ne s'ouvre, ce n'est pas votre procédure qui est en cause, c'est la
+description. Rouvrez <code>SKILL.md</code>, remplacez la description par la
+phrase exacte que vous venez de taper, et refaites l'essai à la session
+suivante. En attendant, la compétence n'est pas perdue : nommez-la dans votre
+demande et elle s'applique. Elle ne se déclenche simplement pas encore
+d'elle-même.</p>
+
+<div class="encadre">
+<p>⚠️ <strong>N'installez que ce que vous avez écrit</strong></p>
+<p>Une compétence est une instruction que Claude Code suit. Celle qui vient
+d'un inconnu peut lui demander tout autre chose que ce que son titre annonce.
+Anthropic recommande de n'utiliser que les compétences que vous avez créées
+vous-même ou qui viennent d'Anthropic. Traitez leur installation comme celle
+d'un logiciel.</p>
+</div>
+
+<div class="encadre">
+<p>📝 <strong>Une compétence reste là où elle est écrite</strong></p>
+<p>Celle que vous fabriquez dans Claude Code vit dans vos fichiers. Elle ne se
+retrouve ni sur claude.ai ni dans l'interface de programmation : ces trois
+surfaces ne se synchronisent pas entre elles.</p>
+</div>
+
+<div class="encadre">
+<p>📅 Information vérifiée en août 2026 auprès de la documentation Anthropic.
+L'état du jour figure dans la rubrique
+<a href="donnees.html">« Les informations qui vieillissent »</a>.</p>
+</div>
+
+</main>
+
+<footer>
+  <div class="dedans">
+    <p>Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce : écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p>
+  </div>
+</footer>
+<script>
+document.querySelectorAll('.copier').forEach(function (bouton) {
+  bouton.addEventListener('click', function () {
+    var bloc = bouton.parentNode.querySelector('pre');
+    var fait = function () {
+      bouton.textContent = 'Copié, collez-le dans Claude Code';
+      window.setTimeout(function () { bouton.textContent = 'Copier le prompt'; }, 4000);
+    };
+    function selectionner() {
+      var plage = document.createRange();
+      plage.selectNodeContents(bloc);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(plage);
+      bouton.textContent = 'Texte sélectionné, faites Ctrl+C ou Cmd+C';
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(bloc.textContent).then(fait, selectionner);
+    } else {
+      selectionner();
+    }
+  });
+});
+</script>
+</body>
+</html>
