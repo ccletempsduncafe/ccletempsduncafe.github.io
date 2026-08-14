@@ -330,10 +330,12 @@ fait une tâche précise.</p>
 
 <h2>La demande à formuler</h2>
 
-<p>Ouvrez Claude Code dans le dossier où se trouve votre
-<code>instruction.md</code>, puis collez la demande ci-dessous. Le passage
-entre crochets est une case à remplir : remplacez-le entièrement, crochets
-compris.</p>
+<p>Ouvrez Claude Code sur le dossier où vous ferez ce travail chaque mois, celui
+qui contient vos sources. Si votre <code>instruction.md</code> est resté dans le
+dossier d'essai du Chapitre 19, copiez-le ici d'abord : c'est ce dossier de
+travail, et lui seul, que vous ouvrirez désormais. Puis collez la demande
+ci-dessous. Le passage entre crochets est une case à remplir : remplacez-le
+entièrement, crochets compris.</p>
 
 <div class="bloc-prompt">
 <button class="copier" type="button">Copier le prompt</button>
@@ -348,14 +350,27 @@ l&#x27;utiliser. Rédige cette description avec les mots que j&#x27;emploie moi-
 pour demander ce travail, à savoir : [la phrase avec laquelle vous demandez
 cette tâche, telle que vous la diriez à un collègue].
 
-Montre-moi le contenu du fichier avant de l&#x27;écrire, et dis-moi dans quel
-dossier tu le déposes.</pre>
+Dépose la compétence dans le sous-dossier .claude/skills de ce dossier-ci,
+pour qu&#x27;elle serve quand je travaille ici. Montre-moi le contenu du fichier
+avant de l&#x27;écrire, et dis-moi ensuite le chemin exact où tu l&#x27;as écrit.</pre>
 </div>
 
-<p>Claude Code vous montre le fichier avant de l'écrire, puis vous dit dans quel
-dossier il le dépose. Notez ce dossier : c'est de là que la compétence sera
-disponible, et c'est donc là que vous ferez ce travail chaque mois. Deux points
-seulement vous concernent à cet instant. Le premier est le corps du fichier : ce doit
+<p>Un mot sur ce sous-dossier <code>.claude/skills</code>, puisque le prompt le
+nomme. Anthropic documente deux endroits où une compétence peut vivre dans
+Claude Code : un dossier personnel, <code>~/.claude/skills</code>, rangé dans
+votre compte utilisateur et loin de vos documents, et un dossier de projet,
+<code>.claude/skills</code>, qui vit à l'intérieur du dossier de travail
+lui-même. La documentation nomme le premier « personnel » et le second « basé
+sur le projet », mais elle ne dit pas depuis quels dossiers de travail chacun se
+déclenche. Le prompt demande donc le dossier de projet, dont l'emplacement ne
+laisse aucun doute : la compétence est rangée dans le dossier même où vous
+travaillez. C'est un dossier technique, que vous n'aurez jamais à ouvrir
+vous-même.</p>
+
+<p>Claude Code vous montre le fichier avant de l'écrire, puis vous donne le
+chemin où il l'a écrit. Notez ce chemin quelque part : il ne servira que le jour
+où quelque chose ne se déclenche pas. Deux points seulement vous concernent à
+cet instant. Le premier est le corps du fichier : ce doit
 être votre procédure, avec vos phrases. Si elle a été réécrite ou raccourcie,
 demandez qu'elle soit remise telle quelle, car c'est cette rédaction-là que
 vous avez éprouvée au Chapitre 19.</p>
@@ -375,8 +390,10 @@ en cours contient déjà tout ce qu'il faut, et vous ne testez rien. Le contrôl
 qui compte se fait à la session suivante, dans quatre gestes.</p>
 
 <ol class="etapes">
-<li>Ouvrez Claude Code dans le dossier que Claude Code vous a indiqué en
-déposant le fichier.</li>
+<li>Ouvrez Claude Code sur votre dossier de travail, celui qui contient vos
+sources du mois et où vous avez fabriqué la compétence. Ce n'est pas le
+sous-dossier technique où le fichier a été rangé : celui-là, vous ne l'ouvrez
+jamais.</li>
 <li>Formulez votre demande avec vos mots, sans nommer le fichier
 <code>instruction.md</code> ni la compétence.</li>
 <li>Avant de le laisser produire quoi que ce soit, demandez-lui : « quelles
@@ -387,13 +404,15 @@ précédent, comme vous l'aviez fait au Chapitre 19. C'est la seule preuve qui
 compte vraiment.</li>
 </ol>
 
-<p>Si la réponse ne cite pas votre compétence, vérifiez d'abord le dossier :
-vous devez être dans celui que Claude Code vous a nommé, et non dans celui où
-vous aviez mis au point votre instruction, qui est souvent un autre. Une
-compétence déposée ailleurs ne se déclenche pas ici.</p>
+<p>Si la réponse ne cite pas votre compétence, vérifiez d'abord le fichier avant
+d'accuser la description. Demandez-le en une phrase : « où as-tu déposé la
+compétence, et est-elle disponible depuis ce dossier ? » Un fichier écrit
+ailleurs que dans le <code>.claude/skills</code> de ce dossier, ou un dossier
+renommé depuis, suffit à expliquer le silence. Faites-la redéposer ici et
+reprenez l'essai.</p>
 
-<p>Si le dossier est le bon, c'est alors la description qui est en cause, et non
-votre procédure. Rouvrez <code>SKILL.md</code>, remplacez la description par la
+<p>Si le fichier est bien là où il doit être, c'est alors la description qui est
+en cause, et non votre procédure. Rouvrez <code>SKILL.md</code>, remplacez la description par la
 phrase exacte que vous venez de taper, et refaites l'essai à la session
 suivante. En attendant, vous ne perdez rien : votre fichier
 <code>instruction.md</code> n'a pas bougé, et vous le désignez comme au
