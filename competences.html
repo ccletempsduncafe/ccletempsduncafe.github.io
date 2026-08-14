@@ -311,8 +311,8 @@ Au démarrage d'une session, Claude Code ne lit que l'en-tête, le nom et la
 description, ce qu'Anthropic chiffre à une centaine de <em>tokens</em> par
 compétence. Le corps du fichier, lui, n'est lu que le jour où votre demande
 correspond à la description. Deux conséquences pratiques : vous pouvez en
-garder plusieurs sans alourdir vos sessions, et la description est la seule
-partie du fichier qui décide du déclenchement.</p>
+garder plusieurs sans alourdir vos sessions, et c'est la description qui décide
+du déclenchement automatique.</p>
 
 <h2>Ce qui la distingue du fichier de contexte</h2>
 
@@ -352,8 +352,10 @@ Montre-moi le contenu du fichier avant de l&#x27;écrire, et dis-moi dans quel
 dossier tu le déposes.</pre>
 </div>
 
-<p>Claude Code vous montre le fichier avant de l'écrire. Deux points seulement
-vous concernent à cet instant. Le premier est le corps du fichier : ce doit
+<p>Claude Code vous montre le fichier avant de l'écrire, puis vous dit dans quel
+dossier il le dépose. Notez ce dossier : c'est de là que la compétence sera
+disponible, et c'est donc là que vous ferez ce travail chaque mois. Deux points
+seulement vous concernent à cet instant. Le premier est le corps du fichier : ce doit
 être votre procédure, avec vos phrases. Si elle a été réécrite ou raccourcie,
 demandez qu'elle soit remise telle quelle, car c'est cette rédaction-là que
 vous avez éprouvée au Chapitre 19.</p>
@@ -373,22 +375,29 @@ en cours contient déjà tout ce qu'il faut, et vous ne testez rien. Le contrôl
 qui compte se fait à la session suivante, dans quatre gestes.</p>
 
 <ol class="etapes">
-<li>Ouvrez Claude Code dans le dossier où vous travaillez d'habitude.</li>
+<li>Ouvrez Claude Code dans le dossier que Claude Code vous a indiqué en
+déposant le fichier.</li>
 <li>Formulez votre demande avec vos mots, sans nommer le fichier
 <code>instruction.md</code> ni la compétence.</li>
-<li>Regardez la trace à l'écran : avant de produire quoi que ce soit, Claude
-Code doit ouvrir le fichier <code>SKILL.md</code>. Cette ligne est votre
-preuve.</li>
-<li>Comparez le résultat au livrable du mois précédent, comme vous l'aviez fait
-au Chapitre 19.</li>
+<li>Avant de le laisser produire quoi que ce soit, demandez-lui : « quelles
+instructions appliques-tu pour ce travail ? » S'il vous répond en citant votre
+compétence, elle s'est déclenchée toute seule.</li>
+<li>Laissez-le travailler, puis comparez le résultat au livrable du mois
+précédent, comme vous l'aviez fait au Chapitre 19. C'est la seule preuve qui
+compte vraiment.</li>
 </ol>
 
-<p>Si rien ne s'ouvre, ce n'est pas votre procédure qui est en cause, c'est la
-description. Rouvrez <code>SKILL.md</code>, remplacez la description par la
+<p>Si la réponse ne cite pas votre compétence, vérifiez d'abord le dossier :
+vous devez être dans celui que Claude Code vous a nommé, et non dans celui où
+vous aviez mis au point votre instruction, qui est souvent un autre. Une
+compétence déposée ailleurs ne se déclenche pas ici.</p>
+
+<p>Si le dossier est le bon, c'est alors la description qui est en cause, et non
+votre procédure. Rouvrez <code>SKILL.md</code>, remplacez la description par la
 phrase exacte que vous venez de taper, et refaites l'essai à la session
-suivante. En attendant, la compétence n'est pas perdue : nommez-la dans votre
-demande et elle s'applique. Elle ne se déclenche simplement pas encore
-d'elle-même.</p>
+suivante. En attendant, vous ne perdez rien : votre fichier
+<code>instruction.md</code> n'a pas bougé, et vous le désignez comme au
+Chapitre 19.</p>
 
 <div class="encadre">
 <p>⚠️ <strong>N'installez que ce que vous avez écrit</strong></p>
@@ -401,9 +410,10 @@ d'un logiciel.</p>
 
 <div class="encadre">
 <p>📝 <strong>Une compétence reste là où elle est écrite</strong></p>
-<p>Celle que vous fabriquez dans Claude Code vit dans vos fichiers. Elle ne se
-retrouve ni sur claude.ai ni dans l'interface de programmation : ces trois
-surfaces ne se synchronisent pas entre elles.</p>
+<p>Celle que vous fabriquez dans Claude Code vit dans vos fichiers. Anthropic
+écrit que les compétences personnelles ne se synchronisent pas d'une surface à
+l'autre : n'attendez donc pas de retrouver la vôtre sur claude.ai ou dans
+l'interface de programmation.</p>
 </div>
 
 <div class="encadre">
