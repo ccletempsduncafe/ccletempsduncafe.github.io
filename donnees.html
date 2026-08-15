@@ -92,6 +92,7 @@ body {
 .raccourcis a:hover { border-color: var(--lien); }
 .raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
 .raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+.raccourcis .ch { display: block; font-size: 12px; font-weight: 400; color: var(--encre-douce); }
 
 main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
 
@@ -106,8 +107,10 @@ main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
   overflow: hidden;
 }
 
-/* L'onglet reprend l'intercalaire d'un classeur : c'est par le numero de
-   chapitre que le lecteur cherche, puisqu'il arrive du livre imprime. */
+/* L'onglet reprend l'intercalaire d'un classeur. Il porte les deux reperes du
+   lecteur : le numero du prompt, qui est le meme que dans l'annexe imprimee, et
+   le chapitre d'ou il vient, puisque c'est souvent par la que le lecteur
+   arrive. */
 .onglet {
   background: var(--encre);
   color: var(--papier);

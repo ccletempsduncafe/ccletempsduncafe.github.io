@@ -92,6 +92,7 @@ body {
 .raccourcis a:hover { border-color: var(--lien); }
 .raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
 .raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+.raccourcis .ch { display: block; font-size: 12px; font-weight: 400; color: var(--encre-douce); }
 
 main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
 
@@ -106,8 +107,10 @@ main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
   overflow: hidden;
 }
 
-/* L'onglet reprend l'intercalaire d'un classeur : c'est par le numero de
-   chapitre que le lecteur cherche, puisqu'il arrive du livre imprime. */
+/* L'onglet reprend l'intercalaire d'un classeur. Il porte les deux reperes du
+   lecteur : le numero du prompt, qui est le meme que dans l'annexe imprimee, et
+   le chapitre d'ou il vient, puisque c'est souvent par la que le lecteur
+   arrive. */
 .onglet {
   background: var(--encre);
   color: var(--papier);
@@ -295,6 +298,7 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 <h2>La page à présenter à votre responsable informatique</h2>
 <p>Claude Code s&#x27;exécute localement sur les postes des utilisateurs. Il n&#x27;y a pas d&#x27;installation côté infrastructure de l&#x27;organisation. Les données transmises passent par une connexion HTTPS chiffrée vers les serveurs Anthropic, comme n&#x27;importe quel service cloud en ligne.</p>
 <p>Anthropic propose un accord de traitement de données (DPA) compatible RGPD pour les organisations soumises à cette réglementation. Les formules Team et Enterprise, destinées aux organisations, incluent des garanties supplémentaires sur la confidentialité.</p>
+<p>Si vos collaborateurs travaillent avec un abonnement individuel, Free, Pro ou Max, l&#x27;exclusion de l&#x27;entraînement des modèles n&#x27;est pas acquise d&#x27;avance : leurs échanges peuvent y servir, sauf s&#x27;ils s&#x27;y opposent dans les réglages de confidentialité de leur compte. Ce réglage se vérifie une fois, en cinq minutes, avant la première session de travail sur des données professionnelles (Chapitre 23, section 23.1, « Ce que Claude Code fait de vos données »).</p>
 <p>L&#x27;usage est individuel et traçable : chaque utilisateur travaille avec son propre compte, un abonnement Claude Pro ou Claude Max dans la plupart des cas, ou une clé API à la consommation si votre organisation retient cette formule. Chacun a son propre historique d&#x27;utilisation, et il n&#x27;y a pas de mélange entre utilisateurs. Ce que l&#x27;outil retient de vous reste sur le poste : le fichier de contexte que l&#x27;utilisateur écrit lui-même et les notes de la mémoire automatique sont des fichiers locaux, lisibles et effaçables par lui (Chapitre 20).</p>
 <p>Les cinq règles de sécurité du Chapitre 23 s&#x27;appliquent et sont simples à communiquer à l&#x27;équipe.</p>
 </section>

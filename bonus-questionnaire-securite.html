@@ -121,7 +121,7 @@ plus tard, il a deux fichiers. Le questionnaire est rempli aux deux
 tiers, chaque réponse portant la phrase exacte dont elle sort. Et une
 note d’une page range le tiers restant par personne à solliciter : sept
 questions pour le responsable de la sécurité, deux pour la direction
-technique, trois pour le juridique, une pour les achats.</p>
+technique, trois pour le juridique, deux pour les achats.</p>
 <p>Il n’a pas répondu au questionnaire. Il a transformé deux jours de
 réunions en quatre emails précis.</p>
 <div class="encadre"><p>🔄 <strong>Copilot et Claude Code : qui fait quoi ici ?</strong></p>
@@ -153,10 +153,10 @@ de certification engagée, audit planifié au quatrième trimestre » et qui
 écrit « certifié ISO 27001 » vous met en défaut contractuel. Une qui lit
 « objectifs de reprise visés » et qui écrit « nous nous engageons sur
 huit heures » aussi.</p>
-<p>Le prompt de ce cas est construit autour de ce danger. Il n’ordonne
-pas de remplir le questionnaire, il ordonne de classer chaque question
-dans l’un de quatre états, et il exige qu’une case sans document reste
-vide.</p>
+<p>Le <em>prompt</em> de ce cas est construit autour de ce danger. Il
+n’ordonne pas de remplir le questionnaire, il ordonne de classer chaque
+question dans l’un de quatre états, et il exige qu’une case sans
+document reste vide.</p>
 <p>Il y a un second gain, moins attendu. Confronter votre politique
 interne à vos réponses de l’an dernier fait apparaître vos propres
 contradictions, celles que personne ne voit parce que les deux documents
@@ -187,9 +187,9 @@ questionnaire du client peut être un tableur, un document Word ou un PDF
 : gardez-le tel quel.</p>
 <p>Un conseil de rangement qui change le résultat : renommez vos
 dossiers passés en faisant figurer l’année dans le nom du fichier, par
-exemple « reponses-2025-groupe-tessier ». Le prompt demande à Claude
-Code de tenir compte de l’ancienneté d’une réponse, et il ne peut le
-faire que si la date est visible.</p>
+exemple <code>reponses-2025-groupe-tessier</code>. Le prompt demande à
+Claude Code de tenir compte de l’ancienneté d’une réponse, et il ne peut
+le faire que si la date est visible.</p>
 <h2 id="b.4-le-prompt-les-mots-exacts-à-taper">B.4 Le prompt : les mots
 exacts à taper</h2>
 <div class="bloc-prompt"><button class="copier" type="button">Copier le prompt</button><pre><code>Tu es responsable des réponses aux questionnaires sécurité chez un
@@ -252,9 +252,10 @@ stockage. Répondre « non » serait plausible, et faux si un prestataire
 vous supervise depuis un pays tiers.</p>
 <h2 id="b.5-pas-à-pas">B.5 Pas à pas</h2>
 <ol type="1">
-<li><p>Créez un dossier, par exemple « questionnaire-Delcourt-2026 », et
-placez-y le questionnaire reçu, votre politique de sécurité et vos
-dossiers des années précédentes.</p></li>
+<li><p>Créez un dossier, par exemple
+<code>questionnaire-Delcourt-2026</code>, et placez-y le questionnaire
+reçu, votre politique de sécurité et vos dossiers des années
+précédentes.</p></li>
 <li><p>Ouvrez Claude Code sur ce dossier. Depuis l’application de
 bureau, sélectionnez simplement ce dossier comme dossier de
 projet.</p></li>
@@ -263,15 +264,12 @@ Entrée.</p></li>
 <li><p>Lisez d’abord l’inventaire des fichiers qui s’affiche. Si un de
 vos dossiers passés manque à la liste, arrêtez-vous et vérifiez où il se
 trouve.</p></li>
-<li><p>Ouvrez le fichier « a-traiter » avant le questionnaire lui-même.
-C’est lui qui déclenche vos emails, et ces emails prennent des jours à
-revenir.</p></li>
+<li><p>Ouvrez le fichier <code>a-traiter</code> avant le questionnaire
+lui-même. C’est lui qui déclenche vos emails, et ces emails prennent des
+jours à revenir.</p></li>
 <li><p>Relisez ensuite les réponses marquées ÉTABLI. Elles sont
 sourcées, mais c’est vous qui signez.</p></li>
 </ol>
-<p>[Capture d’écran : le questionnaire rempli, colonne Niveau visible,
-avec une ligne À CONFIRMER montrant les deux versions
-contradictoires]</p>
 <h2 id="b.6-ce-que-ce-cas-a-donné-au-test">B.6 Ce que ce cas a donné au
 test</h2>
 <p>Le cas a été exécuté sur un questionnaire de 37 questions et trois

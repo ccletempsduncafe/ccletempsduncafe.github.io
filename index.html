@@ -92,6 +92,7 @@ body {
 .raccourcis a:hover { border-color: var(--lien); }
 .raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
 .raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+.raccourcis .ch { display: block; font-size: 12px; font-weight: 400; color: var(--encre-douce); }
 
 main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
 
@@ -106,8 +107,10 @@ main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
   overflow: hidden;
 }
 
-/* L'onglet reprend l'intercalaire d'un classeur : c'est par le numero de
-   chapitre que le lecteur cherche, puisqu'il arrive du livre imprime. */
+/* L'onglet reprend l'intercalaire d'un classeur. Il porte les deux reperes du
+   lecteur : le numero du prompt, qui est le meme que dans l'annexe imprimee, et
+   le chapitre d'ou il vient, puisque c'est souvent par la que le lecteur
+   arrive. */
 .onglet {
   background: var(--encre);
   color: var(--papier);
@@ -227,40 +230,43 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
 <header class="bandeau">
   <div class="dedans">
     <h1>Les prompts du livre, prêts à copier</h1>
-    <p>Claude Code le temps d'un café. Treize cas d'usage testés en conditions réelles, sans écrire une ligne de code.</p>
+    <p>Claude Code le temps d'un café. Treize cas d'usage sans écrire une ligne de code, testés en exécution réelle.</p>
     <span class="adresse">ccletempsduncafe.github.io</span>
     <p class="maj">Mise à jour du 15/08/2026. Les prompts sont repris mot pour mot du livre.</p>
   </div>
 </header>
 
 <section class="mode-emploi">
-  <p>Chaque prompt du livre est ici, dans l'ordre des chapitres. Repérez le numéro du chapitre que vous lisez, appuyez sur « Copier le prompt », puis collez-le dans Claude Code. Rien à installer, rien à créer comme compte.</p>
+  <p>Tous les prompts du livre sont ici, dans l'ordre des chapitres. Repérez le chapitre que vous lisez, appuyez sur « Copier le prompt », puis collez-le dans Claude Code. Rien à installer, rien à créer comme compte.</p>
+  <p>Chaque prompt porte un numéro, de P1 à P19, et c'est le même numéro que dans l'annexe imprimée « Les dix-neuf prompts du livre ». Les chapitres 10 et 19 en donnent deux : le second se lance après le premier, et il a sa fiche comme les autres.</p>
   <p>Les passages entre crochets sont des cases à remplir : remplacez-les entièrement, crochets compris, par vos informations. Un crochet oublié et votre assistant travaillera pour une entreprise qui s'appelle « Nom de l'entreprise ».</p>
   <ul class="raccourcis">
-    <li class="intitule">Aller au chapitre</li>
-    <li><a href="#chapitre-4">4</a></li>
-    <li><a href="#chapitre-6">6</a></li>
-    <li><a href="#chapitre-7">7</a></li>
-    <li><a href="#chapitre-8">8</a></li>
-    <li><a href="#chapitre-9">9</a></li>
-    <li><a href="#chapitre-10">10</a></li>
-    <li><a href="#chapitre-11">11</a></li>
-    <li><a href="#chapitre-12">12</a></li>
-    <li><a href="#chapitre-13">13</a></li>
-    <li><a href="#chapitre-14">14</a></li>
-    <li><a href="#chapitre-15">15</a></li>
-    <li><a href="#chapitre-16">16</a></li>
-    <li><a href="#chapitre-17">17</a></li>
-    <li><a href="#chapitre-18">18</a></li>
-    <li><a href="#chapitre-19">19</a></li>
-    <li><a href="#chapitre-20">20</a></li>
-    <li><a href="#chapitre-22">22</a></li>
+    <li class="intitule">Aller au prompt</li>
+    <li><a href="#prompt-p1">P1<span class="ch">ch. 4</span></a></li>
+    <li><a href="#prompt-p2">P2<span class="ch">ch. 6</span></a></li>
+    <li><a href="#prompt-p3">P3<span class="ch">ch. 7</span></a></li>
+    <li><a href="#prompt-p4">P4<span class="ch">ch. 8</span></a></li>
+    <li><a href="#prompt-p5">P5<span class="ch">ch. 9</span></a></li>
+    <li><a href="#prompt-p6">P6<span class="ch">ch. 10</span></a></li>
+    <li><a href="#prompt-p7">P7<span class="ch">ch. 10</span></a></li>
+    <li><a href="#prompt-p8">P8<span class="ch">ch. 11</span></a></li>
+    <li><a href="#prompt-p9">P9<span class="ch">ch. 12</span></a></li>
+    <li><a href="#prompt-p10">P10<span class="ch">ch. 13</span></a></li>
+    <li><a href="#prompt-p11">P11<span class="ch">ch. 14</span></a></li>
+    <li><a href="#prompt-p12">P12<span class="ch">ch. 15</span></a></li>
+    <li><a href="#prompt-p13">P13<span class="ch">ch. 16</span></a></li>
+    <li><a href="#prompt-p14">P14<span class="ch">ch. 17</span></a></li>
+    <li><a href="#prompt-p15">P15<span class="ch">ch. 18</span></a></li>
+    <li><a href="#prompt-p16">P16<span class="ch">ch. 19</span></a></li>
+    <li><a href="#prompt-p17">P17<span class="ch">ch. 19</span></a></li>
+    <li><a href="#prompt-p18">P18<span class="ch">ch. 20</span></a></li>
+    <li><a href="#prompt-p19">P19<span class="ch">ch. 22</span></a></li>
   </ul>
 </section>
 
 <main>
-      <article class="fiche" id="chapitre-4">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">4</span></div>
+      <article class="fiche" id="prompt-p1">
+        <div class="onglet"><span class="rang">P1</span><span class="mot">Chapitre 4</span></div>
         <div class="corps">
           <h2><mark>Les quatre principes d&#x27;un bon prompt</mark></h2>
           <p class="sous-titre">Assembler les quatre principes : un exercice complet</p>
@@ -282,15 +288,15 @@ comportant :
 - le budget détaillé par phase
 
 Contraintes :
-- Maximum 4 pages
+- Maximum 2 000 mots
 - Ton professionnel mais pas distant
 - Ne mentionne pas de tarif horaire, uniquement des forfaits par
   phase
 - Rédige en français</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-6">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">6</span></div>
+      <article class="fiche" id="prompt-p2">
+        <div class="onglet"><span class="rang">P2</span><span class="mot">Chapitre 6</span></div>
         <div class="corps">
           <h2><mark>Rapport consolidé depuis vos systèmes métier</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -323,6 +329,11 @@ satisfaction et 250 pour les points d&#x27;attention.
 Règles :
 - Utilise uniquement les données présentes dans les fichiers.
   N&#x27;invente aucun chiffre.
+- Pour chaque chiffre du rapport, indique entre parenthèses le
+  fichier dont il provient.
+- Quand tu rapproches deux libellés différents comme désignant
+  le même produit ou la même région, dis-le en une ligne avec
+  les deux libellés, au lieu de le faire en silence.
 - Si une donnée est manquante ou ambiguë, indique-le clairement
   avec [DONNÉE MANQUANTE].
 - Le rapport est en français, style professionnel mais
@@ -335,8 +346,8 @@ Règles :
   dossier de projet.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-7">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">7</span></div>
+      <article class="fiche" id="prompt-p3">
+        <div class="onglet"><span class="rang">P3</span><span class="mot">Chapitre 7</span></div>
         <div class="corps">
           <h2><mark>Fiche compte complète depuis vos sources dispersées</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -378,14 +389,18 @@ Règles :
 - Pour chaque information, indique entre parenthèses le fichier
   d&#x27;où elle provient, et la date du document quand elle est
   connue.
-- 1 000 mots maximum, soit deux pages. Va à l&#x27;essentiel : cette
+- Sépare ce qui est écrit dans les documents de ce que tu en
+  déduis. Un risque, une insatisfaction ou une opportunité que
+  personne n&#x27;a formulée est une déduction : annonce-la par
+  « hypothèse : » et donne le fait qui la fonde.
+- 1 000 mots maximum. Va à l&#x27;essentiel : cette
   fiche se relit en cinq minutes avant d&#x27;entrer en réunion.
 - Format de sortie : fiche-[nom du client]-[date].md dans ce
   dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-8">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">8</span></div>
+      <article class="fiche" id="prompt-p4">
+        <div class="onglet"><span class="rang">P4</span><span class="mot">Chapitre 8</span></div>
         <div class="corps">
           <h2><mark>Du compte-rendu Teams aux livrables opérationnels</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -408,15 +423,17 @@ Une ligne par action identifiée dans le compte-rendu.
 
 Livrable 2 — Email de relance pour les absents
 Fichier : email-absents-[date].txt
-Format : email professionnel, ton concis. Inclure : objet de la
-réunion, décisions principales, actions qui les concernent.
+Format : email professionnel, ton concis. Commence par une
+ligne « Objet : » prête à recopier dans la messagerie, puis le
+corps du message. Inclure : les décisions principales et les
+actions qui les concernent.
 Destinataires : [noms des absents si connus]
 
 Livrable 3 — Brief pour la direction
 Fichier : brief-direction-[date].txt
-Format : 500 mots maximum, soit une page. Sections : Contexte
-(2 lignes), Décisions prises, Points d&#x27;attention, Prochaines
-étapes.
+Format : 500 mots maximum. Sections : Contexte
+(2 lignes), Décisions prises, Points d&#x27;attention et blocages,
+Prochaines étapes.
 
 Règles :
 - N&#x27;invente aucune information non présente dans le
@@ -430,8 +447,8 @@ Règles :
   qu&#x27;Excel l&#x27;ouvre correctement en français.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-9">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">9</span></div>
+      <article class="fiche" id="prompt-p5">
+        <div class="onglet"><span class="rang">P5</span><span class="mot">Chapitre 9</span></div>
         <div class="corps">
           <h2><mark>Votre synthèse de veille du lundi en dix minutes</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -480,8 +497,8 @@ Règles :
   dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-10">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">10</span></div>
+      <article class="fiche" id="prompt-p6">
+        <div class="onglet"><span class="rang">P6</span><span class="mot">Chapitre 10</span></div>
         <div class="corps">
           <h2><mark>Détecter et qualifier des prospects à partir de signaux publics</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -509,6 +526,15 @@ Règles :
   pour un signal, ne le mentionne pas.
 - Si tu ne trouves aucun signal pour une entreprise, indique-le
   clairement. N&#x27;invente jamais un signal.
+- Ne laisse aucune cellule vide. Pour une entreprise sans
+  signal, écris « aucun signal trouvé » et mets « - » dans la
+  colonne Score : une cellule vide voudrait dire que la
+  recherche n&#x27;est pas allée au bout, pas que l&#x27;entreprise ne
+  bouge pas.
+- L&#x27;angle d&#x27;approche doit citer le signal sur lequel il
+  s&#x27;appuie. Quand il repose sur une déduction, écris-la comme
+  telle : « recrute un responsable des achats, donc réorganise
+  sans doute ses achats ».
 - Ne cherche pas d&#x27;adresses email personnelles ni de données
   privées.
 
@@ -524,8 +550,8 @@ Sauvegarde le résultat dans prospects-priorises-[date].md dans
 ce dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-10">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">10</span></div>
+      <article class="fiche" id="prompt-p7">
+        <div class="onglet"><span class="rang">P7</span><span class="mot">Chapitre 10</span></div>
         <div class="corps">
           <h2><mark>Détecter et qualifier des prospects à partir de signaux publics</mark></h2>
           <p class="sous-titre">Pas à pas : de la liste au tableau de priorités</p>
@@ -549,8 +575,8 @@ Règles strictes :
 Un fichier par prospect : analyse-[nom].md</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-11">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">11</span></div>
+      <article class="fiche" id="prompt-p8">
+        <div class="onglet"><span class="rang">P8</span><span class="mot">Chapitre 11</span></div>
         <div class="corps">
           <h2><mark>Proposition commerciale structurée en 45 minutes</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -574,6 +600,8 @@ Budget évoqué : [Montant ou fourchette]
 Délai de la mission : [Durée estimée]
 Références pertinentes que nous pouvons citer : [2-3 références
 de missions similaires]
+Intervenants pressentis : [prénom, rôle et expérience utile de
+chaque personne qui fera la mission]
 Nos conditions commerciales habituelles : [modalités de
 paiement, durée de validité de l&#x27;offre, conditions d&#x27;annulation.
 N&#x27;invente aucune clause, aucun délai et aucun engagement que je
@@ -597,6 +625,10 @@ Structure de la proposition :
 7. Prochaine étape (200 mots, appel à l&#x27;action clair)
 
 Règles :
+- N&#x27;avance aucun fait sur le client, sur mon entreprise ou sur
+  mes intervenants qui ne figure pas dans les fichiers de ce
+  dossier ou dans les lignes ci-dessus. S&#x27;il te manque un
+  élément, écris [À COMPLÉTER] plutôt que de le supposer.
 - Personnalise chaque section pour ce client spécifique. Évite
   les formules génériques.
 - Utilise « vous » et nomme le client par son nom dans le texte.
@@ -609,10 +641,10 @@ Règles :
   dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-12">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">12</span></div>
+      <article class="fiche" id="prompt-p9">
+        <div class="onglet"><span class="rang">P9</span><span class="mot">Chapitre 12</span></div>
         <div class="corps">
-          <h2><mark>Appel d&#x27;offres : extraire les critères importants en 1 heure</mark></h2>
+          <h2><mark>Appel d&#x27;offres : extraire les critères importants en 1 h 15</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
           <button class="copier" type="button">Copier le prompt</button>
           <pre>Tu es un expert en réponses aux appels d&#x27;offres avec 15 ans
@@ -627,7 +659,7 @@ chacun.
 Produis ensuite un rapport d&#x27;analyse stratégique avec les
 sections suivantes :
 
-1. Fiche de synthèse (1 page)
+1. Fiche de synthèse (300 mots au plus)
    - Acheteur : nom, type d&#x27;organisme
    - Objet du marché : description en 3 lignes
    - Montant estimé / enveloppe budgétaire si mentionnée
@@ -685,8 +717,8 @@ Règles :
   dans ce dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-13">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">13</span></div>
+      <article class="fiche" id="prompt-p10">
+        <div class="onglet"><span class="rang">P10</span><span class="mot">Chapitre 13</span></div>
         <div class="corps">
           <h2><mark>Benchmark concurrentiel depuis des sources externes</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -722,8 +754,8 @@ avec :
    – Points forts identifiés dans les sources
    – Points faibles explicitement documentés dans les sources
 
-2. Analyse narrative par concurrent (1 page par concurrent) Pour
-   chaque concurrent : qui sont-ils, comment se
+2. Analyse narrative par concurrent (400 mots au plus par
+   concurrent) Pour chaque concurrent : qui sont-ils, comment se
    positionnent-ils, qu&#x27;est-ce qui semble fonctionner dans leur
    approche, et quelles limites leurs propres documents
    reconnaissent ou laissent voir. Ne me propose pas de
@@ -767,8 +799,8 @@ Règles :
   dossier, par exemple benchmark-visioconference-2026-09-15.md.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-14">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">14</span></div>
+      <article class="fiche" id="prompt-p11">
+        <div class="onglet"><span class="rang">P11</span><span class="mot">Chapitre 14</span></div>
         <div class="corps">
           <h2><mark>Tableau de bord interactif dans votre navigateur, sans logiciel payant</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -793,10 +825,14 @@ Crée un tableau de bord HTML complet avec les éléments suivants
      (orange)
    - Prochaine échéance critique (gris)
 
-3. Tableau de bord principal Pour chaque projet : nom, statut
-   (avec code couleur : vert/orange/rouge), responsable, barre
-   de progression, prochaine échéance, nombre d&#x27;actions en
-   attente. Tri par défaut : projets en retard en premier.
+3. Tableau de bord principal Format : tableau à quatre
+   colonnes, pas davantage : Projet | Statut et avancement |
+   Responsable | Prochaine échéance. La colonne « Statut et
+   avancement » porte dans la même cellule la pastille de
+   statut et la barre de progression. Tri par défaut : projets
+   en retard en premier. Sous le tableau, et non dedans, écris
+   une ligne par projet donnant son nombre d&#x27;actions en
+   attente.
 
 4. Liste des échéances proches Les projets dont la prochaine
    échéance est dépassée ou tombe dans les 7 prochains jours,
@@ -837,8 +873,8 @@ Règles :
   dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-15">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">15</span></div>
+      <article class="fiche" id="prompt-p12">
+        <div class="onglet"><span class="rang">P12</span><span class="mot">Chapitre 15</span></div>
         <div class="corps">
           <h2><mark>Dossier d&#x27;accueil personnalisé pour chaque nouvel arrivant</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -908,8 +944,8 @@ Règles :
 Format de sortie : accueil-[Prénom]-[date].md dans ce dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-16">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">16</span></div>
+      <article class="fiche" id="prompt-p13">
+        <div class="onglet"><span class="rang">P13</span><span class="mot">Chapitre 16</span></div>
         <div class="corps">
           <h2><mark>Préparer une négociation difficile en 30 minutes</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -983,8 +1019,8 @@ Format de sortie : negociation-[nom-client]-[date au format
 2026-06-25].md dans ce dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-17">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">17</span></div>
+      <article class="fiche" id="prompt-p14">
+        <div class="onglet"><span class="rang">P14</span><span class="mot">Chapitre 17</span></div>
         <div class="corps">
           <h2><mark>Tableau de bord de portefeuille depuis vos comptes-rendus Teams</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
@@ -1040,10 +1076,10 @@ Règles :
 - Format de sortie : portefeuille-[date].md dans ce dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-18">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">18</span></div>
+      <article class="fiche" id="prompt-p15">
+        <div class="onglet"><span class="rang">P15</span><span class="mot">Chapitre 18</span></div>
         <div class="corps">
-          <h2><mark>10 CVs comparés sur les mêmes critères en 15 minutes</mark></h2>
+          <h2><mark>10 CVs comparés sur les mêmes critères en 25 minutes</mark></h2>
           <p class="sous-titre">Le prompt : les mots exacts à taper</p>
           <button class="copier" type="button">Copier le prompt</button>
           <pre>Tu es un assistant d&#x27;extraction documentaire. Tu ne juges pas
@@ -1125,29 +1161,8 @@ Format de sortie : analyse-candidats-[poste]-[date].md dans ce
 dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-19">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">19</span></div>
-        <div class="corps">
-          <h2><mark>Fabriquer vos propres cas d&#x27;usage</mark></h2>
-          <p class="sous-titre">Le premier essai sur un mois dont vous connaissez déjà la réponse</p>
-          <button class="copier" type="button">Copier le prompt</button>
-          <pre>Applique à la lettre l&#x27;instruction contenue dans le fichier
-instruction.md de ce dossier, en te servant des autres
-fichiers du dossier comme sources.
-
-Les fichiers de ce dossier portent un autre mois dans leur nom
-que ceux cités dans instruction.md. Reconnais-les par leur rôle,
-pas par leur nom exact, et dis-moi lequel tu retiens pour chaque
-entrée.
-
-Écris le résultat dans un fichier resultat-essai.md.
-
-Ne comble aucun manque : quand une source ne dit rien, écris
-« à compléter » à cet endroit plutôt que de deviner.</pre>
-        </div>
-      </article>
-      <article class="fiche" id="chapitre-19">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">19</span></div>
+      <article class="fiche" id="prompt-p16">
+        <div class="onglet"><span class="rang">P16</span><span class="mot">Chapitre 19</span></div>
         <div class="corps">
           <h2><mark>Fabriquer vos propres cas d&#x27;usage</mark></h2>
           <p class="sous-titre">Le retournement : partez du résultat, pas de la tâche</p>
@@ -1176,8 +1191,29 @@ qui le dise, une phrase par point, sans en omettre : ce sont ces
 points-là qui rateront le mois prochain.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-20">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">20</span></div>
+      <article class="fiche" id="prompt-p17">
+        <div class="onglet"><span class="rang">P17</span><span class="mot">Chapitre 19</span></div>
+        <div class="corps">
+          <h2><mark>Fabriquer vos propres cas d&#x27;usage</mark></h2>
+          <p class="sous-titre">Le premier essai sur un mois dont vous connaissez déjà la réponse</p>
+          <button class="copier" type="button">Copier le prompt</button>
+          <pre>Applique à la lettre l&#x27;instruction contenue dans le fichier
+instruction.md de ce dossier, en te servant des autres
+fichiers du dossier comme sources.
+
+Les fichiers de ce dossier portent un autre mois dans leur nom
+que ceux cités dans instruction.md. Reconnais-les par leur rôle,
+pas par leur nom exact, et dis-moi lequel tu retiens pour chaque
+entrée.
+
+Écris le résultat dans un fichier resultat-essai.md.
+
+Ne comble aucun manque : quand une source ne dit rien, écris
+« à compléter » à cet endroit plutôt que de deviner.</pre>
+        </div>
+      </article>
+      <article class="fiche" id="prompt-p18">
+        <div class="onglet"><span class="rang">P18</span><span class="mot">Chapitre 20</span></div>
         <div class="corps">
           <h2><mark>Le fichier CLAUDE.md : la mémoire permanente de votre assistant</mark></h2>
           <p class="sous-titre">Laissez Claude Code vous interviewer</p>
@@ -1208,8 +1244,8 @@ seulement, enregistre-le sous le nom CLAUDE.md dans ce
 dossier.</pre>
         </div>
       </article>
-      <article class="fiche" id="chapitre-22">
-        <div class="onglet"><span class="mot">Chapitre</span><span class="rang">22</span></div>
+      <article class="fiche" id="prompt-p19">
+        <div class="onglet"><span class="rang">P19</span><span class="mot">Chapitre 22</span></div>
         <div class="corps">
           <h2><mark>Les agents : donnez un objectif complexe, Claude Code fait tout le reste</mark></h2>
           <p class="sous-titre">Formuler un bon objectif d&#x27;agent</p>

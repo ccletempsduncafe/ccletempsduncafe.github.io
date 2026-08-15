@@ -92,6 +92,7 @@ body {
 .raccourcis a:hover { border-color: var(--lien); }
 .raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
 .raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+.raccourcis .ch { display: block; font-size: 12px; font-weight: 400; color: var(--encre-douce); }
 
 main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
 
@@ -106,8 +107,10 @@ main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
   overflow: hidden;
 }
 
-/* L'onglet reprend l'intercalaire d'un classeur : c'est par le numero de
-   chapitre que le lecteur cherche, puisqu'il arrive du livre imprime. */
+/* L'onglet reprend l'intercalaire d'un classeur. Il porte les deux reperes du
+   lecteur : le numero du prompt, qui est le meme que dans l'annexe imprimee, et
+   le chapitre d'ou il vient, puisque c'est souvent par la que le lecteur
+   arrive. */
 .onglet {
   background: var(--encre);
   color: var(--papier);
@@ -284,7 +287,7 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 <p><strong>Carte de la documentation Claude Code</strong> <a href="https://docs.anthropic.com/en/docs/claude-code/claude_code_docs_map.md">https://docs.anthropic.com/en/docs/claude-code/claude_code_docs_map.md</a> Index complet de toutes les pages de documentation Claude Code. Point d&#x27;entrée recommandé pour une recherche précise.</p>
 <p><strong>Documentation API et modèles Anthropic</strong> <a href="https://platform.claude.com/docs/fr/">https://platform.claude.com/docs/fr/</a> Documentation complète de l&#x27;API Anthropic : modèles disponibles (Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5), fenêtres de contexte, tarification à la consommation, paramètres avancés.</p>
 <p><strong>Tarifs et plans Anthropic</strong> <a href="https://claude.com/pricing">https://claude.com/pricing</a> Tarifs officiels des abonnements Claude Pro et Claude Max, et de l&#x27;API à la consommation. Consultez cette page avant toute décision d&#x27;achat : les prix sont régulièrement mis à jour.</p>
-<p><strong>Guide pratique Claude Code (source secondaire)</strong> <a href="https://ccforeveryone.com/">https://ccforeveryone.com/</a> Guide indépendant sur les fonctionnalités, commandes slash et raccourcis de Claude Code. Utilisé en complément de la documentation officielle pour les chapitres 4, 5 et 21.</p>
+<p><strong>Guide pratique Claude Code (source secondaire)</strong> <a href="https://ccforeveryone.com/">https://ccforeveryone.com/</a> Guide indépendant sur les fonctionnalités, commandes slash et raccourcis de Claude Code. Utilisé en complément de la documentation officielle pour les chapitres 4, 5 et 22.</p>
 <h3>Microsoft Copilot</h3>
 <p><strong>Vue d&#x27;ensemble Microsoft Copilot Chat</strong> <a href="https://learn.microsoft.com/fr-fr/copilot/microsoft-copilot">https://learn.microsoft.com/fr-fr/copilot/microsoft-copilot</a> Documentation officielle de Copilot Chat (version gratuite incluse avec les licences Microsoft 365). Décrit les capacités de conversation, de chargement de fichiers et d&#x27;accès aux données.</p>
 <p><strong>Microsoft 365 Copilot — vue d&#x27;ensemble</strong> <a href="https://learn.microsoft.com/fr-fr/copilot/microsoft-365/microsoft-365-copilot-overview">https://learn.microsoft.com/fr-fr/copilot/microsoft-365/microsoft-365-copilot-overview</a> Documentation de la version payante de Copilot intégrée dans Word, Excel, PowerPoint, Outlook et Teams. Décrit l&#x27;accès aux données organisationnelles via Microsoft Graph.</p>
