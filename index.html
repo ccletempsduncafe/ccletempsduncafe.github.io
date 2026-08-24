@@ -232,7 +232,7 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
     <h1>Les prompts du livre, prêts à copier</h1>
     <p>Claude Code le temps d'un café. Treize cas d'usage sans écrire une ligne de code, testés en exécution réelle.</p>
     <span class="adresse">ccletempsduncafe.github.io</span>
-    <p class="maj">Mise à jour du 15/08/2026. Les prompts sont repris mot pour mot du livre.</p>
+    <p class="maj">Mise à jour du 24/08/2026. Les prompts sont repris mot pour mot du livre.</p>
   </div>
 </header>
 
@@ -317,7 +317,8 @@ Produis un rapport de performance mensuelle structuré ainsi :
    produits/services, comparaison avec [mois précédent] si mes
    fichiers contiennent les deux mois
 3. Coûts : total par équipe, variation par rapport au mois
-   précédent, poste de dépense principal
+   précédent si mes fichiers contiennent les deux mois, poste
+   de dépense principal
 4. Satisfaction client : score global, top 3 des motifs
    positifs, top 3 des points d&#x27;amélioration
 5. Points d&#x27;attention et recommandations (3 maximum)
@@ -415,13 +416,13 @@ dossier. Lis-le.
 
 Produis les trois livrables suivants :
 
-Livrable 1 — Tableau de suivi des actions
+Livrable 1 : tableau de suivi des actions
 Fichier : actions-[date].csv
 Colonnes : Action | Responsable | Date limite | Statut (par
 défaut : À faire) | Notes
 Une ligne par action identifiée dans le compte-rendu.
 
-Livrable 2 — Email de relance pour les absents
+Livrable 2 : email de relance pour les absents
 Fichier : email-absents-[date].txt
 Format : email professionnel, ton concis. Commence par une
 ligne « Objet : » prête à recopier dans la messagerie, puis le
@@ -429,7 +430,7 @@ corps du message. Inclure : les décisions principales et les
 actions qui les concernent.
 Destinataires : [noms des absents si connus]
 
-Livrable 3 — Brief pour la direction
+Livrable 3 : brief pour la direction
 Fichier : brief-direction-[date].txt
 Format : 500 mots maximum. Sections : Contexte
 (2 lignes), Décisions prises, Points d&#x27;attention et blocages,
@@ -457,7 +458,7 @@ Règles :
 
 Ce dossier contient les sources que j&#x27;ai mises de côté cette
 semaine : des pages web enregistrées en PDF, des newsletters,
-des captures d&#x27;écran et un fichier de liens.
+des captures d&#x27;écran et, s&#x27;il s&#x27;y trouve, un fichier liens.txt.
 Lis-les toutes.
 
 Je suis [votre métier en une ligne] et mes clients sont [type de
@@ -484,10 +485,10 @@ Règles :
   même si elle te paraît importante.
 - Ignore les fichiers dont le nom commence par « veille » : ce
   sont mes synthèses précédentes, pas des sources.
-- Le fichier liens.txt contient des adresses que je n&#x27;ai pas eu
-  le temps d&#x27;enregistrer. Ne les consulte pas : recopie-les
-  telles quelles en fin de document, sous le titre « À lire, non
-  traité cette semaine ».
+- S&#x27;il est présent, le fichier liens.txt contient des adresses
+  que je n&#x27;ai pas eu le temps d&#x27;enregistrer. Ne les consulte
+  pas : recopie-les telles quelles en fin de document, sous le
+  titre « À lire, non traité cette semaine ».
 - Si une information chiffrée figure dans un article,
   reprends-la telle quelle et n&#x27;arrondis pas.
 - Si un fichier est illisible ou vide, signale-le en fin de
@@ -598,6 +599,10 @@ Ce que nous proposons : [Description de la mission ou du
 service]
 Budget évoqué : [Montant ou fourchette]
 Délai de la mission : [Durée estimée]
+Taux journaliers : [taux journalier de chaque profil qui
+intervient]
+Charge estimée : [nombre de jours prévu pour chaque
+intervenant]
 Références pertinentes que nous pouvons citer : [2-3 références
 de missions similaires]
 Intervenants pressentis : [prénom, rôle et expérience utile de
@@ -635,8 +640,10 @@ Règles :
 - Intègre les références fournies de façon naturelle dans la
   narration.
 - Le montant total doit tenir dans le budget évoqué. Détaille le
-  chiffrage en jours par intervenant et en taux journaliers,
-  pour que je puisse le vérifier.
+  chiffrage à partir des taux journaliers et de la charge que je
+  t&#x27;ai donnés ci-dessus, pour que je puisse le vérifier. Si je ne
+  te les ai pas donnés, écris [À COMPLÉTER] à la place du
+  chiffrage et ne propose aucun montant.
 - Format de sortie : proposition-[nom-client]-[date].md dans ce
   dossier.</pre>
         </div>
@@ -711,6 +718,9 @@ Règles :
   document et, s&#x27;il diffère, le numéro de page du fichier PDF.
 - Si une information n&#x27;est pas dans le dossier, indique-le
   explicitement.
+- Longueur du rapport : 7 500 mots au plus, tableaux compris.
+  Si le dossier est plus court, fais plus court : ne complète
+  rien pour atteindre ce chiffre.
 - Format de sortie : un fichier Markdown nommé analyse-AO suivi
   du nom de l&#x27;acheteur et de la date du jour, par exemple
   analyse-AO-Region-Nouvelle-Aquitaine-2026-09-15.md, enregistré
@@ -904,7 +914,7 @@ d&#x27;équipe, points d&#x27;attention]
 
 Produis les documents suivants dans un seul fichier :
 
-Document 1 — Planning de la première semaine
+Document 1 : planning de la première semaine
 Format : tableau par jour (lundi à vendredi), avec créneaux
 matin/après-midi.
 Contenu : réunions d&#x27;introduction à planifier, documents à lire,
@@ -912,15 +922,15 @@ activités d&#x27;immersion, temps de prise en main des outils.
 Espace les rencontres : trois réunions au maximum par jour, et un
 temps de lecture ou de prise en main entre deux réunions.
 
-Document 2 — Annuaire des contacts clés
+Document 2 : annuaire des contacts clés
 Pour chaque contact : nom, rôle, comment [Prénom] interagira
 avec lui/elle, conseil pour bien travailler avec cette personne.
 
-Document 3 — Résumé des projets en cours
+Document 3 : résumé des projets en cours
 Pour chaque projet : contexte, où en est-on, quel est le rôle de
 [Prénom], quels sont les points d&#x27;attention.
 
-Document 4 — FAQ des premiers jours
+Document 4 : FAQ des premiers jours
 20 questions que [Prénom] va probablement se poser dans ses
 premières semaines, avec les réponses.
 
@@ -1042,10 +1052,11 @@ sections suivantes :
    l&#x27;attention de la direction cette semaine.
 
 2. Tableau de bord par projet Format : tableau à quatre colonnes,
-   pas davantage — Projet | Statut | Responsable | Prochaine
+   pas davantage : Projet | Statut | Responsable | Prochaine
    échéance Statut écrit en toutes lettres : [EN RETARD] / [EN
-   COURS] / [À RISQUE] / [À JOUR] Sous le tableau, et non dedans,
-   écris un paragraphe court par projet : l&#x27;avancement tel que le
+   COURS] / [À RISQUE] / [À JOUR] Tri par défaut : projets en
+   retard en premier. Sous le tableau, et non dedans, écris un
+   paragraphe court par projet : l&#x27;avancement tel que le
    compte-rendu le décrit, puis les points d&#x27;attention. Un projet
    sans point d&#x27;attention n&#x27;a droit qu&#x27;à une phrase.
 
@@ -1071,7 +1082,9 @@ Règles :
   avec le fait sur lequel tu t&#x27;appuies. Même règle pour un nom
   de responsable déduit d&#x27;une signature.
 - Si une information est manquante dans un compte-rendu, indique
-  [INFO MANQUANTE — vérifier avec le chef de projet].
+  [INFO MANQUANTE : vérifier avec le chef de projet].
+- Trie le tableau par projet en faisant remonter les projets en
+  retard.
 - Ne lis que les fichiers dont le nom commence par cr-.
 - Format de sortie : portefeuille-[date].md dans ce dossier.</pre>
         </div>
@@ -1093,11 +1106,11 @@ Description du poste :
 l&#x27;équipe managée si applicable]
 
 Critères du poste :
-1. [critère 1] — obligatoire
-2. [critère 2] — obligatoire
-3. [critère 3] — souhaitable
-4. [critère 4] — souhaitable
-5. [critère 5] — souhaitable
+1. [critère 1] (obligatoire)
+2. [critère 2] (obligatoire)
+3. [critère 3] (souhaitable)
+4. [critère 4] (souhaitable)
+5. [critère 5] (souhaitable)
 
 Règles, à respecter avant tout le reste :
 - N&#x27;utilise aucune information de sexe, d&#x27;âge, de date de
