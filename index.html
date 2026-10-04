@@ -232,7 +232,7 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
     <h1>Les prompts du livre, prêts à copier</h1>
     <p>Claude Code au bureau. 12 tâches du quotidien, testées en réel, sans écrire une ligne de code.</p>
     <span class="adresse">ccletempsduncafe.github.io</span>
-    <p class="maj">Mise à jour du 03/10/2026. Les prompts sont repris mot pour mot du livre.</p>
+    <p class="maj">Mise à jour du 04/10/2026. Les prompts sont repris mot pour mot du livre.</p>
   </div>
 </header>
 
@@ -271,7 +271,7 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
         <div class="onglet"><span class="rang">P1</span><span class="mot">Chapitre 3</span></div>
         <div class="corps">
           <h2><mark>Les quatre principes d&#x27;un bon prompt</mark></h2>
-          <p class="sous-titre">L&#x27;exercice complet du chapitre : une proposition commerciale de deux mille mots au plus, rédigée à partir du brief client et des notes d&#x27;appel.</p>
+          <p class="sous-titre">L&#x27;exercice du chapitre, celui de Sophie, donné pour montrer les quatre principes assemblés et non pour être joué tel quel : il décrit son métier et son client, pas les vôtres. Le prompt de proposition commerciale prêt à l&#x27;emploi est le P9.</p>
           <button class="copier" type="button">Copier le prompt</button>
           <pre>Je suis consultante indépendante en transformation
 organisationnelle.
@@ -294,6 +294,9 @@ Contraintes :
 - Ton professionnel mais pas distant
 - Ne mentionne pas de tarif horaire, uniquement des forfaits par
   phase
+- N&#x27;invente aucun chiffre, aucun délai et aucun engagement qui ne
+  figure pas dans les fichiers : quand une information manque,
+  écris [À COMPLÉTER] à sa place
 - Rédige en français</pre>
         </div>
       </article>
@@ -588,7 +591,7 @@ Entreprise | Signal détecté | Source (URL + date) | Score 1 à 5
 | Angle d&#x27;approche
 
 Le score reflète l&#x27;urgence du besoin pour mon offre, qui est :
-[Décrivez votre offre en une phrase]
+[votre offre en une phrase]
 
 Trie le tableau du score le plus élevé au plus faible.
 Sauvegarde le résultat dans prospects-priorises-[date].md dans
@@ -871,7 +874,8 @@ Règles :
           <h2><mark>Tableau de bord interactif dans votre navigateur, sans logiciel payant</mark></h2>
           <p class="sous-titre">Produit un fichier HTML autonome, ouvrable hors connexion, qui affiche vos projets en cartes, en tableau et en échéances à venir.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>Tu es un spécialiste de la lisibilité des tableaux de bord pour un lecteur non technique.
+          <pre>Tu es un spécialiste de la lisibilité des tableaux de bord
+pour un lecteur non technique.
 
 J&#x27;ai un fichier projets.csv dans ce dossier qui contient les
 données de suivi de mes projets.
@@ -1060,12 +1064,18 @@ Produis une fiche de préparation de négociation avec :
 
 4. Concessions possibles classées par impact Pour chaque
    concession envisageable : impact sur ma marge, impact sur la
-   relation, valeur perçue par le client.
+   relation, valeur perçue par le client. Chiffre ce que la
+   demande du client me coûterait sur douze mois à partir des
+   montants que je t&#x27;ai donnés, en posant le calcul ligne par
+   ligne pour que je puisse refaire l&#x27;addition.
 
-5. Proposition d&#x27;ouverture recommandée Comment ouvrir la réunion
+5. Trois contreparties à demander en échange Pour chacune : ce
+   qu&#x27;elle me rapporte, et pourquoi elle coûte peu au client.
+
+6. Proposition d&#x27;ouverture recommandée Comment ouvrir la réunion
    pour prendre le leadership de la négociation ?
 
-6. Points non négociables, comment les tenir Comment refuser
+7. Points non négociables, comment les tenir Comment refuser
    sans fermer la porte.
 
 Règles :
@@ -1094,7 +1104,7 @@ Format de sortie : negociation-[nom-client]-[date au format
           <pre>Tu es une directrice de portefeuille projets qui prépare son
 bilan hebdomadaire.
 
-J&#x27;ai [N] projets en cours. Leurs comptes-rendus de la semaine
+J&#x27;ai [nombre] projets en cours. Leurs comptes-rendus de la semaine
 sont dans ce dossier :
 - cr-[NomProjet]-[date].txt : compte-rendu du projet [Nom du
   projet] (une ligne par projet, avec le nom exact de chacun de
@@ -1140,7 +1150,7 @@ Règles :
   avec le fait sur lequel tu t&#x27;appuies. Même règle pour un nom
   de responsable déduit d&#x27;une signature.
 - Si une information est manquante dans un compte-rendu, indique
-  [INFO MANQUANTE : vérifier avec le chef de projet].
+  [INFO MANQUANTE].
 - Trie le tableau par projet en faisant remonter les projets en
   retard.
 - Ne lis que les fichiers dont le nom commence par cr-.
@@ -1195,7 +1205,7 @@ entrée.
 Écris le résultat dans un fichier resultat-essai.md.
 
 Ne comble aucun manque : quand une source ne dit rien, écris
-« à compléter » à cet endroit plutôt que de deviner.</pre>
+[À COMPLÉTER] à cet endroit plutôt que de deviner.</pre>
         </div>
       </article>
       <article class="fiche" id="prompt-p18">
@@ -1236,7 +1246,7 @@ quelqu&#x27;un qui n&#x27;était pas là.</pre>
         <div class="onglet"><span class="rang">P20</span><span class="mot">Chapitre 19</span></div>
         <div class="corps">
           <h2><mark>Trier votre boîte mail chaque matin, sans vous</mark></h2>
-          <p class="sous-titre">L&#x27;instruction d&#x27;une routine planifiée : elle prépare des brouillons et n&#x27;envoie rien, la décision restant vôtre.</p>
+          <p class="sous-titre">L&#x27;instruction d&#x27;une routine planifiée : elle prépare des brouillons et n&#x27;envoie rien, la décision restant vôtre. C&#x27;est le seul prompt du livre qui demande trois choses de plus : une formule payante, une connexion à votre messagerie, et une organisation qui n&#x27;a pas désactivé la fonction. Le Chapitre 19 les détaille.</p>
           <button class="copier" type="button">Copier le prompt</button>
           <pre>Passe en revue les messages non lus de ma boîte de réception.
 
