@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adapter les prompts a votre situation</title>
+<meta name="description" content="Les variantes detaillees des prompts du livre, chapitre par chapitre : comparer deux periodes, changer le decoupage, changer le format de sortie, travailler sans modele maison.">
+<style>
+:root {
+  --encre: #16202b;
+  --encre-douce: #51637a;
+  --papier: #eaeef4;
+  --carte: #ffffff;
+  --trait: #ccd5e0;
+  --surligneur: #f2e34a;
+  --lien: #1c4c8c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+.bandeau { background: var(--encre); color: var(--papier); padding: 40px 24px 36px; }
+.dedans { max-width: 760px; margin: 0 auto; }
+.bandeau .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.bandeau h1 { margin: 8px 0 10px; font-size: clamp(26px, 4.6vw, 38px); line-height: 1.14; letter-spacing: -0.02em; }
+.bandeau p { margin: 0; max-width: 60ch; color: #b9c6d6; }
+.bandeau a { color: var(--papier); }
+.retour { display: inline-block; margin-top: 20px; font-size: 15px; color: #b9c6d6; }
+
+article { max-width: 760px; margin: 34px auto 60px; padding: 0 24px; }
+article > h1 { display: none; }
+article h2 { margin: 40px 0 12px; font-size: 23px; letter-spacing: -0.014em; }
+article h3 { margin: 30px 0 10px; font-size: 19px; }
+article p { margin: 0 0 16px; }
+article ol, article ul { margin: 0 0 16px; padding-left: 22px; }
+article li { margin-bottom: 8px; }
+article hr { border: 0; border-top: 1px solid var(--trait); margin: 30px 0; }
+
+/* Les encadres du livre (les lignes commencant par un pictogramme) deviennent
+   des blocs a filet : c'est leur rendu dans la version imprimee. */
+.encadre {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-left: 4px solid var(--encre);
+  border-radius: 4px;
+  padding: 18px 22px 4px;
+  margin: 26px 0;
+}
+.encadre p:last-child { margin-bottom: 18px; }
+
+table { width: 100%; border-collapse: collapse; margin: 22px 0; background: var(--carte); font-size: 15.5px; }
+th, td { border: 1px solid var(--trait); padding: 10px 12px; text-align: left; vertical-align: top; }
+th { background: #f6f8fb; }
+.tableau { overflow-x: auto; }
+
+.bloc-prompt { margin: 24px 0; }
+.copier {
+  font: inherit; font-weight: 600; font-size: 16px; color: var(--carte);
+  background: var(--lien); border: 1px solid var(--lien); border-radius: 3px;
+  padding: 10px 20px; cursor: pointer;
+}
+.copier:hover { background: #163d70; }
+.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+
+pre {
+  margin: 14px 0 0; padding: 16px 18px; background: #f6f8fb;
+  border: 1px solid var(--trait); border-radius: 3px; overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14.5px; line-height: 1.55; white-space: pre-wrap; word-break: break-word;
+}
+
+footer { border-top: 1px solid var(--trait); padding: 26px 24px 60px; color: var(--encre-douce); font-size: 15px; }
+footer .dedans p { margin: 0 0 10px; }
+footer a { color: var(--lien); }
+</style>
+</head>
+<body>
+<header class="bandeau">
+  <div class="dedans">
+    <span class="mot">Complement du livre</span>
+    <h1>Adapter les prompts à votre situation</h1>
+    <p>Les variantes détaillées, chapitre par chapitre. Chaque section du livre intitulée « Adapter ce prompt à votre situation » renvoie ici.</p>
+    <a class="retour" href="index.html">← Revenir aux prompts du livre</a>
+  </div>
+</header>
+
+<article>
+<h1 id="adapter-les-prompts-à-votre-situation">Adapter les prompts à
+votre situation</h1>
+<p>Chaque chapitre du livre se termine en vous disant qu’un prompt se
+modifie comme un texte ordinaire : vous ajoutez une phrase à la section
+concernée, en nommant le fichier, le découpage ou le format que vous
+voulez obtenir.</p>
+<p>Cette page rassemble les variantes détaillées, celles qui reviennent
+le plus souvent dans les essais. Elles sont écrites pour être recopiées
+puis adaptées, et non pour être lues d’un bout à l’autre : allez
+directement au chapitre qui vous intéresse.</p>
+<h2 id="le-rapport-consolidé">Le rapport consolidé</h2>
+<p><em>Chapitre 7, section 7.6.</em></p>
+<p>Pour une comparaison avec le mois précédent, ajoutez les fichiers de
+ce mois au dossier, nommés clairement, par exemple
+<code>ventes-decembre.csv</code>, et mentionnez-les dans la liste des
+sources. Claude Code calculera les variations en pourcentages
+d’évolution.</p>
+<p>Si vous travaillez pour plusieurs <em>business units</em> ou régions,
+précisez la granularité voulue : « Décompose les données de ventes par
+région : Nord, Sud, Est, Ouest. Ajoute un paragraphe de synthèse par
+région. » Le rapport contiendra une sous-section par région, avec les
+mêmes indicateurs.</p>
+<p>Si votre directeur préfère un fichier HTML, changez la section «
+Livrable » du prompt. Écrivez : « Format de sortie : fichier
+rapport-janvier-2026.html avec des tableaux mis en forme et une
+présentation professionnelle. » Il se lit dans Chrome, Edge ou Safari,
+et se partage par email ou sur un SharePoint sans logiciel
+supplémentaire.</p>
+<p>Vos exports changent parfois de format d’un mois à l’autre : colonnes
+renommées, encodage différent. Ajoutez alors : « Si tu rencontres des
+colonnes que tu ne reconnais pas ou des formats inattendus, liste-les et
+demande-moi comment les interpréter avant de continuer. » Claude Code
+s’arrêtera pour vous poser la question au lieu de supposer.</p>
+<p>Si votre entreprise a un modèle de rapport, placez-le dans le
+dossier. Ajoutez : « Utilise le fichier modele-rapport.md comme
+référence pour la structure et le style de rédaction. » Claude Code
+reproduira le format habituel, ce qui facilitera la relecture.</p>
+<h2 id="la-fiche-de-compte-client">La fiche de compte client</h2>
+<p><em>Chapitre 8, section 8.6.</em></p>
+<p>Si votre revue réunit plusieurs interlocuteurs, ajoutez une section «
+Questions probables par interlocuteur » à la structure demandée.
+Complétez-la par cette ligne : « Identifie les sujets de préoccupation
+de chaque interlocuteur mentionné dans les emails et anticipe deux
+questions qu’il pourrait poser. »</p>
+<p>Si vous préparez plusieurs comptes en parallèle, fréquent en fin de
+trimestre, créez un dossier par client avec la même structure et le même
+prompt adapté. Lancez ensuite Claude Code dans chaque dossier. En
+quarante minutes, vous préparez quatre revues pour des clients dont les
+dossiers existent déjà, à dix minutes chacune. Pour quatre clients
+nouveaux, ajoutez la douzaine de minutes de préparation par client, soit
+une bonne heure de plus.</p>
+<p>Si vous avez des informations publiques sur votre client, rapport
+annuel, communiqués, articles récents, ajoutez-les en PDF dans le
+dossier et mentionnez-les dans la liste des sources. Claude Code les
+intègre aux points d’attention et aux opportunités. Thomas ajoute
+systématiquement le dernier rapport annuel de ses grands comptes : il y
+trouve les priorités stratégiques qui l’aident à orienter sa
+proposition.</p>
+<p>Si votre CRM exporte des rapports d’activité détaillés (appels,
+rendez-vous, opportunités en cours), exportez-les en CSV et ajoutez-les
+au dossier. Ajoutez aussi cette ligne : « Dans la section Historique
+commercial, ajoute un paragraphe sur les tendances de la relation :
+fréquence des interactions, évolution du volume de commandes, périodes
+de silence. » Sans cette ligne, la section « Historique commercial »
+n’accorde à la tendance que deux phrases, et votre export ne change
+presque rien à la fiche.</p>
+<h2 id="le-compte-rendu-de-réunion">Le compte-rendu de réunion</h2>
+<p><em>Chapitre 9, section 9.6.</em></p>
+<p>Si vos réunions hebdomadaires produisent les mêmes livrables,
+sauvegardez votre prompt dans un fichier texte, par exemple
+<code>prompt-reunion.txt</code>. À chaque réunion, enregistrez le
+nouveau compte-rendu sous le nom <code>compte-rendu.txt</code> dans le
+dossier de projet, collez le prompt et mettez à jour les noms des
+absents. Les crochets des noms de fichiers, eux, restent tels quels.
+Cinq minutes, et vos trois livrables sont prêts. Le Chapitre 5 montre
+comment intégrer ce prompt à votre fichier CLAUDE.md pour ne même plus
+avoir à le copier.</p>
+<p>Si vos réunions impliquent des participants externes, la case
+<code>[sujets à garder internes]</code> prend toute son importance :
+nommez-y les marges, les coûts internes, les tensions d’équipe, les
+autres clients. Ajoutez au besoin : « L’email de relance pour les
+absents doit adapter le ton pour des interlocuteurs externes. » Claude
+Code ne devine pas ce qui est confidentiel chez vous : il écarte ce que
+vous lui avez désigné, et vous relisez l’email avant l’envoi.</p>
+<p>Si le tableau de suivi doit s’ajouter à un tableau de bord existant,
+demandez les nouvelles lignes au format CSV de ce fichier. Vous n’aurez
+qu’à les importer dans Excel. Et si votre directeur préfère recevoir le
+brief par email, demandez à Claude Code de le formater comme un corps
+d’email, avec un objet et un destinataire.</p>
+<p>Certaines actions reviennent à chaque réunion, comme « mettre à jour
+le planning ». Ajoutez alors : « Identifie les actions qui semblent
+récurrentes et marque-les avec [RÉCURRENTE] dans la colonne Notes. »
+Vous repérerez ainsi les tâches automatisables.</p>
+<h2 id="la-détection-de-prospects">La détection de prospects</h2>
+<p><em>Chapitre 11, section 11.6.</em></p>
+<p>Si vous travaillez par secteur plutôt que par liste de comptes
+nommés, demandez à Claude Code de construire la liste. Dites-lui : «
+Trouve dix entreprises de l’agroalimentaire en région lyonnaise qui ont
+publié une offre d’emploi dans les achats ces trois derniers mois. Cite
+pour chacune l’adresse web de l’offre et sa date. Si tu n’as pas de
+source vérifiable, donne-m’en moins, mais n’invente aucun nom. » Vous
+obtenez une liste déjà qualifiée par le signal, que vous traitez comme
+ci-dessus. Vérifiez toujours qu’elle correspond à votre cible.</p>
+<p>Si votre cycle de vente est long, demandez un tableau de plus,
+l’échéance estimée à côté du nom de l’entreprise : le prompt plafonne
+chaque fichier à quatre colonnes. Demandez quand le besoin sera le plus
+mûr d’après le signal. Un recrutement en cours signale un besoin
+immédiat ; une levée de fonds annoncée, un projet à trois ou six mois.
+Cette nuance vous aide à séquencer vos relances.</p>
+<div class="encadre"><p>💡 <strong>Astuce — et si vous êtes indépendant ?</strong></p>
+<p>Sophie, consultante seule, n’a pas de liste de quarante comptes :
+elle commence donc par fabriquer le <code>comptes-cibles.md</code> que
+le pas à pas attend. Elle part de son type de client idéal et demande la
+liste sectorielle du premier paragraphe de cette section, puis recopie
+les entreprises retenues dans un fichier texte de ce nom, une ligne par
+entreprise : son nom exact, puis l’adresse de son site officiel. Dix
+lignes suffisent pour un premier essai, et la suite du chapitre se
+déroule à l’identique. Pour un indépendant, l’analyse personnalisée du
+point 6 est souvent décisive : elle met un solo à égalité avec une
+grande structure, en lui donnant la préparation qu’une équipe
+avant-vente produirait.</p>
+</div>
+<hr />
+<p>Une mise en garde sur les outils de prospection « de volume ».
+Certaines plateformes promettent des milliers de contacts par jour :
+extraction massive depuis des bases commerciales, moissonnage de
+profils, achat de listes toutes faites. Ce livre ne les recommande pas.
+Elles reposent sur la collecte et l’envoi en masse de données
+personnelles. Cette pratique vous expose au RGPD, dégrade la réputation
+de votre domaine d’envoi et finit dans les courriers indésirables. La
+méthode de ce chapitre prend le chemin inverse : moins de contacts,
+mieux choisis, abordés avec un message utile. Elle ne s’appuie que sur
+des informations publiées par les entreprises elles-mêmes et ne
+constitue aucun fichier acheté ou moissonné. Elle ne vous dispense pas
+pour autant des obligations de l’encadré « prospection et RGPD » et de
+la section 11.8.</p>
+<h2 id="la-proposition-commerciale">La proposition commerciale</h2>
+<p><em>Chapitre 12, section 12.6.</em></p>
+<p>Si votre domaine est très technique (conseil informatique,
+ingénierie, finance), indiquez dans votre brief les termes à utiliser et
+ceux à éviter. Par exemple : « Utilise les termes lean management et
+kaizen. Évite le jargon informatique : le client est un directeur des
+opérations, pas un directeur des systèmes d’information. »</p>
+<p>Si vous répondez à un appel d’offres, copiez les sections importantes
+du cahier des charges dans votre prompt. Ajoutez : « La proposition doit
+répondre explicitement aux critères du cahier des charges. Cite chaque
+critère avant d’y répondre. » Le Chapitre 13 couvre ce cas en
+détail.</p>
+<p>Si vous avez un template Word, deux voies fonctionnent. La première :
+demander le contenu texte section par section et le coller dans votre
+template. La seconde : demander le document en HTML, l’ouvrir dans Word
+comme à l’étape 6, puis appliquer votre mise en forme.</p>
+<p>Si le client attend une proposition très courte, ajoutez : « La
+proposition complète ne doit pas dépasser 2 500 mots, soit cinq pages.
+Sois concis : chaque phrase doit apporter une information ou un
+argument. Pas de remplissage. »</p>
+<h2 id="lanalyse-dappel-doffres">L’analyse d’appel d’offres</h2>
+<p><em>Chapitre 13, section 13.6.</em></p>
+<p>Vous répondez peut-être en groupement, avec un partenaire ou un
+sous-traitant. Ajoutez alors : « Identifie les exigences spécifiques aux
+groupements d’entreprises : pièces supplémentaires, répartition des
+compétences attendue, conditions de solidarité entre membres du
+groupement. »</p>
+<p>Si vous avez déjà répondu à des AO similaires, vos anciens rapports
+ne gênent pas : le prompt refuse de lire un document étranger à la
+consultation, et vous le signale au lieu de s’en servir. Rangez-les
+quand même dans un sous-dossier <code>archives</code>, pour savoir d’un
+coup d’œil ce qui appartient à cette consultation. Pour les comparer,
+attendez que la grille soit produite, puis ouvrez une nouvelle session
+sur le même dossier d’AO, celui qui contient à la fois la grille et le
+sous-dossier <code>archives</code>, et demandez : « Quels critères ont
+changé depuis les analyses rangées dans archives ? Quels axes de
+différenciation étaient gagnants ? » C’est un avantage que les
+concurrents qui découvrent l’AO n’ont pas.</p>
+<p>Si vous avez plusieurs AO en cours, créez un dossier par AO et
+utilisez le même prompt dans chacun. La structure identique des rapports
+facilite la comparaison et la priorisation.</p>
+<p>Si le marché est alloti, le prompt traite déjà chaque lot séparément.
+Ajoutez la question qui vous intéresse vraiment : « Indique les lots
+pour lesquels notre positionnement est le plus fort, au regard des
+critères et de leurs pondérations respectives. »</p>
+<h2 id="le-benchmark-concurrentiel">Le benchmark concurrentiel</h2>
+<p><em>Chapitre 14, section 14.6.</em></p>
+<p>Si vous préparez une réponse à un appel d’offres, ajoutez la
+description du client et du marché. Demandez ensuite : « Pour le marché
+[description] auprès de [client], évalue la menace que représente chaque
+concurrent, critère par critère, et dis sur lesquels elle se concentre.
+Quels arguments devons-nous anticiper dans leur offre ? » Cette
+formulation évite de demander un vainqueur, pour la raison donnée à la
+fin de la section précédente. Le résultat nourrit votre note de
+positionnement interne. Il porte sur un concurrent nommé : il prépare
+vos arguments, il ne se recopie pas dans le document remis au
+client.</p>
+<p>Si vous voulez un benchmark trimestriel, créez un dossier permanent
+par concurrent et ajoutez-y de nouvelles sources chaque trimestre.
+Relancez le même prompt : Claude Code retraitera l’ensemble. Une
+précaution avant de relancer : rangez le benchmark précédent dans un
+sous-dossier <code>archives</code>. S’il reste à la racine, Claude Code
+peut le reprendre comme modèle au lieu de repartir de vos sources. Vous
+retrouverez alors les conclusions d’il y a trois mois habillées en neuf.
+Gardez les anciens benchmarks pour observer l’évolution de chaque
+concurrent.</p>
+<div class="encadre"><p>⚠️ <strong>Attention — un écart entre deux trimestres n’est pas
+forcément un mouvement du marché</strong></p>
+<p>Deux exécutions du même prompt sur les mêmes fichiers ne donnent pas
+exactement le même benchmark : ces outils comportent une part d’aléa, et
+une formulation change d’un lancement à l’autre. Quand vous comparez le
+benchmark de ce trimestre à celui du précédent, une partie de l’écart
+vient donc de l’outil et non du concurrent. Ne concluez à un changement
+de positionnement qu’après être retourné voir la source, sur le site du
+concurrent, avec sa date.</p>
+</div>
+<hr />
+<p>Si vous préparez une réunion dans l’urgence, demandez une analyse
+allégée : « En une page, dis-moi ce que je dois savoir sur [concurrent]
+pour ma réunion dans 30 minutes. » Le résultat est moins complet, mais
+disponible en quelques minutes.</p>
+<p>Si vous voulez reprendre le benchmark dans votre proposition
+commerciale (Chapitre 12), attention à ce qui change de statut au
+passage. Le benchmark est interne ; la proposition est remise à un
+client, et ce qui s’y trouve vous engage, y compris sur les autres.
+Demandez donc un paragraphe qui parle de vous : « À partir de ce
+benchmark, rédige un paragraphe de positionnement pour notre proposition
+qui met en valeur nos trois principaux différenciateurs. Formule chaque
+différenciateur comme ce que nous faisons, sans nommer de concurrent et
+sans porter d’appréciation sur un concurrent. Ton factuel, pas de
+superlatif. »</p>
+<p>Vous gardez ainsi ce que le benchmark vous a apporté, savoir où vous
+vous situez, sans transporter dans un document commercial un jugement
+sur une entreprise nommée. Si votre client demande une comparaison
+chiffrée, donnez des éléments vérifiables, avec leur source et leur date
+: un périmètre géographique, une certification, un délai publié. C’est
+la seule comparaison que vous pourrez justifier si on vous la
+conteste.</p>
+<p>Marie adapte ce benchmark à ses revues de prestataires : au lieu de
+concurrents, elle analyse les propositions reçues de plusieurs
+fournisseurs pour un même appel. Le processus est identique, et le
+tableau lui permet de présenter une recommandation argumentée à son
+directeur en moins d’une heure.</p>
+<h2 id="le-dossier-daccueil">Le dossier d’accueil</h2>
+<p><em>Chapitre 16, section 16.6.</em></p>
+<p>Si votre organisation a une culture très formelle ou très informelle,
+dites-le dans les « Particularités » : Claude Code ajustera le ton. Un
+cabinet d’avocats et une startup n’accueillent pas de la même façon.</p>
+<p>Si le collaborateur rejoint une équipe distribuée ou en télétravail,
+ajoutez : « Le collaborateur sera en télétravail 3 jours par semaine.
+Adapte le planning pour inclure les réunions de synchronisation à
+distance et les moments de présence obligatoire au bureau. »</p>
+<p>Si vous recrutez régulièrement, gardez le prompt dans un fichier
+texte à côté de vos sources et ne modifiez que « Informations sur la
+personne recrutée » : dix minutes par recrutement. Ne le rangez pas dans
+votre fichier CLAUDE.md : il porte les noms et les habitudes de vos
+collègues, et l’encadré de la section 4.12 dit pourquoi ce fichier n’en
+reçoit aucun.</p>
+<p>Si le poste implique des connaissances techniques spécifiques,
+ajoutez : « Inclus une section “Ressources techniques”. Elle donne les
+liens ou références des documentations que [Prénom] devra consulter dans
+ses deux premières semaines, classés par priorité. » Claude Code
+produira une liste ordonnée.</p>
+<p>Pour un volet « culture d’équipe », ajoutez les règles non écrites
+aux « Particularités » : « les emails internes ne sont jamais envoyés
+après 19h. On tutoie tout le monde, y compris le directeur. Le café du
+vendredi matin n’est pas une réunion, mais tout le monde y va. » Ce sont
+ces détails qui font un guide de survie plutôt qu’un document
+administratif.</p>
+<h2 id="la-préparation-de-négociation">La préparation de
+négociation</h2>
+<p><em>Chapitre 17, section 17.6.</em></p>
+<p>Si la négociation implique plusieurs parties (client, partenaire,
+sous-traitant), demandez une section par partie prenante, avec ses
+enjeux et les tensions possibles. Un accord avec l’une peut déplaire à
+une autre.</p>
+<p>Si vous devez présenter des chiffres, demandez un tableau des
+scénarios : pour chaque niveau de concession, l’impact sur votre chiffre
+d’affaires et la durée du contrat. Votre marge n’y figure pas, le prompt
+l’interdit partout.</p>
+<p>Le sujet peut être plus large : réorganisation d’un partenariat,
+changement de périmètre. Remplacez alors « concessions sur le prix » par
+une section « variables de négociation ». Elle liste tout ce qui peut
+bouger (périmètre, délais, niveaux de service, volume, exclusivité,
+durée) et la valeur de chaque élément pour chaque partie.</p>
+<p>Un usage avancé est la simulation. Une fois la fiche produite,
+demandez : « Joue le rôle du directeur des achats de [client]. Je vais
+te présenter mes arguments et tu vas répondre comme il le ferait, en
+utilisant les objections identifiées dans la fiche. » Les négociateurs
+expérimentés font cet exercice avec un collègue ; Claude Code fait un
+partenaire patient. Sophie s’y est prêtée trois fois, affinant ses
+formulations.</p>
+<p>Une réserve, du même ordre que les autres : Claude Code ne sait rien
+de la personne réelle qui vous fera face. Il rejoue les objections de
+votre propre fiche, pas la psychologie de votre interlocuteur.
+Entraînez-vous avec, ne pariez rien dessus, et ne prêtez jamais à cette
+personne une intention que la simulation aurait inventée.</p>
+
+</article>
+
+<footer>
+  <div class="dedans">
+    <p>Une erreur, une question, un prompt qui ne se comporte plus comme annoncé ? Les corrections paraissent sur <a href="index.html">ccletempsduncafe.github.io</a>.</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copier').forEach(function (bouton) {
+  bouton.addEventListener('click', function () {
+    var bloc = bouton.parentNode.querySelector('pre');
+    var fait = function () {
+      bouton.textContent = 'Copié, collez-le dans Claude Code';
+      window.setTimeout(function () { bouton.textContent = 'Copier le prompt'; }, 4000);
+    };
+    function selectionner() {
+      var plage = document.createRange();
+      plage.selectNodeContents(bloc);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(plage);
+      bouton.textContent = 'Texte sélectionné, faites Ctrl+C ou Cmd+C';
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(bloc.textContent).then(fait, selectionner);
+    } else {
+      selectionner();
+    }
+  });
+});
+</script>
+</body>
+</html>
