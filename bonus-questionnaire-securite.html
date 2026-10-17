@@ -6,14 +6,21 @@
 <title>Cas bonus : le questionnaire sécurité d'un client</title>
 <meta name="description" content="Un treizième cas d'usage, testé comme les douze du livre : remplir un questionnaire sécurité client depuis vos documents, sans inventer une seule réponse.">
 <style>
+/* La page reprend les trois couleurs de la couverture, et rien d'autre : le
+   noir d'encre du fond, le creme du titre, l'orange du sous-titre. Le lecteur
+   arrive avec le livre en main, la page doit se reconnaitre en une seconde.
+   L'orange de la couverture ne passe pas sur fond creme (2,4:1), d'ou la
+   brique, qui est le meme orange assombri jusqu'a 4,8:1 : c'est elle qui porte
+   les liens et les contours de focus, l'orange ne sert que sur fond sombre. */
 :root {
-  --encre: #16202b;
-  --encre-douce: #51637a;
-  --papier: #eaeef4;
-  --carte: #ffffff;
-  --trait: #ccd5e0;
-  --surligneur: #f2e34a;
-  --lien: #1c4c8c;
+  --encre: #16161a;
+  --encre-douce: #5f574e;
+  --papier: #f4f1ec;
+  --carte: #fffdf9;
+  --trait: #ded5c8;
+  --orange: #e8834a;
+  --surligneur: #f8d7b4;
+  --lien: #a8521c;
 }
 
 * { box-sizing: border-box; }
@@ -29,11 +36,11 @@ body {
 
 .bandeau { background: var(--encre); color: var(--papier); padding: 40px 24px 36px; }
 .dedans { max-width: 760px; margin: 0 auto; }
-.bandeau .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.bandeau .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
 .bandeau h1 { margin: 8px 0 10px; font-size: clamp(26px, 4.6vw, 38px); line-height: 1.14; letter-spacing: -0.02em; }
-.bandeau p { margin: 0; max-width: 60ch; color: #b9c6d6; }
+.bandeau p { margin: 0; max-width: 60ch; color: #cfc6ba; }
 .bandeau a { color: var(--papier); }
-.retour { display: inline-block; margin-top: 20px; font-size: 15px; color: #b9c6d6; }
+.retour { display: inline-block; margin-top: 20px; font-size: 15px; color: #cfc6ba; }
 
 article { max-width: 760px; margin: 34px auto 60px; padding: 0 24px; }
 article > h1 { display: none; }
@@ -58,20 +65,20 @@ article hr { border: 0; border-top: 1px solid var(--trait); margin: 30px 0; }
 
 table { width: 100%; border-collapse: collapse; margin: 22px 0; background: var(--carte); font-size: 15.5px; }
 th, td { border: 1px solid var(--trait); padding: 10px 12px; text-align: left; vertical-align: top; }
-th { background: #f6f8fb; }
+th { background: #faf6ef; }
 .tableau { overflow-x: auto; }
 
 .bloc-prompt { margin: 24px 0; }
 .copier {
-  font: inherit; font-weight: 600; font-size: 16px; color: var(--carte);
-  background: var(--lien); border: 1px solid var(--lien); border-radius: 3px;
+  font: inherit; font-weight: 600; font-size: 16px; color: var(--papier);
+  background: var(--encre); border: 1px solid var(--encre); border-radius: 3px;
   padding: 10px 20px; cursor: pointer;
 }
-.copier:hover { background: #163d70; }
-.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.copier:hover { background: #2c2a26; }
+.copier:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
 
 pre {
-  margin: 14px 0 0; padding: 16px 18px; background: #f6f8fb;
+  margin: 14px 0 0; padding: 16px 18px; background: #faf6ef;
   border: 1px solid var(--trait); border-radius: 3px; overflow-x: auto;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 14.5px; line-height: 1.55; white-space: pre-wrap; word-break: break-word;

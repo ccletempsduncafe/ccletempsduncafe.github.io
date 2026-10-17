@@ -6,14 +6,21 @@
 <title>Ranger une instruction en compétence réutilisable — Claude Code pour vos dossiers</title>
 <meta name="description" content="La marche à suivre annoncée par le Chapitre 17 : faire écrire à Claude Code une compétence à partir de votre instruction.">
 <style>
+/* La page reprend les trois couleurs de la couverture, et rien d'autre : le
+   noir d'encre du fond, le creme du titre, l'orange du sous-titre. Le lecteur
+   arrive avec le livre en main, la page doit se reconnaitre en une seconde.
+   L'orange de la couverture ne passe pas sur fond creme (2,4:1), d'ou la
+   brique, qui est le meme orange assombri jusqu'a 4,8:1 : c'est elle qui porte
+   les liens et les contours de focus, l'orange ne sert que sur fond sombre. */
 :root {
-  --encre: #16202b;
-  --encre-douce: #51637a;
-  --papier: #eaeef4;
-  --carte: #ffffff;
-  --trait: #ccd5e0;
-  --surligneur: #f2e34a;
-  --lien: #1c4c8c;
+  --encre: #16161a;
+  --encre-douce: #5f574e;
+  --papier: #f4f1ec;
+  --carte: #fffdf9;
+  --trait: #ded5c8;
+  --orange: #e8834a;
+  --surligneur: #f8d7b4;
+  --lien: #a8521c;
 }
 
 * { box-sizing: border-box; }
@@ -28,27 +35,55 @@ body {
 }
 
 .bandeau {
+  position: relative;
   background: var(--encre);
   color: var(--papier);
   padding: 44px 24px 40px;
+  overflow: hidden;
 }
 
-.dedans { max-width: 940px; margin: 0 auto; }
+.dedans { position: relative; max-width: 940px; margin: 0 auto; }
+
+/* La couverture pose un halo chaud derriere l'ordinateur allume : le bandeau
+   le reprend, pour que le haut de la page et le haut du livre s'eclairent de
+   la meme facon. */
+.bandeau::before {
+  content: "";
+  position: absolute;
+  inset: -40% -10% auto auto;
+  width: 820px;
+  height: 820px;
+  background: radial-gradient(circle, rgba(232, 131, 74, 0.24) 0%, rgba(232, 131, 74, 0) 62%);
+  pointer-events: none;
+}
 
 .bandeau h1 {
   margin: 0 0 10px;
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, system-ui, sans-serif;
   font-size: clamp(28px, 5vw, 42px);
   letter-spacing: -0.022em;
   line-height: 1.12;
 }
 
-.bandeau p { margin: 0; max-width: 60ch; color: #b9c6d6; }
+/* Le filet orange sous le titre vient de la couverture, ou il separe le titre
+   du sous-titre. Il sert ici de signature : on le retrouve sur les annexes et
+   au-dessus des rubriques. */
+.bandeau h1::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 18px;
+  background: var(--orange);
+}
+
+.bandeau p { margin: 0; max-width: 60ch; color: #cfc6ba; }
 
 .adresse {
   display: inline-block;
   margin-top: 22px;
   padding: 7px 14px;
-  border: 1px solid #3b4c60;
+  border: 1px solid #4a423a;
   border-radius: 3px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 15px;
@@ -58,7 +93,69 @@ body {
 .bandeau .maj {
   margin-top: 14px;
   font-size: 15px;
-  color: #93a5ba;
+  color: #a2978a;
+}
+
+/* L'accueil porte la couverture, les annexes non : elles gardent le bandeau
+   simple ci-dessus. */
+.bandeau--jaquette { padding: 56px 24px 52px; }
+
+.bandeau--jaquette .dedans {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Sans cette ligne, le titre en capitales fixe une largeur plancher a sa
+   colonne : sur un telephone, la grille s'elargit au mot le plus long et c'est
+   TOUTE la page qui deborde, bandeau compris. */
+.bandeau--jaquette .texte-bandeau { min-width: 0; }
+
+.bandeau--jaquette h1 {
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  line-height: 1.04;
+}
+
+/* Deux teintes dans le titre, comme sur la couverture : le sujet en creme, ce
+   qu'on vient y faire en orange. */
+.bandeau--jaquette h1 .geste { color: var(--orange); }
+
+.bandeau--jaquette .promesse {
+  margin-top: 18px;
+  font-size: 18px;
+  color: #cfc6ba;
+}
+
+.bandeau--jaquette .promesse strong { color: var(--papier); font-weight: 600; }
+
+.jaquette {
+  display: block;
+  width: 232px;
+  height: auto;
+  border-radius: 3px;
+  transform: rotate(-2.2deg);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.55), 0 2px 0 rgba(255, 255, 255, 0.07);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .jaquette { animation: pose 620ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+  @keyframes pose {
+    from { opacity: 0; transform: rotate(-2.2deg) translateY(16px); }
+    to { opacity: 1; transform: rotate(-2.2deg) translateY(0); }
+  }
+}
+
+@media (max-width: 760px) {
+  .bandeau--jaquette { padding: 40px 24px 42px; }
+  .bandeau--jaquette .dedans { grid-template-columns: 1fr; gap: 26px; }
+  .bandeau--jaquette .couv { order: -1; }
+  .bandeau--jaquette h1 { font-size: clamp(24px, 6.6vw, 34px); }
+  .bandeau--jaquette h1::after { margin-top: 14px; }
+  .jaquette { width: 166px; }
 }
 
 .mode-emploi {
@@ -90,7 +187,7 @@ body {
   text-decoration: none;
 }
 .raccourcis a:hover { border-color: var(--lien); }
-.raccourcis a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.raccourcis a:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
 .raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
 .raccourcis .ch { display: block; font-size: 12px; font-weight: 400; color: var(--encre-douce); }
 
@@ -112,15 +209,22 @@ main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
    le chapitre d'ou il vient, puisque c'est souvent par la que le lecteur
    arrive. */
 .onglet {
-  background: var(--encre);
-  color: var(--papier);
+  background: var(--orange);
+  color: var(--encre);
   padding: 16px 16px 18px;
   text-align: center;
   border-bottom-right-radius: 4px;
 }
 
-.onglet .mot { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
-.onglet .rang { display: block; font-size: 40px; font-weight: 700; line-height: 1.1; }
+.onglet .mot { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #4a2409; }
+.onglet .rang {
+  display: block;
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, system-ui, sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
 
 .corps { padding: 20px 24px 24px; min-width: 0; }
 
@@ -134,6 +238,7 @@ main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
 .corps h2 mark {
   background: transparent;
   color: inherit;
+  margin-left: -3px;
   padding: 1px 3px;
   transition: background 160ms ease-in;
 }
@@ -141,25 +246,28 @@ main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
 
 .sous-titre { margin: 0 0 16px; color: var(--encre-douce); font-size: 15px; }
 
+/* Le bouton est sombre et l'orange est reserve a la confirmation : sur
+   vingt et une fiches, vingt et un boutons orange auraient couvert la page, et
+   le lecteur n'aurait plus vu lequel il venait d'appuyer. */
 .copier {
   font: inherit;
   font-weight: 600;
   font-size: 16px;
-  color: var(--carte);
-  background: var(--lien);
-  border: 1px solid var(--lien);
+  color: var(--papier);
+  background: var(--encre);
+  border: 1px solid var(--encre);
   border-radius: 3px;
   padding: 10px 20px;
   cursor: pointer;
 }
-.copier:hover { background: #163d70; }
-.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
-.fiche.copiee .copier { background: var(--encre); border-color: var(--encre); }
+.copier:hover { background: #2c2a26; }
+.copier:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
+.fiche.copiee .copier { background: var(--orange); border-color: var(--orange); color: var(--encre); }
 
 pre {
   margin: 16px 0 0;
   padding: 16px 18px;
-  background: #f6f8fb;
+  background: #faf6ef;
   border: 1px solid var(--trait);
   border-radius: 3px;
   overflow-x: auto;
@@ -181,16 +289,24 @@ pre {
   border-radius: 4px;
   text-decoration: none;
 }
-.bonus .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #93a5ba; }
+.bonus .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
 .bonus h2 { margin: 6px 0 8px; font-size: 21px; letter-spacing: -0.014em; }
-.bonus p { margin: 0; max-width: 62ch; color: #b9c6d6; }
-.bonus .fleche { display: inline-block; margin-top: 12px; color: var(--papier); font-weight: 600; }
+.bonus p { margin: 0; max-width: 62ch; color: #cfc6ba; }
+.bonus .fleche { display: inline-block; margin-top: 12px; color: var(--orange); font-weight: 600; }
 .bonus:hover .fleche { text-decoration: underline; }
-.bonus:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.bonus:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 
 /* Les autres rubriques que le livre promet a cette page. Elles ne sont pas des
    prompts : elles se presentent donc en liste, pas en fiches a onglet. */
-.titre-rubriques { margin: 44px 0 0; font-size: 21px; letter-spacing: -0.014em; }
+.titre-rubriques { margin: 48px 0 0; font-size: 21px; letter-spacing: -0.014em; }
+.titre-rubriques::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-bottom: 14px;
+  background: var(--orange);
+}
 
 .rubriques { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
 .rubriques a {
@@ -203,7 +319,7 @@ pre {
   color: var(--encre);
 }
 .rubriques a:hover { border-color: var(--lien); }
-.rubriques a:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.rubriques a:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
 .rubriques strong { display: block; color: var(--lien); font-size: 17px; }
 .rubriques span { display: block; margin-top: 4px; color: var(--encre-douce); font-size: 15.5px; max-width: 66ch; }
 
@@ -267,12 +383,12 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 
 .bloc-prompt { margin: 20px 0 6px; }
 .copier {
-  font: inherit; font-weight: 600; font-size: 16px; color: var(--carte);
-  background: var(--lien); border: 1px solid var(--lien); border-radius: 3px;
+  font: inherit; font-weight: 600; font-size: 16px; color: var(--papier);
+  background: var(--encre); border: 1px solid var(--encre); border-radius: 3px;
   padding: 10px 20px; cursor: pointer;
 }
-.copier:hover { background: #163d70; }
-.copier:focus-visible { outline: 3px solid var(--surligneur); outline-offset: 2px; }
+.copier:hover { background: #2c2a26; }
+.copier:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
 .etapes { max-width: 68ch; }
 .etapes li { margin-bottom: 8px; }
 </style>
