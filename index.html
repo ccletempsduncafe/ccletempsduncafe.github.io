@@ -2738,6 +2738,15 @@ choisit.
   sans source ne s&#x27;écrit pas. Si une date ou un montant
   y est écrit dans une autre forme que la mienne,
   recopie-le tel quel et signale-le-moi.
+- Une adresse web sans date n&#x27;est pas une source datée.
+  Un signal dont la colonne de date est vide ne peut
+  donc pas figurer dans la partie de ce qui est établi,
+  même suivi d&#x27;un [À COMPLÉTER] : sa place est la
+  dernière partie de la fiche, celle de ce qui manque
+  pour décider, et il s&#x27;y écrit comme une piste à
+  vérifier. C&#x27;est le signal le plus intéressant qui
+  tombe le plus souvent sous cette règle, et c&#x27;est
+  précisément pour lui qu&#x27;elle existe.
 - Seuls calculs autorisés : compter les signaux d&#x27;un
   compte, reprendre son rang et son critère de
   classement tels qu&#x27;ils sont écrits, et donner
@@ -2775,7 +2784,9 @@ neuve, dans cet ordre et avec ces longueurs :
 2. Ce qui est établi : les signaux relevés, chacun avec
    sa source et sa date, en tableau, suivi de 150 à 250
    mots qui disent ce que ces signaux montrent de la
-   situation du compte.
+   situation du compte. Un signal dont la date manque
+   n&#x27;entre ni dans ce tableau ni dans ces mots : il va
+   au point 5.
 3. Ce que j&#x27;en déduis, et qui reste une hypothèse : 150
    à 250 mots. Chaque phrase annonce qu&#x27;elle déduit,
    et de quel signal elle part.
@@ -2953,6 +2964,9 @@ reste.
    aussi qu&#x27;aucun nom de personne physique ne figure
    dans les fiches, et qu&#x27;aucune phrase de la partie
    « ce qui est établi » n&#x27;est dépourvue de source.
+   Reprends cette partie signal par signal et vérifie
+   que chacun porte une date : celui dont la date
+   manque se déplace au point 5, et tu me dis lequel.
 3. Donne-moi, dans ta réponse et non dans le
    document :
    - la liste des [À COMPLÉTER], avec pour chacun
@@ -6901,11 +6915,17 @@ La mise en page suit le format que je t&#x27;ai demandé.
 Pour un document : A4 portrait, marges de 25 mm, corps
 en 10,5 points, prose justifiée, titres posés avec les
 styles de titre, pied de page paginé, logo et couleurs
-de mon dossier charte, et chaque [À COMPLÉTER] surligné
-en jaune. Pour un tableau : .csv à séparateur
-point-virgule, virgule décimale, UTF-8 avec signature,
-dates en AAAA-MM-JJ. Pour une page : un seul fichier
-.html, aucune ressource appelée sur internet.
+de mon dossier charte, gras réservé aux titres et à
+aucun mot du corps, quatre colonnes au plus par
+tableau, et chaque [À COMPLÉTER] surligné en jaune et
+écrit avec une espace insécable. Si l&#x27;information ne
+tient pas en quatre colonnes, fais deux tableaux
+plutôt qu&#x27;un tableau serré. Pour un tableau : .csv à
+séparateur point-virgule, virgule décimale, UTF-8 avec
+signature, dates en AAAA-MM-JJ, et les [À COMPLÉTER]
+en espaces ordinaires, qu&#x27;un filtre Excel sache
+trouver. Pour une page : un seul fichier .html, aucune
+ressource appelée sur internet.
 
 ## Avant de me rendre la main
 
