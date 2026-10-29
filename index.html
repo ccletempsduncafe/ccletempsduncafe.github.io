@@ -340,6 +340,68 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
 @media (prefers-reduced-motion: reduce) {
   .corps h2 mark { transition: none; }
 }
+
+/* Vingt et un prompts de trois cents lignes font cent cinquante ecrans : un
+   lecteur qui vise le quinzieme traversait quatorze blocs. Seul le TEXTE se
+   replie. Le titre, la section et le bouton restent dehors : ce sont eux qu'on
+   parcourt pour choisir, et copier doit rester un seul geste. */
+details.bloc-prompt { margin-top: 16px; }
+
+/* `display: inline-block` supprime le marqueur natif du summary, et la ligne
+   se lisait alors comme un lien : rien ne disait qu'elle se replie. Le chevron
+   est donc dessine, et il pivote. C'est la seule animation de la page qui
+   reponde a un geste du lecteur, et elle lui montre ce qui vient de changer. */
+details.bloc-prompt > summary {
+  cursor: pointer;
+  display: inline-block;
+  list-style: none;
+  color: var(--lien);
+  font-weight: 600;
+  padding: 2px 0;
+}
+details.bloc-prompt > summary::-webkit-details-marker { display: none; }
+details.bloc-prompt > summary::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 10px;
+  vertical-align: 2px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 160ms ease;
+}
+details.bloc-prompt[open] > summary::before { transform: rotate(45deg); }
+details.bloc-prompt > summary:focus-visible { outline: 3px solid var(--lien); outline-offset: 3px; }
+details.bloc-prompt > summary .lignes { font-weight: 400; color: var(--encre-douce); }
+details.bloc-prompt[open] > summary { margin-bottom: 2px; }
+
+/* Le retour a la liste ne s'affiche qu'une fois le prompt deplie. Replie, la
+   fiche tient en six lignes et la liste est a un demi-ecran : le lien n'y
+   servait a rien, et vingt et une fois rien fait une page bavarde. */
+.haut { display: none; margin: 14px 0 0; font-size: 14px; }
+details.bloc-prompt[open] ~ .haut { display: block; }
+.haut a { color: var(--encre-douce); text-decoration: none; }
+.haut a:hover { color: var(--lien); text-decoration: underline; }
+.haut a:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
+
+.tout-deplier { margin: 10px 0 0; }
+.tout-deplier button {
+  font: inherit;
+  font-weight: 600;
+  color: var(--lien);
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.tout-deplier button:focus-visible { outline: 3px solid var(--lien); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  details.bloc-prompt > summary::before { transition: none; }
+}
 </style>
 </head>
 <body>
@@ -361,30 +423,31 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
   <p>Tous les prompts du livre sont ici, dans l'ordre des chapitres. Repérez le chapitre que vous lisez, appuyez sur « Copier le prompt », puis collez-le dans Claude Code. Rien à installer, rien à créer comme compte.</p>
   <p>Chaque prompt porte un numéro, de P1 à P21, et c'est le même numéro que dans l'annexe imprimée « Les vingt et un prompts du livre ». Le Chapitre 11 en donne deux, le Chapitre 19 en donne trois : chacun se lance après le précédent, et chacun a sa fiche.</p>
   <p>Les crochets ne demandent pas tous le même geste. En minuscules dans le corps d'un prompt, c'est une case à remplir : remplacez le tout, crochets compris, par votre information. Un crochet oublié et votre assistant travaillera pour une entreprise qui s'appelle « Nom de l'entreprise ». Dans un nom de fichier, comme <code>rapport-[mois]-[année].md</code>, laissez-les tels quels. Et en majuscules, comme <code>[DONNÉE MANQUANTE]</code>, ne les tapez jamais : c'est Claude Code qui les écrit pour signaler ce qui lui manque, et c'est la raison de ne pas y toucher.</p>
-  <ul class="raccourcis">
+  <ul class="raccourcis" id="sommaire">
     <li class="intitule">Aller au prompt</li>
     <li><a href="#prompt-p1">P1<span class="ch">ch. 3</span></a></li>
     <li><a href="#prompt-p2">P2<span class="ch">ch. 4</span></a></li>
-    <li><a href="#prompt-p19">P19<span class="ch">ch. 5</span></a></li>
-    <li><a href="#prompt-p3">P3<span class="ch">ch. 7</span></a></li>
-    <li><a href="#prompt-p4">P4<span class="ch">ch. 8</span></a></li>
-    <li><a href="#prompt-p5">P5<span class="ch">ch. 9</span></a></li>
-    <li><a href="#prompt-p6">P6<span class="ch">ch. 10</span></a></li>
-    <li><a href="#prompt-p7">P7<span class="ch">ch. 11</span></a></li>
+    <li><a href="#prompt-p3">P3<span class="ch">ch. 5</span></a></li>
+    <li><a href="#prompt-p4">P4<span class="ch">ch. 7</span></a></li>
+    <li><a href="#prompt-p5">P5<span class="ch">ch. 8</span></a></li>
+    <li><a href="#prompt-p6">P6<span class="ch">ch. 9</span></a></li>
+    <li><a href="#prompt-p7">P7<span class="ch">ch. 10</span></a></li>
     <li><a href="#prompt-p8">P8<span class="ch">ch. 11</span></a></li>
-    <li><a href="#prompt-p9">P9<span class="ch">ch. 12</span></a></li>
-    <li><a href="#prompt-p10">P10<span class="ch">ch. 13</span></a></li>
-    <li><a href="#prompt-p11">P11<span class="ch">ch. 14</span></a></li>
-    <li><a href="#prompt-p12">P12<span class="ch">ch. 15</span></a></li>
-    <li><a href="#prompt-p13">P13<span class="ch">ch. 16</span></a></li>
-    <li><a href="#prompt-p14">P14<span class="ch">ch. 17</span></a></li>
-    <li><a href="#prompt-p15">P15<span class="ch">ch. 18</span></a></li>
-    <li><a href="#prompt-p16">P16<span class="ch">ch. 19</span></a></li>
+    <li><a href="#prompt-p9">P9<span class="ch">ch. 11</span></a></li>
+    <li><a href="#prompt-p10">P10<span class="ch">ch. 12</span></a></li>
+    <li><a href="#prompt-p11">P11<span class="ch">ch. 13</span></a></li>
+    <li><a href="#prompt-p12">P12<span class="ch">ch. 14</span></a></li>
+    <li><a href="#prompt-p13">P13<span class="ch">ch. 15</span></a></li>
+    <li><a href="#prompt-p14">P14<span class="ch">ch. 16</span></a></li>
+    <li><a href="#prompt-p15">P15<span class="ch">ch. 17</span></a></li>
+    <li><a href="#prompt-p16">P16<span class="ch">ch. 18</span></a></li>
     <li><a href="#prompt-p17">P17<span class="ch">ch. 19</span></a></li>
     <li><a href="#prompt-p18">P18<span class="ch">ch. 19</span></a></li>
+    <li><a href="#prompt-p19">P19<span class="ch">ch. 19</span></a></li>
     <li><a href="#prompt-p20">P20<span class="ch">ch. 20</span></a></li>
     <li><a href="#prompt-p21">P21<span class="ch">ch. 21</span></a></li>
   </ul>
+  <p class="tout-deplier"><button id="tout-deplier" type="button">Déplier les vingt et un prompts</button></p>
 </section>
 
 <main>
@@ -392,9 +455,11 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
         <div class="onglet"><span class="rang">P1</span><span class="mot">Chapitre 3</span></div>
         <div class="corps">
           <h2><mark>Les quatre principes d&#x27;un bon prompt</mark></h2>
-          <p class="sous-titre">L&#x27;exercice du chapitre, celui de Sophie, donné pour montrer les quatre principes assemblés et non pour être joué tel quel : il décrit son métier et son client, pas les vôtres. Le prompt de proposition commerciale prêt à l&#x27;emploi est le P9.</p>
+          <p class="sous-titre">L&#x27;exercice du chapitre, celui de Sophie, donné pour montrer les quatre principes assemblés et non pour être joué tel quel : il décrit son métier et son client, pas les vôtres. Le prompt de proposition commerciale prêt à l&#x27;emploi est le P10.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 245 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis consultante indépendante en transformation
 organisationnelle. Mon client est le directeur des
@@ -639,6 +704,8 @@ reste.
    demandé, et dis lequel. Sois sévère : pour chaque
    note inférieure à 5, dis ce qu&#x27;il faudrait pour
    gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
       <article class="fiche" id="prompt-p2">
@@ -647,7 +714,9 @@ reste.
           <h2><mark>Quinze minutes pour que Claude Code vous connaisse</mark></h2>
           <p class="sous-titre">Le seul prompt du livre dont le résultat n&#x27;est pas un document mais un entretien, et dont le destinataire est Claude Code. Il produit le fichier CLAUDE.md que les douze tâches suivantes utilisent sans que le lecteur ait à y penser. Son enjeu n&#x27;est pas la rédaction mais la mécanique de l&#x27;entretien : qui parle, quand, et ce qui se passe quand le lecteur ne sait pas répondre.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 209 lignes</span></summary>
+            <pre>## Contexte
 
 Je veux créer mon fichier CLAUDE.md, celui que tu liras
 au début de chacune de nos sessions, avant même ma
@@ -856,15 +925,19 @@ reste.
    de données sensibles. Sois sévère : pour chaque note
    inférieure à 5, dis ce qu&#x27;il faudrait pour gagner
    un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p19">
-        <div class="onglet"><span class="rang">P19</span><span class="mot">Chapitre 5</span></div>
+      <article class="fiche" id="prompt-p3">
+        <div class="onglet"><span class="rang">P3</span><span class="mot">Chapitre 5</span></div>
         <div class="corps">
           <h2><mark>Reprendre demain où vous vous êtes arrêté</mark></h2>
           <p class="sous-titre">Le plus court prompt du livre, et il doit le rester : il se tape à la fin d&#x27;une longue séance, au moment où le lecteur n&#x27;a plus d&#x27;énergie. Sa valeur n&#x27;est pas dans sa longueur mais dans trois exigences que le prompt court laissait à Claude Code, et qui décident à elles seules si le fichier servira le lendemain : la raison derrière chaque décision, une prochaine action exécutable plutôt qu&#x27;un thème, et une longueur bornée en mots, puisque ce fichier sera relu en entier au début de la session suivante.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 135 lignes</span></summary>
+            <pre>## Contexte
 
 On s&#x27;arrête pour aujourd&#x27;hui. Écris la passation que tu
 reliras demain, dans une session vide, avant ma première
@@ -999,15 +1072,19 @@ reste.
    exécutable de la prochaine action, brièveté, absence de
    recopie. Sois sévère : pour chaque note inférieure à 5,
    dis ce qu&#x27;il faudrait pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p3">
-        <div class="onglet"><span class="rang">P3</span><span class="mot">Chapitre 7</span></div>
+      <article class="fiche" id="prompt-p4">
+        <div class="onglet"><span class="rang">P4</span><span class="mot">Chapitre 7</span></div>
         <div class="corps">
           <h2><mark>Rapport consolidé depuis vos systèmes métier</mark></h2>
           <p class="sous-titre">Le rapport de performance mensuelle à partir de trois exports de provenances différentes, où chaque chiffre reste rattaché au fichier dont il vient. C&#x27;est la seule chose qui compte en revue mensuelle : un chiffre contesté dont on ne sait plus d&#x27;où il sort coûte la réunion entière.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 333 lignes</span></summary>
+            <pre>## Contexte
 
 Chaque mois, [le destinataire de ce rapport] attend un
 rapport de performance qu&#x27;il lit en revue mensuelle,
@@ -1340,15 +1417,19 @@ reste.
    Dis-moi combien tu en as trouvé et corrige-les.
    Dis-moi aussi, en une phrase, si la comparaison
    avec le mois précédent était possible ou non.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p4">
-        <div class="onglet"><span class="rang">P4</span><span class="mot">Chapitre 8</span></div>
+      <article class="fiche" id="prompt-p5">
+        <div class="onglet"><span class="rang">P5</span><span class="mot">Chapitre 8</span></div>
         <div class="corps">
           <h2><mark>Fiche compte complète depuis vos sources dispersées</mark></h2>
           <p class="sous-titre">Produit une fiche de compte interne, chaque élément rattaché au fichier dont il vient et daté, dont la première page se lit debout en cinq minutes avant d&#x27;entrer en réunion.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 319 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Je prépare une
 revue de compte avec [nom du client], et la réunion a
@@ -1667,15 +1748,19 @@ Avant de me rendre la main :
    t&#x27;ai demandé, et dis lequel. Sois sévère : pour
    chaque note inférieure à 5, dis ce qu&#x27;il faudrait
    pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p5">
-        <div class="onglet"><span class="rang">P5</span><span class="mot">Chapitre 9</span></div>
+      <article class="fiche" id="prompt-p6">
+        <div class="onglet"><span class="rang">P6</span><span class="mot">Chapitre 9</span></div>
         <div class="corps">
           <h2><mark>Du compte-rendu Teams aux livrables opérationnels</mark></h2>
           <p class="sous-titre">Le prompt qui produit trois fichiers de trois formats différents à partir d&#x27;une seule source : le suivi des actions en .csv parce qu&#x27;il se trie, l&#x27;email aux absents en texte parce qu&#x27;un email ne s&#x27;envoie pas en pièce jointe, le brief à la direction en .docx parce qu&#x27;il circule. C&#x27;est le même compte-rendu, trois destinataires, trois formes.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 364 lignes</span></summary>
+            <pre>## Contexte
 
 Je sors d&#x27;une réunion de [type de réunion], tenue le
 [date de la réunion], qui a réuni
@@ -2039,15 +2124,19 @@ Trois contrôles s&#x27;ajoutent, un par fichier :
 - vérifie que le brief ne liste pas les actions une
   par une, et dis-moi qui tu as retenu comme absent,
   et sur quoi tu l&#x27;as déduit.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p6">
-        <div class="onglet"><span class="rang">P6</span><span class="mot">Chapitre 10</span></div>
+      <article class="fiche" id="prompt-p7">
+        <div class="onglet"><span class="rang">P7</span><span class="mot">Chapitre 10</span></div>
         <div class="corps">
           <h2><mark>Votre synthèse de veille du lundi en dix minutes</mark></h2>
           <p class="sous-titre">La note de veille hebdomadaire, telle qu&#x27;elle part chez les clients de Sophie. Ce n&#x27;est pas un résumé de presse interne : c&#x27;est un livrable commercial, et la règle qui le tient est qu&#x27;aucune actualité ne peut venir d&#x27;ailleurs que du dossier de la semaine.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 321 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase] et mes clients sont
 [type de clients].
@@ -2368,15 +2457,19 @@ reste.
    source et une date, et que la liste « Écarté cette
    semaine » figure bien dans le document et porte un
    motif par ligne.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p7">
-        <div class="onglet"><span class="rang">P7</span><span class="mot">Chapitre 11</span></div>
+      <article class="fiche" id="prompt-p8">
+        <div class="onglet"><span class="rang">P8</span><span class="mot">Chapitre 11</span></div>
         <div class="corps">
           <h2><mark>Détecter et qualifier des prospects à partir de signaux publics</mark></h2>
-          <p class="sous-titre">Le prompt de détection du chapitre : il part d&#x27;une liste de comptes et rend deux tableaux triables, les comptes classés par urgence et les signaux avec leur source. Il classe des comptes et des signaux publics, jamais des personnes. L&#x27;analyse personnalisée des meilleurs comptes est le P8.</p>
+          <p class="sous-titre">Le prompt de détection du chapitre : il part d&#x27;une liste de comptes et rend deux tableaux triables, les comptes classés par urgence et les signaux avec leur source. Il classe des comptes et des signaux publics, jamais des personnes. L&#x27;analyse personnalisée des meilleurs comptes est le P9.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 261 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Je prospecte des
 entreprises, pas des particuliers, et mon offre est :
@@ -2637,15 +2730,19 @@ qui suit : dis-moi seulement ce qui manque.
 7. Rappelle-moi en une phrase que je dois ouvrir
    chaque adresse citée avant d&#x27;appeler : un signal
    peut être périmé sans être faux.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p8">
-        <div class="onglet"><span class="rang">P8</span><span class="mot">Chapitre 11</span></div>
+      <article class="fiche" id="prompt-p9">
+        <div class="onglet"><span class="rang">P9</span><span class="mot">Chapitre 11</span></div>
         <div class="corps">
           <h2><mark>Détecter et qualifier des prospects à partir de signaux publics, second prompt</mark></h2>
-          <p class="sous-titre">Le second prompt du chapitre. Il se colle dans la même conversation que le P7, une fois le tableau de comptes cibles produit et relu, et prend ce tableau pour seule entrée. Il ne cherche rien de nouveau : il approfondit les trois premiers comptes du classement. Le document qui en sort est un document de décision, pour Thomas puis pour son directeur commercial, et non un message à envoyer au prospect.</p>
+          <p class="sous-titre">Le second prompt du chapitre. Il se colle dans la même conversation que le P8, une fois le tableau de comptes cibles produit et relu, et prend ce tableau pour seule entrée. Il ne cherche rien de nouveau : il approfondit les trois premiers comptes du classement. Le document qui en sort est un document de décision, pour Thomas puis pour son directeur commercial, et non un message à envoyer au prospect.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 337 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Je viens de faire
 produire, dans cette même conversation, un tableau de
@@ -2982,15 +3079,19 @@ reste.
    t&#x27;ai demandé, et dis lequel. Sois sévère : pour
    chaque note inférieure à 5, dis ce qu&#x27;il faudrait
    pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p9">
-        <div class="onglet"><span class="rang">P9</span><span class="mot">Chapitre 12</span></div>
+      <article class="fiche" id="prompt-p10">
+        <div class="onglet"><span class="rang">P10</span><span class="mot">Chapitre 12</span></div>
         <div class="corps">
           <h2><mark>Proposition commerciale structurée en 45 minutes</mark></h2>
           <p class="sous-titre">Le prompt de proposition commerciale prêt à l&#x27;emploi, celui vers lequel le P1 renvoie. Il produit une page de garde et six parties, chiffrage détaillé compris, destinée à un client qui la lira à côté de deux autres : le document doit donc se comprendre sans avoir assisté aux échanges. Les forfaits, les délais et les clauses sont ceux de l&#x27;employeur et ne s&#x27;inventent pas.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 346 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Je réponds à une demande
 de mission reçue d&#x27;un client.
@@ -3336,15 +3437,19 @@ reste.
    t&#x27;ai demandé, et dis lequel. Sois sévère : pour
    chaque note inférieure à 5, dis ce qu&#x27;il faudrait
    pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p10">
-        <div class="onglet"><span class="rang">P10</span><span class="mot">Chapitre 13</span></div>
+      <article class="fiche" id="prompt-p11">
+        <div class="onglet"><span class="rang">P11</span><span class="mot">Chapitre 13</span></div>
         <div class="corps">
           <h2><mark>Appel d&#x27;offres : extraire les critères importants en une heure</mark></h2>
           <p class="sous-titre">Analyse un dossier de consultation entier et produit deux fichiers, parce qu&#x27;ils ne servent pas au même geste : une grille de dépouillement en .csv, que vous triez et répartissez entre les membres de votre équipe, et une note de vigilance en .docx, qui porte les dates limites, les contradictions entre les pièces et ce qui manque pour répondre. Le prompt n&#x27;a le droit de trancher aucune de ces contradictions.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 400 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase] et je réponds à des
 appels d&#x27;offres.
@@ -3744,15 +3849,19 @@ Avant de me rendre la main :
    sans fichier source, sans article et sans page, que
    les dates sont au format AAAA-MM-JJ, et que chaque
    pièce exigée porte l&#x27;article qui l&#x27;exige.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p11">
-        <div class="onglet"><span class="rang">P11</span><span class="mot">Chapitre 14</span></div>
+      <article class="fiche" id="prompt-p12">
+        <div class="onglet"><span class="rang">P12</span><span class="mot">Chapitre 14</span></div>
         <div class="corps">
           <h2><mark>Benchmark concurrentiel depuis des sources externes</mark></h2>
           <p class="sous-titre">Le benchmark de trois concurrents nommés, à partir de pages et de rapports publics enregistrés en PDF. C&#x27;est le document le plus exposé de la série : une phrase inexacte sur une société identifiable engage l&#x27;employeur du lecteur. Le prompt sépare donc, dans le document lui-même, ce qu&#x27;une source datée établit de ce que le lecteur en déduit.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 384 lignes</span></summary>
+            <pre>## Contexte
 
 Je réponds à des appels d&#x27;offres dans le secteur
 [votre secteur]. Je prépare un benchmark de trois
@@ -4136,15 +4245,19 @@ reste.
    colonne du tableau chaque axe de différenciation
    s&#x27;appuie. Si l&#x27;un ne s&#x27;appuie sur aucune cellule,
    retire-le du document et dis-le-moi.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p12">
-        <div class="onglet"><span class="rang">P12</span><span class="mot">Chapitre 15</span></div>
+      <article class="fiche" id="prompt-p13">
+        <div class="onglet"><span class="rang">P13</span><span class="mot">Chapitre 15</span></div>
         <div class="corps">
           <h2><mark>Tableau de bord interactif dans votre navigateur, sans logiciel payant</mark></h2>
           <p class="sous-titre">Le seul prompt du livre dont le livrable reste une page .html, et c&#x27;est voulu : la page est interactive, elle s&#x27;ouvre hors connexion et se lit sans licence. Son enjeu n&#x27;est pas la rédaction mais l&#x27;autonomie du fichier : une seule police appelée sur internet, et le tableau de bord ne s&#x27;ouvre plus dans l&#x27;avion ni chez le chef de projet qui n&#x27;a pas le réseau de l&#x27;entreprise. Le prompt l&#x27;interdit, puis fait vérifier l&#x27;interdiction.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 350 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [nombre] projets en parallèle. Chaque
 responsable de projet m&#x27;envoie sa mise à jour
@@ -4494,15 +4607,19 @@ reste.
    lisibilité en noir et blanc, respect de la charte.
    Sois sévère : pour chaque note inférieure à 5, dis ce
    qu&#x27;il faudrait pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p13">
-        <div class="onglet"><span class="rang">P13</span><span class="mot">Chapitre 16</span></div>
+      <article class="fiche" id="prompt-p14">
+        <div class="onglet"><span class="rang">P14</span><span class="mot">Chapitre 16</span></div>
         <div class="corps">
           <h2><mark>Dossier d&#x27;accueil personnalisé pour chaque nouvel arrivant</mark></h2>
           <p class="sous-titre">Le livret d&#x27;accueil en quatre parties, produit directement sous une forme imprimable et agrafable. C&#x27;est le seul livrable du lot qui est lu par quelqu&#x27;un qui ne connaît rien à l&#x27;organisation : un sigle non développé ou un nom de projet sans explication y est un défaut de fond, et un relecteur interne ne le voit pas. C&#x27;est aussi le seul qui parle de collègues nommés, d&#x27;où un périmètre d&#x27;annuaire écrit noir sur blanc.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 350 lignes</span></summary>
+            <pre>## Contexte
 
 J&#x27;accueille une nouvelle recrue dans une équipe de
 [nombre] personnes, et je veux qu&#x27;elle trouve sur son
@@ -4852,15 +4969,19 @@ reste.
    rien de ce que je t&#x27;ai interdit de faire figurer sur
    mes collègues, et vérifie que chaque partie commence
    bien en haut d&#x27;une page.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p14">
-        <div class="onglet"><span class="rang">P14</span><span class="mot">Chapitre 17</span></div>
+      <article class="fiche" id="prompt-p15">
+        <div class="onglet"><span class="rang">P15</span><span class="mot">Chapitre 17</span></div>
         <div class="corps">
           <h2><mark>Préparer une négociation difficile en 30 minutes</mark></h2>
           <p class="sous-titre">La fiche que Sophie tient en main pendant l&#x27;entretien, et le seul livrable du livre qui n&#x27;est destiné à personne d&#x27;autre qu&#x27;à son auteur. Deux conséquences commandent tout le prompt : la feuille se consulte d&#x27;un coup d&#x27;œil, et elle ne contient rien que l&#x27;autre partie puisse lire par-dessus la table sans dommage. Elle ne porte donc ni logo, ni couverture, ni marge réelle.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 419 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. J&#x27;ai une négociation
 de renouvellement de contrat dans [nombre] jours, avec un
@@ -5279,15 +5400,19 @@ Puis, en plus, et toujours dans ta réponse :
    s&#x27;envoie à personne, et qu&#x27;aucun de ses passages ne
    s&#x27;avance comme une analyse du marché : il dit ce que
    mes fichiers contiennent, rien d&#x27;autre.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p15">
-        <div class="onglet"><span class="rang">P15</span><span class="mot">Chapitre 18</span></div>
+      <article class="fiche" id="prompt-p16">
+        <div class="onglet"><span class="rang">P16</span><span class="mot">Chapitre 18</span></div>
         <div class="corps">
           <h2><mark>Tableau de bord de portefeuille depuis vos comptes-rendus Teams</mark></h2>
           <p class="sous-titre">Le seul prompt du livre qui soit relancé à date fixe, chaque lundi, sur des sources nouvelles. Deux fichiers en sortent : la note d&#x27;une page que le directeur de Marie lit, et le détail par projet qu&#x27;elle garde et compare d&#x27;une semaine sur l&#x27;autre. D&#x27;où la contrainte qui commande tout le reste, la structure ne bouge pas d&#x27;une semaine à l&#x27;autre, et d&#x27;où le piège du cas, un projet dont le compte-rendu manque n&#x27;est pas un projet qui va bien.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 396 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [nombre] projets menés en parallèle par
 plusieurs équipes. Chaque lundi matin,
@@ -5683,15 +5808,19 @@ reste.
    section de la note et les onze en-têtes du fichier de
    détail, pour que je vérifie qu&#x27;ils sont identiques à
    ceux de la semaine dernière.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p16">
-        <div class="onglet"><span class="rang">P16</span><span class="mot">Chapitre 19</span></div>
+      <article class="fiche" id="prompt-p17">
+        <div class="onglet"><span class="rang">P17</span><span class="mot">Chapitre 19</span></div>
         <div class="corps">
           <h2><mark>Outiller vos propres tâches répétitives</mark></h2>
           <p class="sous-titre">Le retournement du chapitre, et le prompt qui écrit les prompts du lecteur : il part d&#x27;un livrable déjà produit à la main et en déduit l&#x27;instruction qui l&#x27;aurait produit. Son enjeu n&#x27;est pas la rédaction du mois d&#x27;exemple mais la réutilisation du mois suivant : tout ce qui change d&#x27;un mois sur l&#x27;autre doit sortir de l&#x27;instruction sous forme de crochets, et ce qu&#x27;un seul exemple ne permet pas de trancher doit revenir en question plutôt qu&#x27;en décision. L&#x27;instruction produite porte elle-même les sections de la structure longue, faute de quoi ce prompt fabrique un prompt court de plus.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 226 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Je refais chaque
 mois la même tâche à la main, et je veux que tu la
@@ -5917,15 +6046,19 @@ reste.
    prochain, présence des huit sections, brièveté. Sois
    sévère : pour chaque note inférieure à 5, dis ce qu&#x27;il
    faudrait pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p17">
-        <div class="onglet"><span class="rang">P17</span><span class="mot">Chapitre 19</span></div>
+      <article class="fiche" id="prompt-p18">
+        <div class="onglet"><span class="rang">P18</span><span class="mot">Chapitre 19</span></div>
         <div class="corps">
           <h2><mark>Outiller vos propres tâches répétitives, second prompt</mark></h2>
-          <p class="sous-titre">L&#x27;essai du mois suivant. Il rejoue sur de nouvelles sources l&#x27;instruction que le P16 a produite, pour vérifier qu&#x27;elle tient quand les fichiers changent de nom et de contenu. Son livrable est donc celui de l&#x27;instruction testée, et non un document propre : ce que le lecteur attend vraiment, c&#x27;est un verdict, la liste des fichiers retenus pour chaque entrée, et les corrections à apporter à instruction.md.</p>
+          <p class="sous-titre">L&#x27;essai du mois suivant. Il rejoue sur de nouvelles sources l&#x27;instruction que le P17 a produite, pour vérifier qu&#x27;elle tient quand les fichiers changent de nom et de contenu. Son livrable est donc celui de l&#x27;instruction testée, et non un document propre : ce que le lecteur attend vraiment, c&#x27;est un verdict, la liste des fichiers retenus pour chaque entrée, et les corrections à apporter à instruction.md.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 215 lignes</span></summary>
+            <pre>## Contexte
 
 Le fichier instruction.md de ce dossier décrit une tâche que
 je refais chaque mois. Il a été écrit à partir des sources
@@ -6140,15 +6273,19 @@ Si tu t&#x27;es arrêté sans écrire de fichier, passe le point
    netteté du verdict, utilité des corrections proposées.
    Sois sévère : pour chaque note inférieure à 5, dis ce
    qu&#x27;il faudrait pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
-      <article class="fiche" id="prompt-p18">
-        <div class="onglet"><span class="rang">P18</span><span class="mot">Chapitre 19</span></div>
+      <article class="fiche" id="prompt-p19">
+        <div class="onglet"><span class="rang">P19</span><span class="mot">Chapitre 19</span></div>
         <div class="corps">
           <h2><mark>Ranger une instruction éprouvée en compétence</mark></h2>
-          <p class="sous-titre">Le troisième prompt du chapitre, à coller dans le dossier où vit l&#x27;instruction mise au point par le P16 et éprouvée par le P17. Il ne produit pas un document mais une compétence : une procédure nommée, rangée une fois, appelable d&#x27;un mot dans tous les dossiers de travail. Trois choses s&#x27;y jouent et aucune n&#x27;est de la rédaction. La description, parce que c&#x27;est elle qui déclenche la compétence et qu&#x27;une description vague ne part jamais, ou part à contretemps. La généralisation, parce qu&#x27;une instruction mise au point dans un dossier porte les noms de fichiers de ce dossier. Et le contrôle qui précède l&#x27;écriture : une instruction jamais rejouée sur de nouvelles sources ne se range pas, parce que ranger une erreur la rend disponible partout.</p>
+          <p class="sous-titre">Le troisième prompt du chapitre, à coller dans le dossier où vit l&#x27;instruction mise au point par le P17 et éprouvée par le P18. Il ne produit pas un document mais une compétence : une procédure nommée, rangée une fois, appelable d&#x27;un mot dans tous les dossiers de travail. Trois choses s&#x27;y jouent et aucune n&#x27;est de la rédaction. La description, parce que c&#x27;est elle qui déclenche la compétence et qu&#x27;une description vague ne part jamais, ou part à contretemps. La généralisation, parce qu&#x27;une instruction mise au point dans un dossier porte les noms de fichiers de ce dossier. Et le contrôle qui précède l&#x27;écriture : une instruction jamais rejouée sur de nouvelles sources ne se range pas, parce que ranger une erreur la rend disponible partout.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 254 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. J&#x27;ai mis au point
 une instruction de travail, le fichier instruction.md de
@@ -6402,6 +6539,8 @@ reste.
    brièveté, absence de données sensibles. Sois sévère :
    pour chaque note inférieure à 5, dis ce qu&#x27;il faudrait
    pour gagner un point.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
       <article class="fiche" id="prompt-p20">
@@ -6410,7 +6549,9 @@ reste.
           <h2><mark>Trier votre boîte mail chaque matin, sans vous</mark></h2>
           <p class="sous-titre">L&#x27;instruction d&#x27;une routine planifiée : elle prépare des brouillons et n&#x27;envoie rien, la décision restant vôtre. C&#x27;est le seul prompt du livre qui demande trois choses de plus : une formule payante, une connexion à votre messagerie, et une organisation qui n&#x27;a pas désactivé la fonction. C&#x27;est aussi le seul qui s&#x27;exécute sans que personne soit devant l&#x27;écran, ce qui change deux choses dans son écriture : aucune fenêtre d&#x27;autorisation ne s&#x27;affichera, et ce que le texte n&#x27;interdit pas n&#x27;est interdit nulle part. Le chapitre 20 détaille les trois conditions et la façon de régler la routine.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 271 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Tu es une routine
 planifiée : tu partiras seule chaque matin, avant mon
@@ -6681,6 +6822,8 @@ Si tu t&#x27;es arrêté sans rien produire, saute les points 1
    une phrase que je dois les relire avant de les
    envoyer : aucun d&#x27;eux n&#x27;est une réponse que j&#x27;aie
    écrite.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
       <article class="fiche" id="prompt-p21">
@@ -6689,7 +6832,9 @@ Si tu t&#x27;es arrêté sans rien produire, saute les points 1
           <h2><mark>Les agents : donnez un objectif complexe, Claude Code fait tout le reste</mark></h2>
           <p class="sous-titre">Le seul gabarit du livre : une trame à remplir pour confier une tâche en plusieurs étapes, et non un prompt prêt à jouer. Ses cases entre crochets sont nombreuses, c&#x27;est sa nature. Quatre d&#x27;entre elles ne se laissent pas vides : le format du livrable, la condition d&#x27;arrêt, la liste de ce que l&#x27;agent n&#x27;est pas autorisé à faire, et l&#x27;endroit où il tient son journal. Un objectif confié sans ces quatre réponses n&#x27;est pas un objectif, c&#x27;est un chèque en blanc.</p>
           <button class="copier" type="button">Copier le prompt</button>
-          <pre>## Contexte
+          <details class="bloc-prompt">
+            <summary>Lire le texte du prompt <span class="lignes">· 272 lignes</span></summary>
+            <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Je te confie ici une
 tâche en plusieurs étapes que je ne vais pas superviser
@@ -6961,6 +7106,8 @@ reste.
 7. Reprends les décisions que tu as prises seul dans
    ton journal et dis-moi laquelle tu aurais préféré
    me poser.</pre>
+          </details>
+          <p class="haut"><a href="#sommaire">↑ Revenir à la liste des prompts</a></p>
         </div>
       </article>
 
@@ -7029,7 +7176,14 @@ document.querySelectorAll('.copier').forEach(function (bouton) {
     }
     // Si le presse-papiers est refuse par le navigateur, on selectionne le
     // texte : il reste un Ctrl+C a faire, et on le dit.
+    //
+    // Le bloc est deplie d'abord. Sans cela, la page ouverte depuis un disque,
+    // ou le contexte n'est pas sur et ou cette branche est la seule qui
+    // s'execute, selectionnait un texte replie : rien ne bougeait a l'ecran et
+    // le Ctrl+C annonce ne copiait rien.
     function selectionner() {
+      var bloc = fiche.querySelector('details.bloc-prompt');
+      if (bloc) { bloc.open = true; }
       var plage = document.createRange();
       plage.selectNodeContents(fiche.querySelector('pre'));
       var selection = window.getSelection();
@@ -7039,6 +7193,46 @@ document.querySelectorAll('.copier').forEach(function (bouton) {
     }
   });
 });
+
+(function () {
+  var blocs = Array.prototype.slice.call(
+    document.querySelectorAll('details.bloc-prompt'));
+  var bouton = document.getElementById('tout-deplier');
+
+  function nommer() {
+    var ferme = blocs.some(function (d) { return !d.open; });
+    bouton.textContent = ferme
+      ? 'Déplier les vingt et un prompts'
+      : 'Replier les vingt et un prompts';
+    return ferme;
+  }
+
+  if (bouton) {
+    nommer();
+    bouton.addEventListener('click', function () {
+      var ouvrir = nommer();
+      blocs.forEach(function (d) { d.open = ouvrir; });
+      nommer();
+    });
+  }
+
+  // Un lecteur qui arrive par #prompt-p7, depuis le livre papier ou depuis la
+  // liste, doit trouver son prompt ouvert. Replie, il lit un titre et un
+  // bouton, et conclut que la page est incomplete. Au chargement ET sur
+  // hashchange : la liste ne recharge pas la page.
+  function ouvrirLaCible() {
+    var id = window.location.hash.replace('#', '');
+    if (!id) { return; }
+    var cible = document.getElementById(id);
+    if (!cible) { return; }
+    var bloc = cible.querySelector('details.bloc-prompt');
+    if (bloc) { bloc.open = true; }
+    if (bouton) { nommer(); }
+  }
+
+  ouvrirLaCible();
+  window.addEventListener('hashchange', ouvrirLaCible);
+})();
 </script>
 </body>
 </html>
