@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dix-sept tâches qui reviennent toutes seules — Claude Code pour vos dossiers</title>
+<meta name="description" content="Dix-sept automatisations prêtes à régler, et la marche à suivre annoncée par la section 20.4 du livre.">
+<style>
+/* La page reprend les trois couleurs de la couverture, et rien d'autre : le
+   noir d'encre du fond, le creme du titre, l'orange du sous-titre. Le lecteur
+   arrive avec le livre en main, la page doit se reconnaitre en une seconde.
+   L'orange de la couverture ne passe pas sur fond creme (2,4:1), d'ou la
+   brique, qui est le meme orange assombri jusqu'a 4,8:1 : c'est elle qui porte
+   les liens et les contours de focus, l'orange ne sert que sur fond sombre. */
+:root {
+  --encre: #16161a;
+  --encre-douce: #5f574e;
+  --papier: #f4f1ec;
+  --carte: #fffdf9;
+  --trait: #ded5c8;
+  --orange: #e8834a;
+  --surligneur: #f8d7b4;
+  --lien: #a8521c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.bandeau {
+  position: relative;
+  background: var(--encre);
+  color: var(--papier);
+  padding: 44px 24px 40px;
+  overflow: hidden;
+}
+
+.dedans { position: relative; max-width: 940px; margin: 0 auto; }
+
+/* La couverture pose un halo chaud derriere l'ordinateur allume : le bandeau
+   le reprend, pour que le haut de la page et le haut du livre s'eclairent de
+   la meme facon. */
+.bandeau::before {
+  content: "";
+  position: absolute;
+  inset: -40% -10% auto auto;
+  width: 820px;
+  height: 820px;
+  background: radial-gradient(circle, rgba(232, 131, 74, 0.24) 0%, rgba(232, 131, 74, 0) 62%);
+  pointer-events: none;
+}
+
+.bandeau h1 {
+  margin: 0 0 10px;
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, system-ui, sans-serif;
+  font-size: clamp(28px, 5vw, 42px);
+  letter-spacing: -0.022em;
+  line-height: 1.12;
+}
+
+/* Le filet orange sous le titre vient de la couverture, ou il separe le titre
+   du sous-titre. Il sert ici de signature : on le retrouve sur les annexes et
+   au-dessus des rubriques. */
+.bandeau h1::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 18px;
+  background: var(--orange);
+}
+
+.bandeau p { margin: 0; max-width: 60ch; color: #cfc6ba; }
+
+.adresse {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 7px 14px;
+  border: 1px solid #4a423a;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  color: var(--papier);
+}
+
+.bandeau .maj {
+  margin-top: 14px;
+  font-size: 15px;
+  color: #a2978a;
+}
+
+/* L'accueil porte la couverture, les annexes non : elles gardent le bandeau
+   simple ci-dessus. */
+.bandeau--jaquette { padding: 56px 24px 52px; }
+
+.bandeau--jaquette .dedans {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Sans cette ligne, le titre en capitales fixe une largeur plancher a sa
+   colonne : sur un telephone, la grille s'elargit au mot le plus long et c'est
+   TOUTE la page qui deborde, bandeau compris. */
+.bandeau--jaquette .texte-bandeau { min-width: 0; }
+
+.bandeau--jaquette h1 {
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  line-height: 1.04;
+}
+
+/* Deux teintes dans le titre, comme sur la couverture : le sujet en creme, ce
+   qu'on vient y faire en orange. */
+.bandeau--jaquette h1 .geste { color: var(--orange); }
+
+.bandeau--jaquette .promesse {
+  margin-top: 18px;
+  font-size: 18px;
+  color: #cfc6ba;
+}
+
+.bandeau--jaquette .promesse strong { color: var(--papier); font-weight: 600; }
+
+.jaquette {
+  display: block;
+  width: 232px;
+  height: auto;
+  border-radius: 3px;
+  transform: rotate(-2.2deg);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.55), 0 2px 0 rgba(255, 255, 255, 0.07);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .jaquette { animation: pose 620ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+  @keyframes pose {
+    from { opacity: 0; transform: rotate(-2.2deg) translateY(16px); }
+    to { opacity: 1; transform: rotate(-2.2deg) translateY(0); }
+  }
+}
+
+@media (max-width: 760px) {
+  .bandeau--jaquette { padding: 40px 24px 42px; }
+  .bandeau--jaquette .dedans { grid-template-columns: 1fr; gap: 26px; }
+  .bandeau--jaquette .couv { order: -1; }
+  .bandeau--jaquette h1 { font-size: clamp(24px, 6.6vw, 34px); }
+  .bandeau--jaquette h1::after { margin-top: 14px; }
+  .jaquette { width: 166px; }
+}
+
+.mode-emploi {
+  max-width: 940px;
+  margin: 34px auto 0;
+  padding: 0 24px;
+}
+
+.mode-emploi p { max-width: 68ch; margin: 0 0 14px; }
+
+.raccourcis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+.raccourcis a {
+  display: block;
+  min-width: 46px;
+  padding: 8px 10px;
+  text-align: center;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  color: var(--lien);
+  font-weight: 600;
+  text-decoration: none;
+}
+.raccourcis a:hover { border-color: var(--lien); }
+.raccourcis a:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
+.raccourcis .intitule { color: var(--encre-douce); font-weight: 400; align-self: center; margin-right: 4px; }
+.raccourcis .ch { display: block; font-size: 12px; font-weight: 400; color: var(--encre-douce); }
+
+main { max-width: 940px; margin: 10px auto 60px; padding: 0 24px; }
+
+.fiche {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  align-items: start;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  margin-top: 22px;
+  overflow: hidden;
+}
+
+/* L'onglet reprend l'intercalaire d'un classeur. Il porte les deux reperes du
+   lecteur : le numero du prompt, qui est le meme que dans l'annexe imprimee, et
+   le chapitre d'ou il vient, puisque c'est souvent par la que le lecteur
+   arrive. */
+.onglet {
+  background: var(--orange);
+  color: var(--encre);
+  padding: 16px 16px 18px;
+  text-align: center;
+  border-bottom-right-radius: 4px;
+}
+
+.onglet .mot { display: block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #4a2409; }
+.onglet .rang {
+  display: block;
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, system-ui, sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.corps { padding: 20px 24px 24px; min-width: 0; }
+
+.corps h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  letter-spacing: -0.012em;
+}
+
+/* Le surlignage marque ce qui vient d'etre copie, comme on surligne une page. */
+.corps h2 mark {
+  background: transparent;
+  color: inherit;
+  margin-left: -3px;
+  padding: 1px 3px;
+  transition: background 160ms ease-in;
+}
+.fiche.copiee .corps h2 mark { background: var(--surligneur); }
+
+.sous-titre { margin: 0 0 16px; color: var(--encre-douce); font-size: 15px; }
+
+/* Le bouton est sombre et l'orange est reserve a la confirmation : sur
+   vingt et une fiches, vingt et un boutons orange auraient couvert la page, et
+   le lecteur n'aurait plus vu lequel il venait d'appuyer. */
+.copier {
+  font: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--papier);
+  background: var(--encre);
+  border: 1px solid var(--encre);
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.copier:hover { background: #2c2a26; }
+.copier:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
+.fiche.copiee .copier { background: var(--orange); border-color: var(--orange); color: var(--encre); }
+
+pre {
+  margin: 16px 0 0;
+  padding: 16px 18px;
+  background: #faf6ef;
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Le cas bonus n'est pas dans le livre : il se signale donc autrement qu'une
+   fiche de prompt, sans quoi le lecteur le prend pour un chapitre oublie. */
+.bonus {
+  display: block;
+  margin-top: 34px;
+  padding: 22px 24px;
+  background: var(--encre);
+  color: var(--papier);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.bonus .mot { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
+.bonus h2 { margin: 6px 0 8px; font-size: 21px; letter-spacing: -0.014em; }
+.bonus p { margin: 0; max-width: 62ch; color: #cfc6ba; }
+.bonus .fleche { display: inline-block; margin-top: 12px; color: var(--orange); font-weight: 600; }
+.bonus:hover .fleche { text-decoration: underline; }
+.bonus:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* Les autres rubriques que le livre promet a cette page. Elles ne sont pas des
+   prompts : elles se presentent donc en liste, pas en fiches a onglet. */
+.titre-rubriques { margin: 48px 0 0; font-size: 21px; letter-spacing: -0.014em; }
+.titre-rubriques::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-bottom: 14px;
+  background: var(--orange);
+}
+
+.rubriques { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.rubriques a {
+  display: block;
+  padding: 16px 18px;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--encre);
+}
+.rubriques a:hover { border-color: var(--lien); }
+.rubriques a:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
+.rubriques strong { display: block; color: var(--lien); font-size: 17px; }
+.rubriques span { display: block; margin-top: 4px; color: var(--encre-douce); font-size: 15.5px; max-width: 66ch; }
+
+footer {
+  border-top: 1px solid var(--trait);
+  padding: 28px 24px 60px;
+  color: var(--encre-douce);
+  font-size: 15px;
+}
+footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
+
+@media (max-width: 620px) {
+  .fiche { grid-template-columns: 1fr; }
+  .onglet { display: flex; align-items: baseline; gap: 8px; padding: 12px 18px; text-align: left; }
+  .onglet .rang { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corps h2 mark { transition: none; }
+}
+
+.texte { max-width: 940px; margin: 0 auto; padding: 0 24px 60px; }
+.texte h2 { margin: 34px 0 8px; font-size: 22px; letter-spacing: -0.014em; }
+.texte h3 { margin: 26px 0 6px; font-size: 18px; }
+.texte p { max-width: 68ch; }
+.texte ul { max-width: 68ch; }
+.texte a { color: var(--lien); }
+
+.feuillet {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  padding: 8px 28px 28px;
+  margin-top: 26px;
+}
+
+.encadre {
+  border-left: 4px solid var(--encre);
+  background: var(--carte);
+  padding: 14px 18px;
+  margin: 22px 0;
+  border-radius: 0 3px 3px 0;
+}
+
+table { border-collapse: collapse; width: 100%; margin: 18px 0 6px; font-size: 15.5px; }
+th, td { border: 1px solid var(--trait); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { background: var(--carte); font-weight: 600; }
+td.chapitre { white-space: nowrap; font-weight: 600; }
+
+.retour { display: inline-block; margin: 22px 0 0; color: var(--lien); font-weight: 600; text-decoration: none; }
+.retour:hover { text-decoration: underline; }
+
+.rien { background: var(--carte); border: 1px solid var(--trait); border-radius: 4px; padding: 22px 24px; margin-top: 24px; }
+
+@media print {
+  .bandeau, .retour, footer { display: none; }
+  body { background: #fff; font-size: 11.5pt; }
+  .feuillet { border: none; padding: 0; margin: 0 0 24pt; page-break-after: always; }
+  .texte { padding: 0; }
+}
+
+.bloc-prompt { margin: 18px 0 6px; }
+.copier {
+  font: inherit; font-weight: 600; font-size: 16px; color: var(--papier);
+  background: var(--encre); border: 1px solid var(--encre); border-radius: 3px;
+  padding: 10px 20px; cursor: pointer;
+}
+.copier:hover { background: #2c2a26; }
+.copier:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
+.etapes { max-width: 68ch; }
+.etapes li { margin-bottom: 10px; }
+
+.tache {
+  max-width: 68ch; margin: 34px 0; padding: 20px 24px;
+  background: var(--carte); border: 1px solid var(--trait);
+  border-left: 4px solid var(--lien); border-radius: 3px;
+}
+.tache--cloud { border-left-color: var(--encre); }
+.tache h3 { margin: 0 0 10px; font-size: 21px; line-height: 1.25; }
+.tache h3 .rang {
+  display: inline-block; margin-right: 8px; font-size: 15px;
+  font-weight: 700; color: var(--lien); vertical-align: 2px;
+}
+.tache--cloud h3 .rang { color: var(--encre); }
+.tache .etiquettes { margin: 0 0 14px; }
+.forme, .pour {
+  display: inline-block; margin: 0 6px 6px 0; padding: 3px 10px;
+  font-size: 13px; font-weight: 600; border-radius: 2px;
+}
+.forme { color: var(--lien); border: 1px solid var(--lien); }
+.tache--cloud .forme {
+  color: var(--orange); background: var(--encre); border-color: var(--encre);
+}
+.pour { color: var(--encre); border: 1px solid var(--trait); }
+.tache dl { margin: 14px 0 0; }
+.tache dt {
+  margin-top: 12px; font-size: 13px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--lien);
+}
+.tache--cloud dt { color: var(--encre); }
+.tache dd { margin: 3px 0 0; }
+.prolonge { margin: 0 0 12px; font-size: 15px; font-style: italic; }
+
+.sommaire { max-width: 68ch; }
+.sommaire .parcours { margin: 0 0 6px; }
+.sommaire .parcours strong { font-weight: 700; }
+
+/* Le sommaire d'en-tete. Deux colonnes des qu'il y a la place, une seule en
+   dessous : dix-sept entrees sur une colonne font defiler avant le guide. */
+.sommaire-court {
+  max-width: 68ch; margin: 28px 0 34px; padding: 18px 22px 20px;
+  background: var(--carte); border: 1px solid var(--trait); border-radius: 3px;
+}
+.sommaire-court h2 { margin: 0 0 12px; font-size: 19px; }
+.liens-fiches {
+  margin: 0; padding: 0; list-style: none;
+  columns: 2; column-gap: 28px;
+}
+.liens-fiches li { margin: 0 0 5px; break-inside: avoid; }
+.liens-fiches a { text-decoration: none; }
+.liens-fiches a:hover { text-decoration: underline; }
+.liens-fiches .rang {
+  display: inline-block; min-width: 34px; font-weight: 700;
+  font-size: 13px; color: var(--lien);
+}
+@media (max-width: 620px) { .liens-fiches { columns: 1; } }
+
+.haut { margin: 16px 0 0; font-size: 14px; }
+.haut a { text-decoration: none; }
+.haut a:hover { text-decoration: underline; }
+
+/* Le prompt se deplie. Le <summary> doit rester reconnaissable comme un
+   bouton : c'est le seul endroit de la page ou le lecteur doit cliquer pour
+   voir apparaitre quelque chose. */
+details.bloc-prompt { margin: 18px 0 6px; }
+details.bloc-prompt > summary {
+  cursor: pointer; font-weight: 600; font-size: 16px; color: var(--lien);
+  padding: 8px 0; list-style-position: inside;
+}
+details.bloc-prompt > summary:hover { text-decoration: underline; }
+details.bloc-prompt > summary:focus-visible {
+  outline: 3px solid var(--lien); outline-offset: 2px;
+}
+.tache--cloud details.bloc-prompt > summary { color: var(--encre); }
+details.bloc-prompt[open] > summary { margin-bottom: 10px; }
+
+.deplier-tout { max-width: 68ch; margin: 18px 0 0; }
+.lien-action {
+  font: inherit; font-size: 15px; font-weight: 600; color: var(--lien);
+  background: none; border: 1px solid var(--lien); border-radius: 3px;
+  padding: 7px 16px; cursor: pointer;
+}
+.lien-action:hover { background: var(--carte); }
+.lien-action:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<header class="bandeau">
+  <div class="dedans">
+    <h1>Dix-sept tâches qui reviennent toutes seules</h1>
+    <p>Le complément de la section 20.4 : dix-sept tâches qui partent sans vous, et la marche à suivre pour régler la première.</p>
+    <span class="adresse">ccletempsduncafe.github.io</span>
+    <p class="maj">Mise à jour du 29/10/2026.</p>
+  </div>
+</header>
+
+<main class="texte">
+<a class="retour" href="index.html">← Retour aux prompts du livre</a>
+<p>La section 20.4 du livre vous montre comment faire revenir une tâche sans
+vous. Elle en donne un exemple, le tri de la boîte mail. En voici dix-sept
+autres, prêtes à régler, qui ne sont pas imprimées dans le livre et ne comptent
+donc pas parmi les vingt et un prompts.</p>
+<p>Chaque fiche tient en une page et dit la même chose dans le même ordre : pour
+qui elle vaut, laquelle des deux formes elle prend et pourquoi, à quelle
+cadence, les seuls connecteurs à garder, le prompt à copier d&#x27;un clic, et ce
+qu&#x27;il faut regarder à sa première exécution. Ce dernier point est le plus
+important : une tâche qui tourne sans témoin se vérifie une fois,
+sérieusement, ou elle ne se vérifie jamais.</p>
+<p>Deux de ces fiches prolongent un prompt du livre au lieu d&#x27;en ouvrir un
+nouveau. Le tri du matin part du P20 du chapitre 20, qui classe par urgence et
+prépare des brouillons : la fiche y ajoute le classement par dossier, et c&#x27;est
+tout ce qui change. La veille du lundi part du P6 du chapitre 10, écrit pour
+être lancé à la main : la fiche la fait partir seule. Dans les deux cas, le
+prompt du livre reste la référence, et si les deux textes divergent un jour,
+c&#x27;est celui de la page des prompts qui fait foi.</p>
+
+<nav class="sommaire-court" id="sommaire" aria-label="Les dix-sept fiches">
+<h2>Les dix-sept fiches, d'un coup d'œil</h2>
+<ol class="liens-fiches">
+<li><a href="#b1"><span class="rang">B1</span>Le tri du matin, classé par dossier</a></li><li><a href="#b2"><span class="rang">B2</span>Le chiffre de la veille, déposé chaque matin</a></li><li><a href="#b3"><span class="rang">B3</span>La veille du lundi, qui part toute seule</a></li><li><a href="#b4"><span class="rang">B4</span>Le brief avant chaque rendez-vous</a></li><li><a href="#b5"><span class="rang">B5</span>Une idée de la semaine, déclinée en publications</a></li><li><a href="#b6"><span class="rang">B6</span>Les justificatifs du mois, rangés pour le comptable</a></li><li><a href="#b7"><span class="rang">B7</span>Le rangement du vendredi, qui propose et ne supprime rien</a></li><li><a href="#b8"><span class="rang">B8</span>Les devis sans réponse, et la relance prête à envoyer</a></li><li><a href="#b9"><span class="rang">B9</span>Les appels d&#x27;offres publiés qui correspondent à vos critères</a></li><li><a href="#b10"><span class="rang">B10</span>L&#x27;ordre du jour du point hebdomadaire, bâti sur les actions en retard</a></li><li><a href="#b11"><span class="rang">B11</span>Le récapitulatif du vendredi pour votre direction</a></li><li><a href="#b12"><span class="rang">B12</span>Les échéances contractuelles à soixante jours</a></li><li><a href="#b13"><span class="rang">B13</span>Le journal de bord d&#x27;un projet, tenu sans vous</a></li><li><a href="#b14"><span class="rang">B14</span>Le résumé des canaux de discussion que vous ne lisez plus</a></li><li><a href="#b15"><span class="rang">B15</span>Le contrôle de cohérence d&#x27;un export avant qu&#x27;il parte</a></li><li><a href="#b16"><span class="rang">B16</span>La veille sur vos clients, pas sur vos concurrents</a></li><li><a href="#b17"><span class="rang">B17</span>Les pièces jointes reçues, classées et renommées</a></li>
+</ol>
+</nav>
+
+
+<h2>Régler votre première automatisation</h2>
+<p>Une automatisation réunit trois pièces : une instruction écrite comme un
+message ordinaire, les connexions dont elle a besoin, et un déclencheur qui
+décide du moment. Vous les posez dans cet ordre, au même endroit, et le choix
+de la forme se fait en une case.</p>
+<p>Le nom de cette page a changé récemment. Elle s&#x27;appelle aujourd&#x27;hui « tâches
+planifiées », « Scheduled tasks » en anglais, et certains comptes affichent
+encore son ancien nom, « Routines ». Les deux désignent la même chose. Si un
+libellé de cette marche à suivre ne correspond pas à votre écran, cherchez le
+réglage qui est au même endroit et produit le même effet : c&#x27;est la règle que
+le livre pose à sa section 4.2, et elle vaut ici plus qu&#x27;ailleurs.</p>
+<ol class="etapes">
+<li>Ouvrez l&#x27;onglet « Code » de l&#x27;application, puis la page des tâches planifiées dans la barre latérale. Elle porte vos deux formes de tâches, celles qui tournent sur votre machine et celles qui tournent sans elle.</li>
+<li>Créez une tâche. Le bouton porte « Nouvelle tâche » ou « New task », et « New routine » sur les comptes restés à l&#x27;ancien nom. Si un menu vous propose de décrire la tâche à Claude plutôt que de la régler vous-même, prenez le réglage manuel pour cette première fois : vous verrez les cases que vous réglerez seul ensuite.</li>
+<li>Nommez la tâche. Le nom sert aussi de nom de dossier sur votre disque, il doit donc être unique. Prenez le titre de la fiche que vous réglez.</li>
+<li>Collez l&#x27;instruction dans la case en dessous du nom. C&#x27;est le prompt de la fiche, copié d&#x27;un clic. Ne le résumez pas : la tâche part sans vous, et ce qui n&#x27;est pas écrit ne sera pas fait.</li>
+<li>Choisissez la forme. Pour une tâche qui doit voir vos fichiers, ouvrez les réglages avancés et activez l&#x27;interrupteur qui la limite à cet ordinateur, puis désignez le dossier de travail. Tant qu&#x27;aucun dossier n&#x27;est choisi, le bouton de création reste inactif. Pour une tâche qui doit tourner ordinateur fermé, laissez cet interrupteur au repos.</li>
+<li>Réglez la cadence dans la carte du déclencheur. Prenez la planification, et la fréquence que la fiche indique.</li>
+<li>Ne gardez que les connecteurs dont la fiche a besoin. C&#x27;est l&#x27;étape que tout le monde saute, et c&#x27;est la plus importante : tous vos connecteurs sont rattachés d&#x27;office, y compris ceux qui savent écrire. Une tâche censée lire votre messagerie se retrouve capable de modifier vos notes.</li>
+<li>Créez la tâche. Si le dossier n&#x27;a jamais servi, l&#x27;application vous demande de lui faire confiance à ce moment.</li>
+<li>Lancez-la une fois à la main, sans attendre l&#x27;heure dite. Le bouton d&#x27;exécution immédiate est sur la page de la tâche. Restez devant : une tâche locale réglée en mode « Manuel » s&#x27;arrête à la première autorisation qu&#x27;elle n&#x27;a pas, et vous ne le verrez pas si vous êtes parti.</li>
+<li>Lisez le résultat, pas le journal. C&#x27;est le point sur lequel le livre insiste et il faut l&#x27;entendre : un état sans erreur dit que la session s&#x27;est terminée normalement, il ne dit pas que le travail est juste. Ouvrez le fichier produit, ou le brouillon déposé, et comparez-le à ce que la fiche annonce.</li>
+</ol>
+<p>Trois conditions valent la peine d&#x27;être connues avant de vous lancer. Une tâche
+qui tourne sans votre machine demande un abonnement payant et une organisation
+qui a laissé la fonction active. Une tâche locale ne part que si l&#x27;application
+est ouverte et l&#x27;ordinateur réveillé : une exécution manquée est sautée, pas
+rattrapée, et refermer le capot suffit à la manquer. Et la cadence la plus
+rapide n&#x27;est pas la même des deux côtés : une heure pour la forme qui tourne
+sans vous, une minute pour la forme locale, cette dernière ne descendant sous
+l&#x27;heure que si vous demandez le réglage à Claude en conversation plutôt que de
+le choisir dans le formulaire.</p>
+<p>Un dernier mot sur la sécurité, et il vaut pour les dix-sept. Ce qu&#x27;une tâche
+fait paraît fait par vous, puisque cela passe par vos comptes connectés. Votre
+instruction doit donc interdire expressément ce que vous ne voulez pas, et non
+se contenter de décrire ce que vous voulez. Chaque prompt de cette page porte
+ses interdits : ne les retirez pas en l&#x27;adaptant.</p>
+
+<div class="encadre">
+<p>📅 <strong>Information vérifiée le 29 octobre 2026</strong> contre la
+documentation d'Anthropic. Les tâches planifiées y sont données en préversion
+de recherche : leurs limites et leurs libellés peuvent changer. Si un nom ne
+correspond pas à votre écran, cherchez le réglage qui est au même endroit et
+produit le même effet.</p>
+</div>
+
+<h2>Choisir la forme</h2>
+<p>Le critère tient en une question : où vivent les sources ?</p>
+<p>Si le travail part de fichiers rangés sur votre disque, prenez la forme locale.
+Celle qui tourne sans votre machine travaille sur une copie neuve et ne voit
+pas votre disque, même ordinateur allumé : elle n&#x27;atteint que ce qu&#x27;un
+connecteur lui ouvre.</p>
+<p>Si le travail part de votre messagerie, de votre calendrier ou d&#x27;un service
+connecté, et qu&#x27;il doit partir ordinateur fermé, prenez la forme qui tourne
+sans vous.</p>
+<p>Si les deux conviennent, prenez la forme locale : elle vous laisse le résultat
+sur votre disque, là où vous le cherchez.</p>
+
+<h2>Les dix-sept fiches</h2>
+<div class="sommaire">
+<p class="parcours"><strong>Si vous travaillez comme Marie</strong> : <a href="#b1">B1</a>, <a href="#b10">B10</a>, <a href="#b11">B11</a>, <a href="#b13">B13</a>, <a href="#b14">B14</a>.</p><p class="parcours"><strong>Si vous travaillez comme Thomas</strong> : <a href="#b2">B2</a>, <a href="#b4">B4</a>, <a href="#b9">B9</a>, <a href="#b12">B12</a>, <a href="#b16">B16</a>.</p><p class="parcours"><strong>Si vous travaillez comme Sophie</strong> : <a href="#b3">B3</a>, <a href="#b5">B5</a>, <a href="#b6">B6</a>, <a href="#b8">B8</a>.</p><p class="parcours"><strong>Utiles à tout le monde</strong> : <a href="#b7">B7</a>, <a href="#b15">B15</a>, <a href="#b17">B17</a>.</p>
+</div>
+<div class="tableau">
+<table>
+<thead><tr><th>Fiche</th><th>Ce qu'elle fait</th><th>Pour qui</th><th>Forme</th></tr></thead>
+<tbody>
+<tr><td><a href="#b1">B1</a></td><td>Le tri du matin, classé par dossier</td><td>Marie</td><td>Tourne sans votre machine</td></tr>
+<tr><td><a href="#b2">B2</a></td><td>Le chiffre de la veille, déposé chaque matin</td><td>Thomas</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b3">B3</a></td><td>La veille du lundi, qui part toute seule</td><td>Sophie</td><td>Tourne sans votre machine</td></tr>
+<tr><td><a href="#b4">B4</a></td><td>Le brief avant chaque rendez-vous</td><td>Thomas</td><td>Tourne sans votre machine</td></tr>
+<tr><td><a href="#b5">B5</a></td><td>Une idée de la semaine, déclinée en publications</td><td>Sophie</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b6">B6</a></td><td>Les justificatifs du mois, rangés pour le comptable</td><td>Sophie</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b7">B7</a></td><td>Le rangement du vendredi, qui propose et ne supprime rien</td><td>tous</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b8">B8</a></td><td>Les devis sans réponse, et la relance prête à envoyer</td><td>Sophie</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b9">B9</a></td><td>Les appels d&#x27;offres publiés qui correspondent à vos critères</td><td>Thomas</td><td>Tourne sans votre machine</td></tr>
+<tr><td><a href="#b10">B10</a></td><td>L&#x27;ordre du jour du point hebdomadaire, bâti sur les actions en retard</td><td>Marie</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b11">B11</a></td><td>Le récapitulatif du vendredi pour votre direction</td><td>Marie</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b12">B12</a></td><td>Les échéances contractuelles à soixante jours</td><td>Thomas</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b13">B13</a></td><td>Le journal de bord d&#x27;un projet, tenu sans vous</td><td>Marie</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b14">B14</a></td><td>Le résumé des canaux de discussion que vous ne lisez plus</td><td>Marie</td><td>Tourne sans votre machine</td></tr>
+<tr><td><a href="#b15">B15</a></td><td>Le contrôle de cohérence d&#x27;un export avant qu&#x27;il parte</td><td>tous</td><td>Tourne sur votre ordinateur</td></tr>
+<tr><td><a href="#b16">B16</a></td><td>La veille sur vos clients, pas sur vos concurrents</td><td>Thomas</td><td>Tourne sans votre machine</td></tr>
+<tr><td><a href="#b17">B17</a></td><td>Les pièces jointes reçues, classées et renommées</td><td>tous</td><td>Tourne sur votre ordinateur</td></tr>
+</tbody>
+</table>
+</div>
+<p class="deplier-tout"><button id="deplier-tout" type="button" class="lien-action">Déplier les dix-sept prompts</button></p>
+
+
+<section class="tache tache--cloud" id="b1">
+<h3><span class="rang">B1</span>Le tri du matin, classé par dossier</h3>
+<p class="etiquettes"><span class="forme">Tourne sans votre machine</span><span class="pour">Pour Marie</span></p>
+<p class="prolonge">Prolonge le <a href="index.html#prompt-p20">prompt P20</a> du livre.</p><p>Le P20 du livre classe vos messages par urgence et prépare des brouillons. Il ne dit pas de quel dossier chaque message relève, et c&#x27;est souvent la première question qu&#x27;on se pose devant une boîte à cent messages.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Tout ce dont ce tri a besoin vit dans votre messagerie, qu&#x27;un connecteur ouvre. Rien n&#x27;est sur le disque, et le classement doit être fait avant que vous ouvriez l&#x27;ordinateur.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par jour, avant votre heure d&#x27;arrivée. Une seule exécution suffit : un second passage reclasserait ce qui l&#x27;est déjà.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Votre messagerie, et rien d&#x27;autre.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B1</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Lis les messages non lus de ma messagerie depuis hier 18 h.
+
+Classe chacun dans l&#x27;un des dossiers suivants, et dans un seul :
+[liste de vos dossiers, un par ligne]
+
+Un message qui n&#x27;entre dans aucun va dans « À trier ». Ne crée aucun
+dossier nouveau.
+
+Rends-moi un tableau de quatre colonnes : expéditeur, objet, dossier
+retenu, et la phrase du message qui t&#x27;a fait choisir ce dossier.
+Cette dernière colonne est ce qui me permet de te corriger.
+
+Ne déplace aucun message, n&#x27;en supprime aucun, n&#x27;envoie rien et
+n&#x27;enregistre aucun brouillon. Tu proposes un classement, c&#x27;est tout.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Prenez dix messages au hasard dans le tableau et ouvrez-les. La phrase citée en quatrième colonne figure-t-elle bien dans le message ? Si une seule est inventée ou approximative, le classement ne vaut rien et il faut resserrer la liste des dossiers. Vérifiez ensuite que votre boîte est intacte : rien de déplacé, rien de lu, aucun brouillon.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b2">
+<h3><span class="rang">B2</span>Le chiffre de la veille, déposé chaque matin</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Thomas</span></p>
+<p>Votre outil de gestion sort un export chaque nuit. Personne ne l&#x27;ouvre avant la réunion du lundi, et ce qui s&#x27;y voyait dès le mardi arrive avec six jours de retard.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>L&#x27;export est un fichier déposé dans un dossier de votre disque. Une tâche qui tourne sans votre machine ne le verrait pas.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par jour ouvré, après l&#x27;heure de dépôt de l&#x27;export. Décalez d&#x27;une demi-heure : un export en retard vaut mieux qu&#x27;un résumé vide.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun. Tout vit dans le dossier de travail.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B2</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Dans ce dossier se trouvent les exports quotidiens, nommés
+export-AAAA-MM-JJ.csv.
+
+Prends le plus récent. S&#x27;il date de plus de deux jours, écris
+« export manquant depuis le [date] » et arrête-toi là : ne travaille
+pas sur un fichier périmé sans le dire.
+
+Compare-le au précédent et écris une note d&#x27;une demi-page dans
+veille-[date].md :
+- le total de la journée, et son écart au jour précédent en
+  pourcentage
+- les trois plus fortes variations, chacune avec son libellé exact
+  tel qu&#x27;il figure dans le fichier
+- ce qui apparaît aujourd&#x27;hui et n&#x27;existait pas hier
+
+Chaque chiffre vient du fichier. Ne calcule rien d&#x27;autre que des
+sommes, des écarts et des pourcentages. Si une cellule est vide ou
+illisible, écris [DONNÉE MANQUANTE] et continue : ne devine pas.
+
+N&#x27;écris que ce fichier. Ne touche pas aux exports.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Reprenez le total à la main sur le tableur, une fois. S&#x27;il tombe juste, vous n&#x27;aurez plus à le refaire. Vérifiez surtout que les libellés cités existent mot pour mot dans l&#x27;export : un libellé reformulé est le signe que la tâche interprète au lieu de lire.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--cloud" id="b3">
+<h3><span class="rang">B3</span>La veille du lundi, qui part toute seule</h3>
+<p class="etiquettes"><span class="forme">Tourne sans votre machine</span><span class="pour">Pour Sophie</span></p>
+<p class="prolonge">Prolonge le <a href="index.html#prompt-p6">prompt P6</a> du livre.</p><p>Le P6 du chapitre 10 produit votre synthèse de veille en dix minutes, quand vous la lancez. Un lundi sur trois, vous ne la lancez pas.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>La veille lit des pages publiques, pas vos fichiers. Et elle doit être prête avant que vous ouvriez l&#x27;ordinateur, sans quoi elle ne change rien à votre lundi.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine, le lundi tôt. Pas plus : une veille quotidienne sur un secteur qui bouge lentement produit du bruit, et vous cesserez de la lire.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Celui de votre espace de notes, si vous voulez y déposer le résultat. Sinon aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B3</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Fais la veille de la semaine écoulée sur ces sujets :
+[vos trois à cinq sujets, un par ligne]
+
+Pour chaque signal retenu, donne : la date de publication, la source
+avec son adresse, ce qu&#x27;il dit en deux phrases, et ce qu&#x27;il change
+pour moi en une phrase.
+
+Trois règles de fond.
+Ne retiens qu&#x27;un signal daté de moins de huit jours et portant une
+source vérifiable. Un signal sans date ne se retient pas, même s&#x27;il
+paraît important : écris-le dans une liste séparée, à vérifier à la
+main.
+Ne classe aucune personne et ne porte aucune appréciation sur qui
+que ce soit.
+Si un sujet ne donne rien cette semaine, écris « rien de nouveau »
+pour ce sujet. N&#x27;étire pas la synthèse pour la remplir.
+
+Rends une note de deux pages au plus, en français, triée par
+importance pour moi et non par date.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Ouvrez trois des adresses citées. Mènent-elles bien à la page qui porte le signal, et la date annoncée y figure-t-elle ? Une adresse qui répond mais ne porte pas le signal est le défaut le plus fréquent de cette tâche. Vérifiez aussi qu&#x27;au moins un sujet a rendu « rien de nouveau » : sans cela, c&#x27;est que la tâche remplit.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--cloud" id="b4">
+<h3><span class="rang">B4</span>Le brief avant chaque rendez-vous</h3>
+<p class="etiquettes"><span class="forme">Tourne sans votre machine</span><span class="pour">Pour Thomas</span></p>
+<p>Vous enchaînez cinq à huit rendez-vous par semaine chez des grands comptes, et vous les préparez dans le train ou pas du tout. Ce brief n&#x27;a de valeur que s&#x27;il existe déjà quand vous ouvrez l&#x27;ordinateur.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Le calendrier et l&#x27;historique des messages vivent dans des services qu&#x27;un connecteur ouvre, pas sur votre disque. Et le brief doit partir ordinateur fermé.</dd>
+<dt>La cadence</dt>
+<dd>Toutes les heures, en regardant les deux heures à venir. Le titre dit « avant le rendez-vous » et c&#x27;est l&#x27;intention, pas le réglage : la forme qui tourne sans vous ne descend pas sous une exécution par heure, et aucune cadence ne tombe pile à trente minutes d&#x27;un rendez-vous qui peut commencer à n&#x27;importe quelle minute. Une passe horaire qui prend deux heures d&#x27;avance garantit à chaque rendez-vous son brief.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Le calendrier et la messagerie, et rien d&#x27;autre.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B4</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Regarde mon calendrier pour les deux prochaines heures.
+
+Pour chaque rendez-vous avec une personne extérieure à mon entreprise
+qui n&#x27;a pas déjà son brief, écris une note d&#x27;une page, et une seule,
+dans un fichier nommé brief-[date]-[client].md. Si le brief existe
+déjà, passe au suivant : je ne veux pas deux notes par réunion.
+
+La note dit, dans cet ordre :
+- qui participe et à quel titre, d&#x27;après l&#x27;invitation
+- ce que nos trois derniers échanges par message ont laissé en
+  suspens, chacun avec sa date
+- les trois questions que je dois poser
+- les deux objections probables, et ce que j&#x27;y réponds
+
+N&#x27;utilise que mon calendrier et ma messagerie. S&#x27;il te manque une
+information, écris [DONNÉE MANQUANTE] à sa place : ne la déduis pas
+et ne va pas la chercher sur le web. Ne porte aucune appréciation sur
+les personnes et ne leur attribue ni note ni classement.
+
+N&#x27;envoie aucun message, ne réponds à rien, ne déplace rien dans mon
+calendrier. Tu déposes le fichier, c&#x27;est tout.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Trois contrôles, trois minutes. La liste des participants correspond-elle à l&#x27;invitation que vous avez sous les yeux ? Les dates citées pour les échanges en suspens existent-elles dans votre messagerie ? Et voyez-vous au moins un [DONNÉE MANQUANTE] sur un rendez-vous que vous savez mal documenté ? Si ce troisième point manque, la tâche comble les trous au lieu de les signaler : ajoutez une phrase et refaites une passe. Vérifiez enfin votre dossier d&#x27;envois, qui doit être inchangé.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b5">
+<h3><span class="rang">B5</span>Une idée de la semaine, déclinée en publications</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Sophie</span></p>
+<p>Vous écrivez une note de fond par mois et vous n&#x27;en tirez rien. Le travail de découpage prend une heure, et c&#x27;est une heure que vous n&#x27;avez pas.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Votre note vit dans un fichier de votre disque, et les textes produits doivent y revenir pour que vous les relisiez avant de publier.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine. Rien ne presse, et vous devez de toute façon relire avant de publier.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun. Les textes restent sur votre disque.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B5</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Dans ce dossier, prends la note la plus récente du
+sous-dossier « idées ».
+
+Tires-en trois textes courts, dans trois fichiers séparés :
+- publication-longue.md, de 180 à 250 mots, une idée et un exemple
+- publication-courte.md, de 60 mots au plus, une seule affirmation
+- fil.md, quatre messages de 40 mots au plus chacun, qui se lisent
+  dans l&#x27;ordre
+
+Garde mes mots quand ils sont bons. N&#x27;ajoute aucun fait, aucun
+chiffre et aucun exemple qui ne soit pas dans la note : si un texte
+a besoin d&#x27;un exemple que la note ne porte pas, écris
+[EXEMPLE À FOURNIR] et continue.
+
+N&#x27;écris aucune question rhétorique, aucune formule d&#x27;accroche du
+genre « voici pourquoi », et ne termine par aucun appel à commenter.
+
+Ne publie rien nulle part. Tu écris trois fichiers, c&#x27;est tout.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Relisez les trois textes avec la note à côté. Tout chiffre, tout exemple et tout nom qui n&#x27;est pas dans la note est un ajout, et c&#x27;est exactement ce que le prompt interdit : s&#x27;il y en a un, la tâche invente et il faut durcir la règle avant de la laisser tourner.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b6">
+<h3><span class="rang">B6</span>Les justificatifs du mois, rangés pour le comptable</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Sophie</span></p>
+<p>Les justificatifs arrivent en PDF toute l&#x27;année et s&#x27;empilent dans un dossier. Chaque trimestre, vous y passez une demi-journée.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Les justificatifs sont des fichiers de votre disque, et le tableau produit doit y rester : ce sont des pièces comptables.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par mois, le premier jour ouvré. Un passage mensuel laisse le mois se compléter et vous évite de corriger deux fois les mêmes lignes.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B6</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Dans ce dossier se trouvent des justificatifs en PDF et en
+image.
+
+Pour chacun de ceux du mois écoulé, relève : la date, le fournisseur
+tel qu&#x27;il est écrit sur la pièce, le montant toutes taxes comprises,
+le montant de taxe, et la catégorie parmi celles-ci :
+[vos catégories comptables, une par ligne]
+
+Écris le tout dans justificatifs-[AAAA-MM].csv, séparateur
+point-virgule, une ligne par pièce, avec une dernière colonne qui
+porte le nom du fichier d&#x27;origine.
+
+Si une information est illisible ou absente, écris [À COMPLÉTER]
+dans la cellule et continue : ne déduis ni un montant ni une date.
+Si deux pièces portent le même fournisseur, le même montant et la
+même date, signale-les comme doublon possible sans en supprimer
+aucune.
+
+Ne renomme aucun fichier, n&#x27;en déplace aucun, n&#x27;en supprime aucun.
+Tu proposes un tableau, je range ensuite.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Comparez cinq lignes aux pièces d&#x27;origine, montant de taxe compris. Puis cherchez les [À COMPLÉTER] : s&#x27;il n&#x27;y en a aucun sur un mois entier, méfiez-vous. Un lot de justificatifs scannés en produit toujours, et leur absence signifie que la tâche comble au lieu de signaler.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b7">
+<h3><span class="rang">B7</span>Le rangement du vendredi, qui propose et ne supprime rien</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour tous</span></p>
+<p>Votre dossier de téléchargements porte huit cents fichiers et votre bureau trente. Vous ne rangez pas, car ranger demande de décider huit cents fois.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Ce sont vos fichiers, sur votre disque. Aucune autre forme ne les voit.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine, le vendredi en fin de journée. Vous lisez la proposition le lundi, l&#x27;esprit clair.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B7</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Regarde les fichiers de ce dossier et de ses sous-dossiers.
+
+Écris un plan de rangement dans rangement-[date].md, en quatre
+listes :
+- les fichiers à classer, chacun avec le sous-dossier où tu
+  proposes de le mettre et pourquoi en cinq mots
+- les doublons probables, groupés, avec leur taille et leur date
+- les fichiers de plus de six mois qu&#x27;aucun autre fichier ne cite
+- ce que tu n&#x27;as pas su classer
+
+Ne déplace rien, ne renomme rien, ne supprime rien, ne crée aucun
+dossier. Tu écris un plan, je l&#x27;applique si je le veux. C&#x27;est une
+règle absolue : un rangement qui s&#x27;exécute sans témoin finit un jour
+par emporter ce qu&#x27;il ne fallait pas.
+
+À la fin, écris en une ligne combien de fichiers tu as examinés et
+combien tu proposes de déplacer.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Vérifiez d&#x27;abord que rien n&#x27;a bougé : comptez les fichiers avant et après, le nombre doit être identique au fichier de plan près. Lisez ensuite la liste des doublons et ouvrez-en une paire : des fichiers de même nom et de tailles différentes ne sont pas des doublons, c&#x27;est le piège de cette tâche.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b8">
+<h3><span class="rang">B8</span>Les devis sans réponse, et la relance prête à envoyer</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Sophie</span></p>
+<p>Un devis sur trois se perd faute de relance. Vous le savez, et vous relancez quand même au jugé, c&#x27;est-à-dire ceux dont vous vous souvenez.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Votre tableau de suivi est un fichier de votre disque, et les relances doivent rester des brouillons que vous relisez avant d&#x27;envoyer.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine. Deux fois serait du harcèlement, une fois par mois arrive trop tard.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun : les relances sont écrites dans des fichiers, et vous les copiez vous-même. C&#x27;est volontaire, car un message commercial ne part pas sans relecture.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B8</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Ouvre devis.csv dans ce dossier.
+
+Repère les devis dont la date d&#x27;envoi remonte à plus de
+[nombre] jours et dont la colonne de statut ne porte ni
+« accepté » ni « refusé ».
+
+Pour chacun, écris un brouillon de relance dans
+relance-[référence].md : six lignes au plus, qui rappellent l&#x27;objet
+du devis, son montant et sa date, posent une question simple et
+proposent deux créneaux la semaine prochaine. Pas de formule
+d&#x27;insistance, pas de « je me permets de revenir vers vous ».
+
+Chaque chiffre vient du tableau. Si le montant ou la date manque,
+écris [À COMPLÉTER] : n&#x27;invente rien dans un document commercial.
+
+Écris aussi recapitulatif.md, qui liste les relances produites par
+ordre de montant décroissant.
+
+N&#x27;envoie aucun message et ne modifie pas devis.csv.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Lisez deux relances en entier, montant et date compris, contre la ligne du tableau. Puis vérifiez le compte : autant de fichiers de relance que de lignes relevées dans le récapitulatif. Un écart signifie qu&#x27;une ligne a été lue puis oubliée en chemin.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--cloud" id="b9">
+<h3><span class="rang">B9</span>Les appels d&#x27;offres publiés qui correspondent à vos critères</h3>
+<p class="etiquettes"><span class="forme">Tourne sans votre machine</span><span class="pour">Pour Thomas</span></p>
+<p>Les consultations paraissent en continu et vous les découvrez quand un confrère vous en parle. À ce moment-là, il reste huit jours.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>La recherche porte sur des publications en ligne, pas sur vos fichiers, et elle doit tourner même la semaine où vous êtes en déplacement.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par jour ouvré, tôt. Un délai de dépôt se compte en jours, donc un passage quotidien suffit, et un passage hebdomadaire vous ferait rater les consultations à délai court.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Celui de votre espace de notes ou de votre messagerie, si vous voulez y recevoir le résultat.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B9</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Cherche les consultations publiées depuis hier qui
+correspondent à ces critères :
+[vos codes d&#x27;activité, zones géographiques et seuils de montant]
+
+Pour chacune, donne : l&#x27;acheteur, l&#x27;objet en une phrase, la date
+limite de remise, le montant estimé s&#x27;il est publié, et l&#x27;adresse
+de la publication.
+
+Trois règles.
+Ne retiens qu&#x27;une consultation dont tu as lu l&#x27;avis : si tu n&#x27;as
+que le titre, mets-la dans une liste séparée intitulée
+« à vérifier à la main », avec son adresse.
+Si la date limite est à moins de [nombre] jours, écris-le en tête
+de ligne : c&#x27;est la seule information qui change ma décision
+aujourd&#x27;hui.
+Ne juge pas si je peux répondre ou non, et ne classe pas les
+consultations par chance de succès. Tu ne connais ni mes références
+ni ma charge.
+
+Si rien ne correspond, écris « aucune consultation aujourd&#x27;hui ».
+N&#x27;élargis pas les critères pour remplir.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Ouvrez chaque adresse donnée le premier jour. Une adresse qui répond mais mène à une autre consultation est le défaut à attraper tout de suite : il se voit en une minute et coûte une journée s&#x27;il passe. Vérifiez aussi qu&#x27;une liste « à vérifier à la main » existe : si tout tombe dans la liste principale, la tâche ne distingue pas ce qu&#x27;elle a lu de ce qu&#x27;elle a deviné.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b10">
+<h3><span class="rang">B10</span>L&#x27;ordre du jour du point hebdomadaire, bâti sur les actions en retard</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Marie</span></p>
+<p>Votre point du lundi commence par un tour de table qui prend vingt minutes et ne dit jamais ce qui est en retard.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Vos comptes-rendus sont des fichiers de votre disque, et l&#x27;ordre du jour doit y rester pour que vous le modifiiez avant la réunion.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine, la veille au soir de votre point. Vous le lisez le matin, vous le corrigez en cinq minutes.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B10</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Dans ce dossier se trouvent les comptes-rendus de mes points,
+nommés cr-AAAA-MM-JJ.md.
+
+Relis les quatre derniers. Relève toutes les actions annoncées, avec
+leur porteur et leur échéance quand elle est écrite.
+
+Écris ordre-du-jour-[date].md en trois parties :
+- les actions dont l&#x27;échéance est passée et qu&#x27;aucun compte-rendu
+  ultérieur ne donne pour faites, chacune avec la date et le
+  compte-rendu où elle a été prise
+- les actions dont l&#x27;échéance tombe cette semaine
+- les sujets évoqués deux fois ou plus sans qu&#x27;aucune décision soit
+  notée
+
+Cite le compte-rendu d&#x27;origine pour chaque ligne. Une action dont
+tu ne trouves pas le porteur garde la mention [PORTEUR NON NOTÉ] :
+ne l&#x27;attribue à personne.
+
+N&#x27;évalue personne, ne compte pas les retards par personne et
+n&#x27;établis aucun classement. Ce document sert à avancer, pas à
+juger.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Prenez trois actions de la première partie et retrouvez-les dans le compte-rendu cité. Une action attribuée à quelqu&#x27;un qui ne l&#x27;a pas prise est le défaut grave de cette tâche, et il se produit quand un compte-rendu cite un nom à côté d&#x27;une action sans la lui donner. Si vous en trouvez un, ajoutez au prompt qu&#x27;un porteur ne se déduit pas d&#x27;une proximité dans le texte.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b11">
+<h3><span class="rang">B11</span>Le récapitulatif du vendredi pour votre direction</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Marie</span></p>
+<p>Votre directeur vous demande « où on en est » le lundi matin, et vous reconstituez la semaine de mémoire.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Il part de vos comptes-rendus et de vos tableaux de suivi, qui vivent sur votre disque.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine, le vendredi en fin d&#x27;après-midi.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B11</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Dans ce dossier se trouvent mes comptes-rendus de la semaine
+et le tableau suivi.csv.
+
+Écris recapitulatif-[date].md, une page au plus, pour un lecteur qui
+n&#x27;a suivi aucun de ces sujets. Quatre parties :
+- ce qui a avancé cette semaine, trois points au plus, chacun avec
+  le fait qui le prouve
+- ce qui a glissé, avec depuis quand et la raison si elle est écrite
+- les deux décisions que j&#x27;attends de ma direction, chacune avec
+  l&#x27;option que je recommande et pourquoi
+- ce qui arrive la semaine prochaine
+
+Chaque affirmation s&#x27;appuie sur une ligne du tableau ou une phrase
+d&#x27;un compte-rendu. Si une partie n&#x27;a rien à dire, écris-le en une
+ligne : un récapitulatif honnête vaut mieux qu&#x27;un récapitulatif
+complet.
+
+Ne nomme aucune personne de mon équipe à propos d&#x27;un retard. Les
+sujets glissent, pas les gens.
+
+Pas de jargon, pas de verbe au futur pour ce qui est déjà fait.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Faites lire la page à quelqu&#x27;un qui ne suit pas vos sujets. S&#x27;il ne comprend pas une des quatre parties, ce n&#x27;est pas lui, c&#x27;est le document. Vérifiez ensuite qu&#x27;aucun nom de votre équipe n&#x27;apparaît à côté d&#x27;un retard : c&#x27;est l&#x27;interdit du prompt, et c&#x27;est celui qui se contourne le plus facilement.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b12">
+<h3><span class="rang">B12</span>Les échéances contractuelles à soixante jours</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Thomas</span></p>
+<p>Un contrat se reconduit tacitement et vous l&#x27;apprenez en recevant la facture. Le préavis était de trois mois.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Vos contrats sont des PDF rangés sur votre disque, et ils n&#x27;ont rien à faire ailleurs.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine. Un préavis se compte en mois, donc un passage hebdomadaire laisse largement le temps d&#x27;agir.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B12</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Dans ce dossier se trouvent des contrats en PDF.
+
+Pour chacun, relève : la date de signature, la durée, la date de
+reconduction ou d&#x27;échéance, la durée du préavis, et la forme exigée
+pour dénoncer le contrat si elle est précisée.
+
+Écris echeances-[date].md, trié par date de décision croissante, où
+la date de décision est l&#x27;échéance moins le préavis. Pour chaque
+contrat, donne cette date de décision en clair, et la page du
+contrat où tu as lu le préavis.
+
+Signale en tête ceux dont la date de décision tombe dans les
+soixante prochains jours.
+
+Si une durée de préavis ne figure pas dans le contrat, écris
+[PRÉAVIS NON TROUVÉ] et donne la page que tu as lue en dernier.
+N&#x27;applique aucun préavis par défaut : une durée supposée est pire
+qu&#x27;une durée absente, car elle ne se vérifie pas.
+
+Tu ne donnes aucun conseil juridique et tu ne dis pas s&#x27;il faut
+dénoncer ou non.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Vérifiez deux préavis en ouvrant le contrat à la page citée. C&#x27;est le seul contrôle qui compte, car une date de décision fausse est indétectable autrement et vous fera manquer l&#x27;échéance en croyant l&#x27;avoir surveillée.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b13">
+<h3><span class="rang">B13</span>Le journal de bord d&#x27;un projet, tenu sans vous</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour Marie</span></p>
+<p>Six mois après, personne ne sait plus pourquoi une décision a été prise. Les comptes-rendus existent, mais relire quarante fichiers n&#x27;arrive jamais.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Les comptes-rendus arrivent dans un dossier de votre disque, et le journal doit vivre à côté d&#x27;eux.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine. Le journal se complète, il ne se refait pas.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B13</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Dans ce dossier, journal.md tient la chronologie du projet.
+
+Lis les comptes-rendus déposés depuis la date de la dernière entrée
+du journal, et eux seuls. S&#x27;il n&#x27;y en a aucun, ne modifie pas le
+fichier et dis-le.
+
+Ajoute à la fin de journal.md, sans rien réécrire au-dessus, une
+entrée par semaine qui porte :
+- les décisions prises, avec leur date et le compte-rendu d&#x27;origine
+- ce qui a changé par rapport à ce qui était prévu, et la raison
+  telle qu&#x27;elle est écrite
+- les risques nommés, et ce qui en a été dit
+
+Une décision qui n&#x27;est pas écrite noir sur blanc dans un
+compte-rendu ne rentre pas dans le journal. N&#x27;interprète pas, ne
+résume pas une discussion en décision.
+
+Ne modifie aucune entrée existante et ne supprime aucune ligne. Le
+journal s&#x27;allonge, il ne se corrige pas : c&#x27;est ce qui en fait une
+trace.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Comparez la dernière entrée aux comptes-rendus de la semaine. Vérifiez surtout que les entrées antérieures sont intactes, octet pour octet : une tâche qui réécrit l&#x27;histoire du projet est plus dangereuse qu&#x27;une tâche qui ne l&#x27;écrit pas.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--cloud" id="b14">
+<h3><span class="rang">B14</span>Le résumé des canaux de discussion que vous ne lisez plus</h3>
+<p class="etiquettes"><span class="forme">Tourne sans votre machine</span><span class="pour">Pour Marie</span></p>
+<p>Vous êtes dans onze canaux et vous en lisez deux. Ce qui se décide dans les neuf autres vous revient en réunion, trop tard.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Les messages vivent dans un service qu&#x27;un connecteur ouvre. Rien n&#x27;est sur votre disque.</dd>
+<dt>La cadence</dt>
+<dd>Deux fois par jour, en fin de matinée et en fin de journée. Plus souvent, vous relirez ce que vous venez de lire ; une fois par jour, et le résumé du matin arrive après les décisions de l&#x27;après-midi.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Celui de votre outil de discussion, et rien d&#x27;autre.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B14</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Lis les messages postés depuis ton dernier passage dans ces
+canaux :
+[la liste de vos canaux, un par ligne]
+
+Rends un résumé de quinze lignes au plus, groupé par canal, qui ne
+retient que trois choses : les décisions annoncées, les demandes qui
+me sont adressées nommément, et les échéances citées.
+
+Tout le reste ne se résume pas. S&#x27;il n&#x27;y a rien de ces trois
+catégories dans un canal, écris le nom du canal suivi de « rien ».
+
+Pour chaque ligne, donne qui a écrit et quand, et cite la phrase
+d&#x27;origine entre guillemets. Je dois pouvoir retrouver le message en
+dix secondes.
+
+Ne réponds à aucun message, n&#x27;en poste aucun, ne réagis à rien. Tu
+lis et tu résumes.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Retrouvez trois des phrases citées dans leur canal. Une citation reformulée, même fidèle, rend le résumé inutilisable, car vous ne pourrez pas retrouver le message par recherche. Vérifiez aussi qu&#x27;au moins un canal a rendu « rien » : c&#x27;est le signe que la tâche trie au lieu de remplir.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b15">
+<h3><span class="rang">B15</span>Le contrôle de cohérence d&#x27;un export avant qu&#x27;il parte</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour tous</span></p>
+<p>Un tableau part chez un client avec une date au mauvais format et deux lignes en double. Vous le découvrez en réunion.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Le fichier à contrôler est sur votre disque, et il ne doit pas en sortir avant d&#x27;être juste.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par jour, sur un dossier de dépôt. Posez-y le fichier, relisez le rapport le lendemain.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B15</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Contrôle les fichiers .csv et .xlsx déposés dans ce dossier
+depuis ton dernier passage.
+
+Pour chacun, écris controle-[nom du fichier].md qui relève :
+- les lignes en double, exactes ou différant d&#x27;un seul caractère
+- les dates qui ne suivent pas le format majoritaire du fichier, ou
+  qui se lisent de deux façons, et celles qui sont impossibles
+- les montants hors de l&#x27;ordre de grandeur de leur colonne, avec le
+  rapport à la médiane
+- les cellules vides dans une colonne qui est remplie partout
+  ailleurs
+- les libellés presque identiques, qui désignent peut-être la même
+  chose
+
+Pour chaque signalement, donne le numéro de ligne et la valeur telle
+qu&#x27;elle est écrite. Ne corrige rien, ne réécris aucun fichier, ne
+tranche aucune ambiguïté : tu signales, je décide.
+
+Si un fichier ne porte aucun défaut, écris-le. C&#x27;est une information
+qui vaut autant que les autres.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Posez un fichier dont vous connaissez déjà un défaut, et vérifiez qu&#x27;il le trouve. C&#x27;est le seul contrôle qui vaut : une tâche de contrôle qui ne signale rien ressemble exactement à une tâche qui ne tourne pas.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--cloud" id="b16">
+<h3><span class="rang">B16</span>La veille sur vos clients, pas sur vos concurrents</h3>
+<p class="etiquettes"><span class="forme">Tourne sans votre machine</span><span class="pour">Pour Thomas</span></p>
+<p>Vous surveillez vos concurrents et pas vos clients. Un changement de direction chez un compte stratégique se découvre pourtant dans la presse avant de se découvrir au téléphone.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>La veille lit des publications en ligne et doit tourner sans vous.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par semaine. Un signal d&#x27;entreprise ne se périme pas en quarante-huit heures.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Celui de votre espace de notes ou de votre messagerie, pour y recevoir le résultat.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B16</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Fais la veille de la semaine sur ces entreprises :
+[vos comptes, un par ligne]
+
+Ne retiens que ces cinq types de signaux : changement de dirigeant,
+opération financière, ouverture ou fermeture de site, publication de
+résultats, annonce de projet lié à [votre domaine].
+
+Pour chaque signal : la date, la source avec son adresse, le fait
+en une phrase, et ce qu&#x27;il ouvre comme conversation pour moi en une
+phrase.
+
+Trois règles.
+Un signal sans date ou sans source datée ne se retient pas : mets-le
+dans une liste « à vérifier » avec son adresse.
+Ne déduis rien du secteur d&#x27;une entreprise ni de sa taille : si le
+signal ne le dit pas, ne l&#x27;écris pas.
+Ne porte aucune appréciation sur les dirigeants cités et n&#x27;établis
+aucun classement de personnes.
+
+Pour une entreprise sans signal cette semaine, écris son nom suivi
+de « aucun signal trouvé ». Ne cherche pas à remplir.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Ouvrez les adresses du premier rapport et vérifiez que chaque signal y figure avec la date annoncée. Regardez ensuite les entreprises sans signal : si elles sont nombreuses, c&#x27;est normal, et c&#x27;est même le signe que la tâche ne remplit pas. Si aucune n&#x27;y est, méfiez-vous.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+<section class="tache tache--locale" id="b17">
+<h3><span class="rang">B17</span>Les pièces jointes reçues, classées et renommées</h3>
+<p class="etiquettes"><span class="forme">Tourne sur votre ordinateur</span><span class="pour">Pour tous</span></p>
+<p>Vous téléchargez une pièce jointe nommée document(3).pdf et vous ne la retrouvez jamais. Trois mois plus tard, votre dossier en porte quatre-vingts.</p>
+<dl>
+<dt>La forme, et pourquoi</dt>
+<dd>Les fichiers téléchargés sont sur votre disque, et le renommage doit s&#x27;y faire.</dd>
+<dt>La cadence</dt>
+<dd>Une fois par jour, en fin de journée.</dd>
+<dt>Les connecteurs à garder</dt>
+<dd>Aucun.</dd>
+</dl>
+<details class="bloc-prompt">
+<summary>Voir le prompt de B17</summary>
+<button class="copier" type="button">Copier le prompt</button>
+<pre>Regarde les fichiers déposés dans ce dossier depuis ton
+dernier passage.
+
+Pour chacun, lis-le et propose un nom de la forme
+AAAA-MM-JJ-emetteur-objet.extension, où la date est celle du
+document et non celle du téléchargement, et où l&#x27;objet tient en
+trois mots.
+
+Écris tes propositions dans renommage-[date].md : nom actuel, nom
+proposé, et la phrase du document qui t&#x27;a donné la date et
+l&#x27;émetteur.
+
+Ne renomme rien, ne déplace rien, ne supprime rien. Je relis et
+j&#x27;applique.
+
+Si tu ne trouves pas de date dans un document, garde la date du
+fichier et marque la ligne [DATE DU FICHIER] : je dois savoir
+lesquelles sont sûres.
+
+Si deux documents donnent le même nom proposé, signale-les ensemble
+sans départager.</pre>
+</details>
+<dl>
+<dt>À vérifier à la première exécution</dt>
+<dd>Vérifiez cinq propositions en ouvrant les documents. La date lue dans le document est-elle bien celle que vous auriez prise ? Comptez ensuite les fichiers du dossier : le nombre doit être inchangé, et aucun nom ne doit avoir bougé.</dd>
+</dl>
+<p class="haut"><a href="#sommaire">↑ Revenir au sommaire</a></p>
+</section>
+
+
+<div class="encadre">
+<p>⚠️ <strong>Aucune de ces dix-sept automatisations ne supprime quoi que ce
+soit.</strong> Celles qui rangent proposent, et laissent la décision au
+lecteur. Ce n'est pas une précaution d'écriture : une tâche qui s'exécute sans
+témoin finit un jour par emporter ce qu'il ne fallait pas, et personne n'est
+là pour l'arrêter. Si vous adaptez l'un de ces prompts, gardez ses interdits.</p>
+</div>
+
+</main>
+
+<footer>
+  <div class="dedans">
+    <p>Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce : écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p>
+  </div>
+</footer>
+<script>
+document.querySelectorAll('.copier').forEach(function (bouton) {
+  bouton.addEventListener('click', function () {
+    var bloc = bouton.parentNode.querySelector('pre');
+    var fait = function () {
+      bouton.textContent = 'Copié, collez-le dans Claude Code';
+      window.setTimeout(function () { bouton.textContent = 'Copier le prompt'; }, 4000);
+    };
+    function selectionner() {
+      var plage = document.createRange();
+      plage.selectNodeContents(bloc);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(plage);
+      bouton.textContent = 'Texte sélectionné, faites Ctrl+C ou Cmd+C';
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(bloc.textContent).then(fait, selectionner);
+    } else {
+      selectionner();
+    }
+  });
+});
+</script>
+<script>
+(function () {
+  var bouton = document.getElementById('deplier-tout');
+  var blocs = Array.prototype.slice.call(
+    document.querySelectorAll('details.bloc-prompt'));
+
+  if (bouton) {
+    bouton.addEventListener('click', function () {
+      var ouvrir = blocs.some(function (d) { return !d.open; });
+      blocs.forEach(function (d) { d.open = ouvrir; });
+      bouton.textContent = ouvrir
+        ? 'Replier les dix-sept prompts'
+        : 'Déplier les dix-sept prompts';
+    });
+  }
+
+  function ouvrirLaCible() {
+    var id = window.location.hash.replace('#', '');
+    if (!id) { return; }
+    var fiche = document.getElementById(id);
+    if (!fiche) { return; }
+    var bloc = fiche.querySelector('details.bloc-prompt');
+    if (bloc) { bloc.open = true; }
+  }
+  window.addEventListener('hashchange', ouvrirLaCible);
+  ouvrirLaCible();
+})();
+</script>
+</body>
+</html>
