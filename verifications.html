@@ -421,14 +421,11 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
   overflow-x: auto;
 }
 
-/* En dessous de 768px, .pages-autres ouverte doit passer SOUS le bouton de
+/* En dessous de 768px, la liste deployee doit passer SOUS le bouton de
    repli, pas a cote de lui dans la meme rangee : sans ce retour a la ligne,
-   le troisieme element flex (.pages-autres, large de son contenu) s'ajoute a
-   droite du bouton et fait reapparaitre, a l'identique, le defilement
-   horizontal interne qu'on repare ce soir. flex-wrap ne se pose qu'ici, sous
-   768px : au-dela, .pages-autres passe en rangee (flex-direction: row) et
-   tient nativement sur la seule ligne existante, sans jamais avoir besoin de
-   passer à la ligne. */
+   elle s'ajoute a droite du bouton et fait reapparaitre le defilement
+   horizontal interne. flex-wrap ne se pose qu'ici : au-dela de 768px, la
+   liste tient sur la seule rangee existante. */
 @media (max-width: 767.98px) {
   .pages { flex-wrap: wrap; }
 }
@@ -460,28 +457,11 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
   font-weight: 600;
 }
 
-/* La page courante ne grandit jamais : sans ce plancher, le flex:1 herite
-   de ".pages ul" ci-dessus l'etire et ouvre un vide entre elle et le repli
-   des dix autres pages. Le selecteur compose ".pages .pages-courante" n'est
-   pas un style : ".pages ul" pose deja un type, et une classe seule n'a pas
-   assez de poids pour la corriger (specificite inferieure), mesure au
-   navigateur le 29 octobre apres qu'une regle a classe seule s'est vue
-   ignorer en silence. */
-/* La marge a droite comble l'ecart de rythme qu'a ouvert l'eclatement de
-   l'ancien <ul> unique en deux listes : le gap de 4px de .pages separait
-   avant des <li> internes espaces de 18px chacun, pas deux <ul> entiers,
-   et sans cette marge "Sources officielles" et le premier lien suivant se
-   touchaient presque, mesure a l'ecran sur le rendu desktop. */
-.pages .pages-courante { flex: 0 0 auto; margin-right: 14px; }
-
-/* Le repli n'est plus que le bouton : son <summary> est le seul contenu du
-   <details>, et .pages-autres vit juste apres, hors de lui. Mesure au
+/* Le repli n'est que le bouton : son <summary> est le seul contenu du
+   <details>, et .pages-liste vit juste apres, hors de lui. Mesure au
    navigateur le 29 octobre : un <details> ferme cache son contenu quelle
-   que soit la regle d'auteur posee SUR CE CONTENU, display comme
-   content-visibility, aucune des deux ne l'emportant sur l'agent
-   utilisateur. En sortant .pages-autres du <details>, ce verrou ne
-   s'applique plus a elle : seul .pages-repli (bouton seul) reste soumis au
-   comportement natif d'ouverture/fermeture. */
+   que soit la regle d'auteur posee SUR CE CONTENU. Il precede la liste, d'ou
+   la marge a droite et non plus a gauche. */
 .pages-repli {
   list-style: none;
   flex: 0 0 auto;
@@ -491,7 +471,7 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
   align-items: center;
   min-height: 24px;
   padding: 2px 10px;
-  margin: 0 0 0 4px;
+  margin: 0 14px 0 0;
   color: var(--papier);
   font-size: 14px;
   font-weight: 600;
@@ -505,62 +485,50 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 .pages-repli summary::marker { content: ""; }
 .pages-repli summary:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 
-/* .pages-autres est une liste ordinaire, posee a cote du <details>, jamais
-   dedans : rien n'empeche donc une regle d'auteur de controler son
-   affichage, contrairement au contenu d'un <details> ferme (mesure ci-
-   dessus). Par defaut, SANS AUCUNE CONDITION, elle reste dans le flux normal
-   d'un <ul> : aucun display n'est pose ici, donc elle herite du display:flex
-   que la regle generique ".pages ul" pose plus haut dans cette feuille, en
-   colonne (flex-direction ci-dessous) et en pleine largeur (flex-basis),
-   c'est-a-dire VISIBLE, repliee sous la rangee du haut. C'est le socle que
-   les deux blocs suivants viennent soit cacher (navigateur qui connait
-   :has(), au clavier/clic), soit mettre en rangee (grand ecran) : AUCUN des
-   deux n'est garanti, et le socle doit donc, a lui seul, rester un etat
-   correct. Le selecteur compose ".pages .pages-autres" est oblige, pour la
-   meme raison de specificite que .pages-courante ci-dessus : une classe
-   seule perd face a ".pages ul" (specificite inferieure, mesure au
-   navigateur le 29 octobre apres qu'une regle a classe seule s'est vue
-   ignorer en silence). */
-.pages .pages-autres {
-  flex-direction: column;
-  flex-basis: 100%;
-  align-items: flex-start;
-  gap: 14px;
-  margin: 14px 0 4px;
-  padding: 0;
-  list-style: none;
+/* Le socle, sous 768px : la liste entiere, en colonne et en pleine largeur
+   sous le bouton, c'est-a-dire VISIBLE. C'est l'etat d'un navigateur qui
+   ignore :has() : il perd le repli, jamais les liens. Le selecteur compose
+   ".pages .pages-liste" est oblige : une classe seule perd face a
+   ".pages ul" (specificite inferieure, mesure au navigateur le 29 octobre
+   apres qu'une regle a classe seule s'est vue ignorer en silence). */
+@media (max-width: 767.98px) {
+  .pages .pages-liste {
+    flex-direction: column;
+    flex-basis: 100%;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 14px 0 4px;
+  }
 }
 
-/* Le repli proprement dit n'existe QUE si le navigateur comprend :has() :
-   @supports selector(...) est lui-meme ignore par un navigateur trop vieux
-   pour evaluer son argument, donc par tout navigateur qui ne connaitrait pas
-   :has(), et le bloc entier disparait avec lui plutot que de lever une
-   erreur. Dans ce cas, aucune regle ne vient jamais poser "display: none"
-   sur .pages-autres : elle reste dans l'etat visible du socle ci-dessus,
-   affichee en permanence sous la rangee du haut, pleinement accessible au
-   clic comme au lecteur d'ecran. C'est la reponse a la question posee le 30
-   octobre : un navigateur qui ignore :has() NE perd PAS les dix pages, il
-   perd seulement le repli, et voit une barre a deux rangees en permanence
-   deployee. C'est strictement mieux que le defilement horizontal silencieux
-   d'avant cette tache (defaut 2), et sans commune mesure avec une barre qui
-   ferait disparaitre les dix liens : aucun des deux risques ne s'est
-   produit, l'un parce qu'on l'a corrige ce soir, l'autre parce que ce bloc
-   est concu pour ne jamais y mener, meme sans :has(). Seul Chrome/Edge a ete
-   mesure au navigateur (barre repliee, ouverte au clic, ouverte au clavier) ;
-   le filet de securite ci-dessus n'a pas ete mesure sur un navigateur reel
-   depourvu de :has(), seulement raisonne depuis la specification CSS des
-   regles @supports et des selecteurs inconnus. */
+/* Le repli proprement dit n'existe QUE si le navigateur comprend :has(),
+   @supports ignorant le bloc entier sinon. Ferme, la liste ne montre que
+   l'echelon courant, sur la rangee du bouton ; ouverte, elle reprend l'etat
+   du socle. Les echelons caches le sont SUR PLACE : l'ordre de PAGES ne
+   bouge jamais, ni replie ni deploye. */
 @supports selector(:has(a)) {
-  .pages .pages-autres { display: none; }
-  nav.pages:has(.pages-repli[open]) .pages-autres { display: flex; }
+  @media (max-width: 767.98px) {
+    .pages .pages-liste {
+      flex-direction: row;
+      flex-basis: auto;
+      align-items: center;
+      margin: 0;
+    }
+    .pages .pages-liste li:not(:has([aria-current])) { display: none; }
+    nav.pages:has(.pages-repli[open]) .pages-liste {
+      flex-direction: column;
+      flex-basis: 100%;
+      align-items: flex-start;
+      margin: 14px 0 4px;
+    }
+    nav.pages:has(.pages-repli[open]) .pages-liste li { display: block; }
+  }
 }
 
-/* Un navigateur qui ignore :has() ignore aussi ce bloc-ci (meme garde
-   @supports) : le bouton de repli resterait sinon affiche sur mobile sans
-   jamais rien replier, puisque .pages-autres y est deja visible en
-   permanence par le socle. Le cacher evite un bouton inerte, pas une perte
-   de contenu : les dix liens restent les memes, juste sans bouton inutile
-   au-dessus d'eux. */
+/* Un navigateur qui ignore :has() ignore aussi ce bloc-ci : le bouton
+   resterait sinon affiche sur mobile sans jamais rien replier, la liste y
+   etant deja deployee par le socle. Le cacher evite un bouton inerte, pas
+   une perte de contenu. */
 @supports not selector(:has(a)) {
   @media (max-width: 767.98px) {
     .pages-repli { display: none; }
@@ -568,26 +536,10 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 }
 
 /* Au-dela de 768px, la barre tient sur une seule rangee, que :has() soit
-   connu ou non : le bouton de repli disparait et .pages-autres repasse en
-   rangee horizontale, flex-basis repris a "auto" pour ne plus reclamer la
-   pleine largeur du socle. La barre se lit donc comme une seule rangee,
-   identique a l'ancienne version. Cette regle n'est pas gardee par
-   @supports : elle doit s'appliquer inconditionnellement, y compris au
-   navigateur sans :has() du bloc ci-dessus, pour qui c'est le SEUL moyen de
-   repasser d'une barre a deux rangees (son seul etat sous 768px) a une barre
-   a une rangee. */
+   connu ou non : le bouton disparait et la liste herite de ".pages ul",
+   en rangee, toutes ses entrees visibles, dans l'ordre de PAGES. */
 @media (min-width: 768px) {
   .pages-repli { display: none; }
-  .pages .pages-autres {
-    display: flex;
-    flex-direction: row;
-    flex-basis: auto;
-    align-items: center;
-    gap: 18px;
-    margin: 0;
-    padding: 0;
-    flex: 1 1 auto;
-  }
 }
 .repere {
   margin-left: auto;
@@ -635,6 +587,7 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
   font-size: 13px;
   color: var(--encre-douce);
 }
+.contact a { color: var(--lien); text-decoration: underline; }
 .cloture {
   margin: 0;
   font-size: 13px;
@@ -723,7 +676,7 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
     <span class="adresse">ccletempsduncafe.github.io</span>
   </div>
 </header>
-<nav class="pages" aria-label="Les pages du site"><ul class="pages-courante"><li><span aria-current="page">Vérifications</span></li></ul><details class="pages-repli"><summary>Les dix autres pages</summary></details><ul class="pages-autres"><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></nav>
+<nav class="pages" aria-label="Les pages du site"><details class="pages-repli"><summary>Les dix autres pages</summary></details><ul class="pages-liste"><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><span aria-current="page">Vérifications</span></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></nav>
 
 <main class="texte" id="contenu">
 <a class="retour" href="index.html">← Retour aux prompts du livre</a>
@@ -828,7 +781,7 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 
 </main>
 
-<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><span aria-current="page">Vérifications</span></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
+<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><span aria-current="page">Vérifications</span></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à <a href="mailto:ccletempsduncafe@lbi1.anonaddy.com">ccletempsduncafe@lbi1.anonaddy.com</a>.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
 
 <script>
 (function () {
