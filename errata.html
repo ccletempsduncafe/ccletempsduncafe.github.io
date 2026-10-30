@@ -379,6 +379,25 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 
 .rien { background: var(--carte); border: 1px solid var(--trait); border-radius: 4px; padding: 22px 24px; margin-top: 24px; }
 
+/* installer.html. Le renvoi dit de quelle section du livre vient la promesse,
+   et la ligne systeme annonce la commande qui suit : ni l'un ni l'autre n'est
+   de la prose, d'ou leur exclusion de la justification dans STYLE_PROSE. */
+.renvoi { color: var(--encre-douce); font-size: 14px; margin: 2px 0 14px; }
+.systeme { font-weight: 600; margin: 18px 0 6px; font-size: 15px; }
+/* Une commande ne se coupe jamais en silence : elle defile dans sa propre
+   boite plutot que de deborder la page ou d'etre tronquee a l'affichage. */
+#contenu pre {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin: 0 0 6px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
+#contenu pre code { white-space: pre; }
+
 @media print {
   .bandeau, .retour, footer { display: none; }
   body { background: #fff; font-size: 11.5pt; }
@@ -443,7 +462,7 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 
 /* La page courante ne grandit jamais : sans ce plancher, le flex:1 herite
    de ".pages ul" ci-dessus l'etire et ouvre un vide entre elle et le repli
-   des neuf autres pages. Le selecteur compose ".pages .pages-courante" n'est
+   des dix autres pages. Le selecteur compose ".pages .pages-courante" n'est
    pas un style : ".pages ul" pose deja un type, et une classe seule n'a pas
    assez de poids pour la corriger (specificite inferieure), mesure au
    navigateur le 29 octobre apres qu'une regle a classe seule s'est vue
@@ -520,11 +539,11 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
    sur .pages-autres : elle reste dans l'etat visible du socle ci-dessus,
    affichee en permanence sous la rangee du haut, pleinement accessible au
    clic comme au lecteur d'ecran. C'est la reponse a la question posee le 30
-   octobre : un navigateur qui ignore :has() NE perd PAS les neuf pages, il
+   octobre : un navigateur qui ignore :has() NE perd PAS les dix pages, il
    perd seulement le repli, et voit une barre a deux rangees en permanence
    deployee. C'est strictement mieux que le defilement horizontal silencieux
    d'avant cette tache (defaut 2), et sans commune mesure avec une barre qui
-   ferait disparaitre les neuf liens : aucun des deux risques ne s'est
+   ferait disparaitre les dix liens : aucun des deux risques ne s'est
    produit, l'un parce qu'on l'a corrige ce soir, l'autre parce que ce bloc
    est concu pour ne jamais y mener, meme sans :has(). Seul Chrome/Edge a ete
    mesure au navigateur (barre repliee, ouverte au clic, ouverte au clavier) ;
@@ -540,7 +559,7 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
    @supports) : le bouton de repli resterait sinon affiche sur mobile sans
    jamais rien replier, puisque .pages-autres y est deja visible en
    permanence par le socle. Le cacher evite un bouton inerte, pas une perte
-   de contenu : les neuf liens restent les memes, juste sans bouton inutile
+   de contenu : les dix liens restent les memes, juste sans bouton inutile
    au-dessus d'eux. */
 @supports not selector(:has(a)) {
   @media (max-width: 767.98px) {
@@ -671,6 +690,28 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 /* Une cible d'ancrage ne doit pas se retrouver masquee sous la barre
    collee : la marge de defilement vaut la hauteur de .pages, prise large. */
 :target { scroll-margin-top: 64px; }
+
+#contenu p,
+#contenu li,
+#contenu dd {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Ce qui ne se justifie jamais : le code, les cellules d'un tableau (trop
+   etroites), et les libelles courts qui annoncent un bloc. */
+#contenu pre,
+#contenu code,
+#contenu th,
+#contenu td,
+#contenu .systeme,
+#contenu .renvoi,
+#contenu .retour {
+  text-align: left;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
 </style>
 </head>
 <body>
@@ -682,7 +723,7 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
     <span class="adresse">ccletempsduncafe.github.io</span>
   </div>
 </header>
-<nav class="pages" aria-label="Les pages du site"><ul class="pages-courante"><li><span aria-current="page">Corrections</span></li></ul><details class="pages-repli"><summary>Les neuf autres pages</summary></details><ul class="pages-autres"><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></nav>
+<nav class="pages" aria-label="Les pages du site"><ul class="pages-courante"><li><span aria-current="page">Corrections</span></li></ul><details class="pages-repli"><summary>Les dix autres pages</summary></details><ul class="pages-autres"><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></nav>
 
 <main class="texte" id="contenu">
 <a class="retour" href="index.html">← Retour aux prompts du livre</a>
@@ -694,11 +735,11 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 
 </main>
 
-<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="sources.html">Sources officielles</a></li><li><span aria-current="page">Corrections</span></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
+<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><span aria-current="page">Corrections</span></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
 
 <script>
 (function () {
-  // Le bouton de retour en haut se construit lui-meme : aucune des dix pages
+  // Le bouton de retour en haut se construit lui-meme : aucune des onze pages
   // n'a besoin de le marquer dans son HTML. Il porte son libelle en toutes
   // lettres, une fleche seule etant ambigue au lecteur presse comme au
   // lecteur d'ecran. Une seule instance par page.

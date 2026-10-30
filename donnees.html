@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Les informations qui vieillissent — Claude Code pour vos dossiers</title>
-<meta name="description" content="L&#x27;état du jour des tarifs, modèles et connecteurs cités par le livre.">
+<meta name="description" content="L&#x27;état du jour des tarifs, modèles, connecteurs et libellés d&#x27;interface cités par le livre.">
 <style>
 /* La page reprend les trois couleurs de la couverture, et rien d'autre : le
    noir d'encre du fond, le creme du titre, l'orange du sous-titre. Le lecteur
@@ -379,6 +379,25 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 
 .rien { background: var(--carte); border: 1px solid var(--trait); border-radius: 4px; padding: 22px 24px; margin-top: 24px; }
 
+/* installer.html. Le renvoi dit de quelle section du livre vient la promesse,
+   et la ligne systeme annonce la commande qui suit : ni l'un ni l'autre n'est
+   de la prose, d'ou leur exclusion de la justification dans STYLE_PROSE. */
+.renvoi { color: var(--encre-douce); font-size: 14px; margin: 2px 0 14px; }
+.systeme { font-weight: 600; margin: 18px 0 6px; font-size: 15px; }
+/* Une commande ne se coupe jamais en silence : elle defile dans sa propre
+   boite plutot que de deborder la page ou d'etre tronquee a l'affichage. */
+#contenu pre {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin: 0 0 6px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
+#contenu pre code { white-space: pre; }
+
 @media print {
   .bandeau, .retour, footer { display: none; }
   body { background: #fff; font-size: 11.5pt; }
@@ -443,7 +462,7 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 
 /* La page courante ne grandit jamais : sans ce plancher, le flex:1 herite
    de ".pages ul" ci-dessus l'etire et ouvre un vide entre elle et le repli
-   des neuf autres pages. Le selecteur compose ".pages .pages-courante" n'est
+   des dix autres pages. Le selecteur compose ".pages .pages-courante" n'est
    pas un style : ".pages ul" pose deja un type, et une classe seule n'a pas
    assez de poids pour la corriger (specificite inferieure), mesure au
    navigateur le 29 octobre apres qu'une regle a classe seule s'est vue
@@ -520,11 +539,11 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
    sur .pages-autres : elle reste dans l'etat visible du socle ci-dessus,
    affichee en permanence sous la rangee du haut, pleinement accessible au
    clic comme au lecteur d'ecran. C'est la reponse a la question posee le 30
-   octobre : un navigateur qui ignore :has() NE perd PAS les neuf pages, il
+   octobre : un navigateur qui ignore :has() NE perd PAS les dix pages, il
    perd seulement le repli, et voit une barre a deux rangees en permanence
    deployee. C'est strictement mieux que le defilement horizontal silencieux
    d'avant cette tache (defaut 2), et sans commune mesure avec une barre qui
-   ferait disparaitre les neuf liens : aucun des deux risques ne s'est
+   ferait disparaitre les dix liens : aucun des deux risques ne s'est
    produit, l'un parce qu'on l'a corrige ce soir, l'autre parce que ce bloc
    est concu pour ne jamais y mener, meme sans :has(). Seul Chrome/Edge a ete
    mesure au navigateur (barre repliee, ouverte au clic, ouverte au clavier) ;
@@ -540,7 +559,7 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
    @supports) : le bouton de repli resterait sinon affiche sur mobile sans
    jamais rien replier, puisque .pages-autres y est deja visible en
    permanence par le socle. Le cacher evite un bouton inerte, pas une perte
-   de contenu : les neuf liens restent les memes, juste sans bouton inutile
+   de contenu : les dix liens restent les memes, juste sans bouton inutile
    au-dessus d'eux. */
 @supports not selector(:has(a)) {
   @media (max-width: 767.98px) {
@@ -671,6 +690,28 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 /* Une cible d'ancrage ne doit pas se retrouver masquee sous la barre
    collee : la marge de defilement vaut la hauteur de .pages, prise large. */
 :target { scroll-margin-top: 64px; }
+
+#contenu p,
+#contenu li,
+#contenu dd {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Ce qui ne se justifie jamais : le code, les cellules d'un tableau (trop
+   etroites), et les libelles courts qui annoncent un bloc. */
+#contenu pre,
+#contenu code,
+#contenu th,
+#contenu td,
+#contenu .systeme,
+#contenu .renvoi,
+#contenu .retour {
+  text-align: left;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
 </style>
 </head>
 <body>
@@ -678,15 +719,15 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 <header class="bandeau">
   <div class="dedans">
     <h1>Les informations qui vieillissent</h1>
-    <p>Tarifs, modèles, fenêtre de contexte et connecteurs : les quatre catégories que le marqueur 📅 du livre renvoie ici.</p>
+    <p>Tarifs, modèles, fenêtre de contexte, connecteurs et libellés d'interface : les cinq catégories que le marqueur 📅 du livre renvoie ici.</p>
     <span class="adresse">ccletempsduncafe.github.io</span>
   </div>
 </header>
-<nav class="pages" aria-label="Les pages du site"><ul class="pages-courante"><li><span aria-current="page">Ce qui vieillit</span></li></ul><details class="pages-repli"><summary>Les neuf autres pages</summary></details><ul class="pages-autres"><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></nav>
+<nav class="pages" aria-label="Les pages du site"><ul class="pages-courante"><li><span aria-current="page">Ce qui vieillit</span></li></ul><details class="pages-repli"><summary>Les dix autres pages</summary></details><ul class="pages-autres"><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></nav>
 
 <main class="texte" id="contenu">
 <a class="retour" href="index.html">← Retour aux prompts du livre</a>
-<div class="encadre"><p>Ces valeurs sont celles imprimées dans le livre, revérifiées à la source à la date ci-dessus. Quand elles changent, c&#x27;est cette page qui fait foi, pas le livre. Dernière vérification à la source&nbsp;: 18/10/2026.</p></div>
+<div class="encadre"><p>Ces valeurs sont celles imprimées dans le livre, revérifiées à la source à la date ci-dessus. Quand elles changent, c&#x27;est cette page qui fait foi, pas le livre. Dernière vérification à la source&nbsp;: 30/10/2026.</p></div>
 <h2>Les formules d&#x27;abonnement</h2>
 <p>Chapitre 4, section 4.1. Source&nbsp;: claude.com/fr/pricing.</p>
 <table><tbody><tr><td class="chapitre">Claude Pro</td><td>20 dollars par mois, soit environ 18 euros. 17 dollars par mois en réglant l&#x27;année d&#x27;avance, soit environ 184 euros l&#x27;an.</td></tr><tr><td class="chapitre">Claude Max</td><td>à partir de 100 dollars par mois. Deux niveaux : cinq fois le volume de Claude Pro, ou vingt fois pour le niveau supérieur.</td></tr><tr><td class="chapitre">Team et Enterprise</td><td>formules destinées aux organisations, tarif sur demande auprès d&#x27;Anthropic.</td></tr><tr><td class="chapitre">API à la consommation</td><td>aucun abonnement, facturation au token consommé. Aucun des douze cas d&#x27;usage du livre ne l&#x27;exige.</td></tr></tbody></table><h2>Le tarif des modèles à l&#x27;API</h2>
@@ -697,16 +738,18 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 <p>Chapitre 2, section 2.3. Source&nbsp;: platform.claude.com, vue d&#x27;ensemble des modèles.</p>
 <table><tbody><tr><td class="chapitre">Fenêtre courante</td><td>un million de tokens, soit environ 750 000 mots ou 1 500 pages, tout compris : vos documents, vos instructions et les réponses de la session.</td></tr></tbody></table><h2>Les connecteurs</h2>
 <p>Chapitre 20, section 20.3. Source&nbsp;: registre officiel MCP.</p>
-<table><tbody><tr><td class="chapitre">Ce qui ne change pas</td><td>la bonne question n&#x27;est pas « existe-t-il un connecteur ? » mais « qui le publie, et quand a-t-il été mis à jour ? ».</td></tr><tr><td class="chapitre">Connecteurs cités par le livre</td><td>Notion et GitHub, publiés par l&#x27;éditeur de l&#x27;outil.</td></tr><tr><td class="chapitre">Connecteurs abandonnés</td><td>Slack et Google Drive, très répandus en 2025, ne sont plus maintenus. Vérifiez la date de dernière mise à jour avant d&#x27;installer.</td></tr></tbody></table>
+<table><tbody><tr><td class="chapitre">Ce qui ne change pas</td><td>la bonne question n&#x27;est pas « existe-t-il un connecteur ? » mais « qui le publie, et quand a-t-il été mis à jour ? ».</td></tr><tr><td class="chapitre">Connecteurs cités par le livre</td><td>Notion et GitHub, publiés par l&#x27;éditeur de l&#x27;outil.</td></tr><tr><td class="chapitre">Connecteurs abandonnés</td><td>Slack et Google Drive, très répandus en 2025, ne sont plus maintenus. Vérifiez la date de dernière mise à jour avant d&#x27;installer.</td></tr></tbody></table><h2>La correspondance des libellés d&#x27;interface</h2>
+<p>Tout le livre, règle posée en section 4.2. Source&nbsp;: relevé sur l&#x27;application de bureau le 30/10/2026, recoupé sur code.claude.com/docs.</p>
+<table><tbody><tr><td class="chapitre">Les quatre modes de permission</td><td>« Manuel », « Auto », « Accepter les modifications » et « Plan » sont inchangés. Le livre vous fait travailler en « Manuel » : c&#x27;est toujours le bon geste, mais ne comptez pas l&#x27;y trouver au démarrage, une session neuve pouvant s&#x27;ouvrir en « Auto » selon votre version. Le mode en cours s&#x27;affiche sous la zone de saisie, et Maj+Tab en change.</td></tr><tr><td class="chapitre">« Routines », la page (chapitre 20)</td><td>s&#x27;appelle désormais « Tâches planifiées », au même endroit dans la barre latérale. Certaines versions affichent encore « Routines » : c&#x27;est la même page.</td></tr><tr><td class="chapitre">« une routine », la forme qui tourne ordinateur éteint</td><td>s&#x27;appelle désormais une tâche planifiée cloud. La documentation d&#x27;Anthropic écrit elle-même « formerly routines ». Rien d&#x27;autre ne change : ni ce qu&#x27;elle fait, ni ses limites.</td></tr><tr><td class="chapitre">« choisir Cloud » à la création (section 20.4)</td><td>ce bouton n&#x27;existe plus dans la forme courante de l&#x27;écran. La boîte « Nouvelle tâche planifiée » prépare une tâche cloud par défaut : vous n&#x27;avez rien à choisir. C&#x27;est la forme LOCALE qui demande un geste, décrit à la ligne suivante.</td></tr><tr><td class="chapitre">« une tâche programmée » locale, celle qui voit vos fichiers</td><td>s&#x27;obtient en dépliant « Paramètres avancés » sous le déclencheur, onglet « Général », puis en activant « Uniquement sur cet ordinateur ». Un « Dossier local » est alors à désigner, sans quoi le bouton « Créer » reste inactif.</td></tr><tr><td class="chapitre">Retirer les connecteurs d&#x27;une tâche (section 20.5)</td><td>« Paramètres avancés », onglet « Connecteurs ». Le livre vous prévient que tous vos connecteurs sont inclus d&#x27;office : c&#x27;est exact, et c&#x27;est à cet endroit précis qu&#x27;on retire ceux dont la tâche n&#x27;a pas besoin.</td></tr></tbody></table>
 <p>Les sources officielles qui permettent de vérifier ces données par vous-même vivent sur la page <a href="sources.html">Sources officielles</a>.</p>
 
 </main>
 
-<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><span aria-current="page">Ce qui vieillit</span></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
+<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><span aria-current="page">Ce qui vieillit</span></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
 
 <script>
 (function () {
-  // Le bouton de retour en haut se construit lui-meme : aucune des dix pages
+  // Le bouton de retour en haut se construit lui-meme : aucune des onze pages
   // n'a besoin de le marquer dans son HTML. Il porte son libelle en toutes
   // lettres, une fleche seule etant ambigue au lecteur presse comme au
   // lecteur d'ecran. Une seule instance par page.
