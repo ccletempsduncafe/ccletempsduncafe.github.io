@@ -346,7 +346,12 @@ footer .dedans p { margin: 0 0 10px; max-width: 68ch; }
 .texte h3 { margin: 26px 0 6px; font-size: 18px; }
 .texte p { max-width: 68ch; }
 .texte ul { max-width: 68ch; }
-.texte a { color: var(--lien); }
+/* Un lien brut vers une longue adresse (sans espace ni trait pour couper) ne
+   doit jamais forcer le corps de la page a defiler horizontalement : il doit
+   casser a l'interieur de sa propre ligne. overflow-wrap: anywhere coupe
+   meme hors d'un mot, la ou word-break: break-word seul ne suffit pas sur
+   une sequence sans caractere de coupe. */
+.texte a { color: var(--lien); overflow-wrap: anywhere; }
 
 .feuillet {
   background: var(--carte);
@@ -380,19 +385,306 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
   .feuillet { border: none; padding: 0; margin: 0 0 24pt; page-break-after: always; }
   .texte { padding: 0; }
 }
+
+/* La barre du haut est une seule ligne, collee en tete d'ecran, et ne porte
+   aucune animation : NN/g dit qu'il est generalement preferable de garder
+   l'en-tete en place plutot que de le faire glisser ou disparaitre au
+   defilement. */
+.pages {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--encre);
+  padding: 10px 24px;
+  overflow-x: auto;
+}
+
+/* En dessous de 768px, .pages-autres ouverte doit passer SOUS le bouton de
+   repli, pas a cote de lui dans la meme rangee : sans ce retour a la ligne,
+   le troisieme element flex (.pages-autres, large de son contenu) s'ajoute a
+   droite du bouton et fait reapparaitre, a l'identique, le defilement
+   horizontal interne qu'on repare ce soir. flex-wrap ne se pose qu'ici, sous
+   768px : au-dela, .pages-autres passe en rangee (flex-direction: row) et
+   tient nativement sur la seule ligne existante, sans jamais avoir besoin de
+   passer à la ligne. */
+@media (max-width: 767.98px) {
+  .pages { flex-wrap: wrap; }
+}
+.pages ul {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1 1 auto;
+}
+.pages li { white-space: nowrap; }
+.pages a {
+  color: var(--papier);
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+.pages a:hover { text-decoration: underline; }
+.pages a:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.pages [aria-current] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+/* La page courante ne grandit jamais : sans ce plancher, le flex:1 herite
+   de ".pages ul" ci-dessus l'etire et ouvre un vide entre elle et le repli
+   des neuf autres pages. Le selecteur compose ".pages .pages-courante" n'est
+   pas un style : ".pages ul" pose deja un type, et une classe seule n'a pas
+   assez de poids pour la corriger (specificite inferieure), mesure au
+   navigateur le 29 octobre apres qu'une regle a classe seule s'est vue
+   ignorer en silence. */
+/* La marge a droite comble l'ecart de rythme qu'a ouvert l'eclatement de
+   l'ancien <ul> unique en deux listes : le gap de 4px de .pages separait
+   avant des <li> internes espaces de 18px chacun, pas deux <ul> entiers,
+   et sans cette marge "Sources officielles" et le premier lien suivant se
+   touchaient presque, mesure a l'ecran sur le rendu desktop. */
+.pages .pages-courante { flex: 0 0 auto; margin-right: 14px; }
+
+/* Le repli n'est plus que le bouton : son <summary> est le seul contenu du
+   <details>, et .pages-autres vit juste apres, hors de lui. Mesure au
+   navigateur le 29 octobre : un <details> ferme cache son contenu quelle
+   que soit la regle d'auteur posee SUR CE CONTENU, display comme
+   content-visibility, aucune des deux ne l'emportant sur l'agent
+   utilisateur. En sortant .pages-autres du <details>, ce verrou ne
+   s'applique plus a elle : seul .pages-repli (bouton seul) reste soumis au
+   comportement natif d'ouverture/fermeture. */
+.pages-repli {
+  list-style: none;
+  flex: 0 0 auto;
+}
+.pages-repli summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 10px;
+  margin: 0 0 0 4px;
+  color: var(--papier);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  list-style: none;
+  border: 1px solid #4a423a;
+  border-radius: 3px;
+}
+.pages-repli summary::-webkit-details-marker { display: none; }
+.pages-repli summary::marker { content: ""; }
+.pages-repli summary:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* .pages-autres est une liste ordinaire, posee a cote du <details>, jamais
+   dedans : rien n'empeche donc une regle d'auteur de controler son
+   affichage, contrairement au contenu d'un <details> ferme (mesure ci-
+   dessus). Par defaut, SANS AUCUNE CONDITION, elle reste dans le flux normal
+   d'un <ul> : aucun display n'est pose ici, donc elle herite du display:flex
+   que la regle generique ".pages ul" pose plus haut dans cette feuille, en
+   colonne (flex-direction ci-dessous) et en pleine largeur (flex-basis),
+   c'est-a-dire VISIBLE, repliee sous la rangee du haut. C'est le socle que
+   les deux blocs suivants viennent soit cacher (navigateur qui connait
+   :has(), au clavier/clic), soit mettre en rangee (grand ecran) : AUCUN des
+   deux n'est garanti, et le socle doit donc, a lui seul, rester un etat
+   correct. Le selecteur compose ".pages .pages-autres" est oblige, pour la
+   meme raison de specificite que .pages-courante ci-dessus : une classe
+   seule perd face a ".pages ul" (specificite inferieure, mesure au
+   navigateur le 29 octobre apres qu'une regle a classe seule s'est vue
+   ignorer en silence). */
+.pages .pages-autres {
+  flex-direction: column;
+  flex-basis: 100%;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 14px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Le repli proprement dit n'existe QUE si le navigateur comprend :has() :
+   @supports selector(...) est lui-meme ignore par un navigateur trop vieux
+   pour evaluer son argument, donc par tout navigateur qui ne connaitrait pas
+   :has(), et le bloc entier disparait avec lui plutot que de lever une
+   erreur. Dans ce cas, aucune regle ne vient jamais poser "display: none"
+   sur .pages-autres : elle reste dans l'etat visible du socle ci-dessus,
+   affichee en permanence sous la rangee du haut, pleinement accessible au
+   clic comme au lecteur d'ecran. C'est la reponse a la question posee le 30
+   octobre : un navigateur qui ignore :has() NE perd PAS les neuf pages, il
+   perd seulement le repli, et voit une barre a deux rangees en permanence
+   deployee. C'est strictement mieux que le defilement horizontal silencieux
+   d'avant cette tache (defaut 2), et sans commune mesure avec une barre qui
+   ferait disparaitre les neuf liens : aucun des deux risques ne s'est
+   produit, l'un parce qu'on l'a corrige ce soir, l'autre parce que ce bloc
+   est concu pour ne jamais y mener, meme sans :has(). Seul Chrome/Edge a ete
+   mesure au navigateur (barre repliee, ouverte au clic, ouverte au clavier) ;
+   le filet de securite ci-dessus n'a pas ete mesure sur un navigateur reel
+   depourvu de :has(), seulement raisonne depuis la specification CSS des
+   regles @supports et des selecteurs inconnus. */
+@supports selector(:has(a)) {
+  .pages .pages-autres { display: none; }
+  nav.pages:has(.pages-repli[open]) .pages-autres { display: flex; }
+}
+
+/* Un navigateur qui ignore :has() ignore aussi ce bloc-ci (meme garde
+   @supports) : le bouton de repli resterait sinon affiche sur mobile sans
+   jamais rien replier, puisque .pages-autres y est deja visible en
+   permanence par le socle. Le cacher evite un bouton inerte, pas une perte
+   de contenu : les neuf liens restent les memes, juste sans bouton inutile
+   au-dessus d'eux. */
+@supports not selector(:has(a)) {
+  @media (max-width: 767.98px) {
+    .pages-repli { display: none; }
+  }
+}
+
+/* Au-dela de 768px, la barre tient sur une seule rangee, que :has() soit
+   connu ou non : le bouton de repli disparait et .pages-autres repasse en
+   rangee horizontale, flex-basis repris a "auto" pour ne plus reclamer la
+   pleine largeur du socle. La barre se lit donc comme une seule rangee,
+   identique a l'ancienne version. Cette regle n'est pas gardee par
+   @supports : elle doit s'appliquer inconditionnellement, y compris au
+   navigateur sans :has() du bloc ci-dessus, pour qui c'est le SEUL moyen de
+   repasser d'une barre a deux rangees (son seul etat sous 768px) a une barre
+   a une rangee. */
+@media (min-width: 768px) {
+  .pages-repli { display: none; }
+  .pages .pages-autres {
+    display: flex;
+    flex-direction: row;
+    flex-basis: auto;
+    align-items: center;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    flex: 1 1 auto;
+  }
+}
+.repere {
+  margin-left: auto;
+  padding-left: 16px;
+  color: var(--papier);
+  opacity: 0.8;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Le pied reprend la carte des fiches de prompt (meme fond --carte, meme
+   trait), pour que le pied se reconnaisse comme une partie du site plutot
+   qu'une mention legale ajoutee. */
+footer .carte {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 0 0 16px;
+}
+footer .carte .groupe { min-width: 160px; }
+footer .carte .famille-nom {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--encre-douce);
+}
+footer .carte ul { margin: 0; padding: 0; list-style: none; }
+footer .carte li { margin: 0 0 6px; }
+footer .carte a {
+  color: var(--lien);
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
+.contact {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--encre-douce);
+}
+.cloture {
+  margin: 0;
+  font-size: 13px;
+  color: var(--encre-douce);
+}
+
+/* Le lien d'evitement reste hors ecran jusqu'au focus clavier, ou il devient
+   le premier element visible de la page : WCAG 2.4.1. */
+.evitement {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--orange);
+  color: var(--encre);
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.evitement:focus {
+  left: 12px;
+  top: 12px;
+}
+
+/* Le bouton de retour en haut est construit par SCRIPT_NAV, cache par
+   defaut : [hidden] le retire de l'ecran sans qu'une transition le fasse
+   glisser ou s'estomper. */
+.haut-fixe {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  min-height: 24px;
+  background: var(--encre);
+  color: var(--papier);
+  border: 1px solid var(--trait);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.haut-fixe:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.haut-fixe[hidden] { display: none; }
+
+/* Le defilement doux reste sous condition : WCAG 2.3.3 range le mouvement
+   declenche par la page parmi les causes de nausee, et le reserve a qui ne
+   l'a pas exclu dans son systeme. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Une cible d'ancrage ne doit pas se retrouver masquee sous la barre
+   collee : la marge de defilement vaut la hauteur de .pages, prise large. */
+:target { scroll-margin-top: 64px; }
 </style>
 </head>
 <body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
 <header class="bandeau">
   <div class="dedans">
     <h1>Les informations qui vieillissent</h1>
     <p>Tarifs, modèles, fenêtre de contexte et connecteurs : les quatre catégories que le marqueur 📅 du livre renvoie ici.</p>
     <span class="adresse">ccletempsduncafe.github.io</span>
-    <p class="maj">Mise à jour du 29/10/2026.</p>
   </div>
 </header>
+<nav class="pages" aria-label="Les pages du site"><ul class="pages-courante"><li><span aria-current="page">Ce qui vieillit</span></li></ul><details class="pages-repli"><summary>Les neuf autres pages</summary></details><ul class="pages-autres"><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></nav>
 
-<main class="texte">
+<main class="texte" id="contenu">
 <a class="retour" href="index.html">← Retour aux prompts du livre</a>
 <div class="encadre"><p>Ces valeurs sont celles imprimées dans le livre, revérifiées à la source à la date ci-dessus. Quand elles changent, c&#x27;est cette page qui fait foi, pas le livre. Dernière vérification à la source&nbsp;: 18/10/2026.</p></div>
 <h2>Les formules d&#x27;abonnement</h2>
@@ -406,13 +698,129 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
 <table><tbody><tr><td class="chapitre">Fenêtre courante</td><td>un million de tokens, soit environ 750 000 mots ou 1 500 pages, tout compris : vos documents, vos instructions et les réponses de la session.</td></tr></tbody></table><h2>Les connecteurs</h2>
 <p>Chapitre 20, section 20.3. Source&nbsp;: registre officiel MCP.</p>
 <table><tbody><tr><td class="chapitre">Ce qui ne change pas</td><td>la bonne question n&#x27;est pas « existe-t-il un connecteur ? » mais « qui le publie, et quand a-t-il été mis à jour ? ».</td></tr><tr><td class="chapitre">Connecteurs cités par le livre</td><td>Notion et GitHub, publiés par l&#x27;éditeur de l&#x27;outil.</td></tr><tr><td class="chapitre">Connecteurs abandonnés</td><td>Slack et Google Drive, très répandus en 2025, ne sont plus maintenus. Vérifiez la date de dernière mise à jour avant d&#x27;installer.</td></tr></tbody></table>
+<p>Les sources officielles qui permettent de vérifier ces données par vous-même vivent sur la page <a href="sources.html">Sources officielles</a>.</p>
 
 </main>
 
-<footer>
-  <div class="dedans">
-    <p>Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p>
-  </div>
-</footer>
+<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><span aria-current="page">Ce qui vieillit</span></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à ccletempsduncafe@lbi1.anonaddy.com.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
+
+<script>
+(function () {
+  // Le bouton de retour en haut se construit lui-meme : aucune des dix pages
+  // n'a besoin de le marquer dans son HTML. Il porte son libelle en toutes
+  // lettres, une fleche seule etant ambigue au lecteur presse comme au
+  // lecteur d'ecran. Une seule instance par page.
+  var bouton = document.createElement('button');
+  bouton.type = 'button';
+  bouton.setAttribute('id', 'haut-fixe'); // rendu : id="haut-fixe"
+  bouton.className = 'haut-fixe';
+  bouton.hidden = true;
+  bouton.textContent = 'Revenir en haut de la page';
+  bouton.addEventListener('click', function () {
+    window.scrollTo({ top: 0 });
+  });
+  document.body.appendChild(bouton);
+
+  // La sentinelle vit en tete de corps de page, haute d'un pixel, et un
+  // IntersectionObserver la surveille plutot qu'un ecouteur de scroll, qui
+  // se declenche des dizaines de fois par seconde pour rien.
+  var sentinelle = document.createElement('div');
+  sentinelle.setAttribute('aria-hidden', 'true');
+  sentinelle.style.position = 'absolute';
+  sentinelle.style.top = '0';
+  sentinelle.style.height = '1px';
+  sentinelle.style.width = '1px';
+  document.body.insertBefore(sentinelle, document.body.firstChild);
+
+  // Un rootMargin positif en haut etend la zone ou la sentinelle compte
+  // comme visible : trois ecrans de marge, plus l'ecran naturel, pour un
+  // total de quatre ecrans avant que le bouton apparaisse.
+  var observateur = new IntersectionObserver(function (entrees) {
+    bouton.hidden = entrees[0].isIntersecting;
+  }, { rootMargin: '300% 0px 0px 0px' });
+  observateur.observe(sentinelle);
+})();
+
+(function () {
+  // Le repere de position n'existe que sur les pages qui portent des
+  // fiches (index.html, automatisations.html) : navigation.barre() y recoit
+  // une chaine vide plutot que None, et c'est elle, et elle seule, qui rend
+  // le <span class="repere">. Sur les huit autres pages, ce span est absent
+  // et il n'y a rien a observer : on sort tout de suite plutot que de poser
+  // un observateur sur une liste vide.
+  var repere = document.querySelector('.repere');
+  if (!repere) {
+    return;
+  }
+
+  // Les fiches ne portent pas la meme classe sur les deux pages : .fiche sur
+  // l'accueil (vingt et un prompts), .tache sur les automatisations (dix-
+  // sept taches). Aucune des huit autres pages ne porte ni l'une ni l'autre.
+  var fiches = document.querySelectorAll('.fiche, .tache');
+  if (!fiches.length) {
+    return;
+  }
+
+  // Le total des taches sert au libelle « B4 sur 17 » : calcule une seule
+  // fois, il ne change pas pendant la session.
+  var totalTaches = document.querySelectorAll('.tache').length;
+
+  // Deduit le libelle depuis le contenu DEJA rendu de la fiche, jamais
+  // depuis une liste ecrite ici : une liste en dur se desynchroniserait du
+  // premier chapitre deplace ou de la premiere tache renumerotee sans que
+  // rien ne le dise.
+  function etiquette(el) {
+    var rangEl = el.querySelector('.rang');
+    var rang = rangEl ? rangEl.textContent.trim() : '';
+    if (el.classList.contains('fiche')) {
+      var motEl = el.querySelector('.onglet .mot');
+      var motTexte = motEl ? motEl.textContent : '';
+      var chapitre = motTexte.match(/\d+/);
+      return chapitre ? rang + ' · ch. ' + chapitre[0] : rang;
+    }
+    return rang + ' sur ' + totalTaches;
+  }
+
+  // courant est la fiche actuellement lue, ou null avant la premiere : le
+  // repere doit rester vide tant qu'aucune fiche n'a ete atteinte, NN/g, une
+  // information fausse valant moins qu'une absence d'information.
+  var courant = null;
+
+  // La hauteur de la barre collee est celle que navigation.STYLE_NAV reserve
+  // deja a la marge de defilement des ancres (:target { scroll-margin-top:
+  // 64px }) : meme valeur, pour que la bande observee commence exactement ou
+  // la barre s'arrete, ni avant (une fiche comptee lue alors qu'elle est
+  // encore sous la barre), ni apres (un trou ou rien n'est repute lu). La
+  // bande est volontairement etroite, les quinze premiers pour cent de
+  // l'ecran sous la barre : mesure a l'usage, une bande large (la moitie de
+  // l'ecran, essayee d'abord) garde une fiche affichee bien apres qu'elle a
+  // defile hors de vue, le lecteur lisant deja la suivante.
+  // Fragilite connue et acceptee : un clic sur le bouton "tout deplier"
+  // change la geometrie des vingt et une fiches en une seule trame, dans le
+  // meme repaint. L'observateur recoit alors un lot d'entrees dont l'ordre
+  // n'est pas garanti par la specification, et le repere peut afficher une
+  // etiquette qui ne correspond a aucune fiche sous la barre jusqu'au
+  // prochain defilement, qui le corrige en retraversant les entrees dans
+  // l'ordre ou elles entrent et sortent reellement de la bande observee.
+  var observateurFiches = new IntersectionObserver(function (entrees) {
+    entrees.forEach(function (entree) {
+      if (entree.isIntersecting) {
+        courant = entree.target;
+      } else if (courant === entree.target && entree.boundingClientRect.top > 0) {
+        // La fiche courante quitte la bande par le HAUT de l'ecran, donc en
+        // remontant : si aucune fiche precedente ne prend sa place dans ce
+        // meme lot d'entrees (verifie juste au-dessus dans la boucle), on
+        // est revenu avant elle, et le repere redevient vide.
+        courant = null;
+      }
+    });
+    repere.textContent = courant ? etiquette(courant) : '';
+  }, { rootMargin: '-64px 0px -85% 0px' });
+
+  for (var i = 0; i < fiches.length; i++) {
+    observateurFiches.observe(fiches[i]);
+  }
+})();
+</script>
 </body>
 </html>
