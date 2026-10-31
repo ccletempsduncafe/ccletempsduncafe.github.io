@@ -405,14 +405,6 @@ td.chapitre { white-space: nowrap; font-weight: 600; }
   .texte { padding: 0; }
 }
 
-.bloc-prompt { margin: 20px 0 6px; }
-.copier {
-  font: inherit; font-weight: 600; font-size: 16px; color: var(--papier);
-  background: var(--encre); border: 1px solid var(--encre); border-radius: 3px;
-  padding: 10px 20px; cursor: pointer;
-}
-.copier:hover { background: #2c2a26; }
-.copier:focus-visible { outline: 3px solid var(--lien); outline-offset: 2px; }
 .etapes { max-width: 68ch; }
 .etapes li { margin-bottom: 8px; }
 
@@ -691,25 +683,26 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 
 <main class="texte" id="contenu">
 <a class="retour" href="index.html">← Retour aux prompts du livre</a>
-<p>Le Chapitre 19 vous a laissé avec un fichier <code>instruction.md</code> qui
-donne le bon résultat. Il vous reste pourtant un geste à faire chaque mois :
-ouvrir le dossier, retrouver le fichier, et demander à Claude Code de le lire.
-Une compétence supprime ce geste. Vous formulez votre demande comme vous la
-formuleriez à un collègue, et la procédure s'applique d'elle-même.</p>
+<p>Le Chapitre 19 vous fait ranger votre <code>instruction.md</code>
+éprouvée sous forme de compétence, avec le prompt
+<a href="index.html#prompt-p19">P19</a>. Une compétence supprime le dernier geste
+qui vous restait : ouvrir le dossier, retrouver le fichier, demander à Claude
+Code de le lire. Vous formulez votre demande comme vous la formuleriez à un
+collègue, et la procédure s'applique d'elle-même.</p>
 
-<p>Comptez vingt minutes le premier jour, puis cinq minutes le lendemain pour
-le contrôle. Vous n'avez rien à rédiger : c'est Claude Code qui écrit le
-fichier, à partir de celui que vous avez déjà.</p>
+<p>Cette page montre ce que ce rangement produit, une compétence écrite en
+entier, puis le contrôle du lendemain, qui prend cinq minutes. Vous n'avez rien
+à rédiger : c'est Claude Code qui écrit le fichier, à partir de celui que vous
+avez déjà.</p>
 
 <h2>Ce qu'est une compétence</h2>
 
 <p>Une compétence est un dossier qui porte un fichier nommé <code>SKILL.md</code>.
-Ce fichier commence par un en-tête de deux lignes : un nom, et une description
-qui dit ce que la compétence fait et quand l'utiliser. Sous cet en-tête vient
-le corps du fichier, c'est-à-dire votre procédure, celle que
-<code>instruction.md</code> contient déjà. Claude Code découvre les compétences
-déposées dans ses dossiers et les utilise automatiquement lorsqu'elles
-correspondent à votre demande.</p>
+Ce fichier commence par un en-tête de deux champs : un nom, et une description
+qui dit quand l'utiliser. Sous cet en-tête vient le corps du fichier,
+c'est-à-dire votre procédure, celle que <code>instruction.md</code> contient
+déjà. Claude Code découvre les compétences déposées dans ses dossiers et les
+utilise automatiquement lorsqu'elles correspondent à votre demande.</p>
 
 <p>La lecture se fait en deux temps, et c'est ce qui rend la chose économique.
 Au démarrage d'une session, Claude Code ne lit que l'en-tête, le nom et la
@@ -733,52 +726,77 @@ du rapport mensuel, elle va dans une compétence. Les deux coexistent sans se
 gêner : le fichier de contexte dit qui vous êtes, la compétence dit comment se
 fait une tâche précise.</p>
 
-<h2>La demande à formuler</h2>
+<h2>Une compétence écrite en entier</h2>
 
-<p>Ouvrez Claude Code sur le dossier où vous ferez ce travail chaque mois, celui
-qui contient vos sources. Si votre <code>instruction.md</code> est resté dans le
-dossier d'essai du Chapitre 19, copiez-le ici d'abord : c'est ce dossier de
-travail, et lui seul, que vous ouvrirez désormais. Puis collez la demande
-ci-dessous. Le passage entre crochets est une case à remplir : remplacez-le
-entièrement, crochets compris.</p>
+<p>Voici celle que le prompt P19 peut produire à partir de l'instruction du
+suivi de trésorerie, l'exemple du Chapitre 19. Elle est fabriquée pour cette
+page : vos règles seront les vôtres, mais la forme sera celle-ci.</p>
 
-<div class="bloc-prompt">
-<button class="copier" type="button">Copier le prompt</button>
-<pre>Voici le fichier instruction.md que j&#x27;ai mis au point et qui donne
-maintenant le bon résultat. Transforme-le en compétence : crée le dossier
-et le fichier SKILL.md qui va avec, en reprenant ma procédure telle quelle,
-sans la réécrire ni la résumer.
+<pre>---
+name: suivi-tresorerie
+description: À employer quand l&#x27;utilisateur demande « mon suivi de
+  trésorerie », « mon point de trésorerie du mois », « le tableau des
+  encaissements » ou « ce qui reste à encaisser ce mois-ci ». Ne pas
+  employer pour un devis, une facture à émettre ou une prévision sur
+  plusieurs mois.
+---
 
-L&#x27;en-tête du fichier doit porter un nom en minuscules et tirets, et une
-description qui dise à la fois ce que fait la compétence et dans quels cas
-l&#x27;utiliser. Rédige cette description avec les mots que j&#x27;emploie moi-même
-pour demander ce travail, à savoir : [la phrase avec laquelle vous demandez
-cette tâche, telle que vous la diriez à un collègue].
+# Suivi de trésorerie mensuel
 
-Dépose la compétence dans le sous-dossier .claude/skills de ce dossier-ci,
-pour qu&#x27;elle serve quand je travaille ici. Montre-moi le contenu du fichier
-avant de l&#x27;écrire, et dis-moi ensuite le chemin exact où tu l&#x27;as écrit.</pre>
-</div>
+## Sources
+- Le relevé bancaire du mois traité : [nom du relevé bancaire].
+- Les factures émises sur la période, un fichier par facture.
+- L&#x27;export des encaissements de [logiciel de facturation].
+- Si un de ces trois rôles n&#x27;a aucun fichier, demande-le avant de commencer.
+- Si les fichiers ne sont pas dans le dossier ouvert, demande où ils sont.
 
-<p>Un mot sur ce sous-dossier <code>.claude/skills</code>, puisque le prompt le
-nomme. Anthropic documente deux endroits où une compétence peut vivre dans
-Claude Code : un dossier personnel, <code>~/.claude/skills</code>, rangé dans
-votre compte utilisateur et loin de vos documents, et un dossier de projet,
-<code>.claude/skills</code>, qui vit à l'intérieur du dossier de travail
-lui-même. La documentation nomme le premier « personnel » et le second « basé
-sur le projet », mais elle ne dit pas depuis quels dossiers de travail chacun se
-déclenche. Le prompt demande donc le dossier de projet, dont l'emplacement ne
-laisse aucun doute : la compétence est rangée dans le dossier même où vous
-travaillez. C'est un dossier technique, que vous n'aurez jamais à ouvrir
-vous-même.</p>
+## Règles
+- Une ligne par facture, dans l&#x27;ordre de leur date d&#x27;émission.
+- Une facture est encaissée quand son montant exact figure au relevé.
+- Un montant voisin à moins de 1 % se signale « à vérifier », sans rapprochement.
+- Les frais bancaires ont leur ligne propre, jamais déduits d&#x27;une facture.
+- Une facture impayée à 45 jours passe à l&#x27;état « relance ».
+- Un libellé illisible au relevé s&#x27;écrit [À COMPLÉTER], il ne se devine pas.
 
-<p>Claude Code vous montre le fichier avant de l'écrire, puis vous donne le
-chemin où il l'a écrit. Notez ce chemin quelque part : il ne servira que le jour
-où quelque chose ne se déclenche pas. Deux points seulement vous concernent à
-cet instant. Le premier est le corps du fichier : ce doit
-être votre procédure, avec vos phrases. Si elle a été réécrite ou raccourcie,
-demandez qu'elle soit remise telle quelle, car c'est cette rédaction-là que
-vous avez éprouvée au Chapitre 19.</p>
+## Livrable
+- Un tableau .csv à séparateur point-virgule, quatre colonnes :
+  facture, client, montant, état.
+- Sous le tableau, le total encaissé et le total en attente.
+- Avant de rendre la main, liste les lignes signalées « à vérifier ».</pre>
+
+<p>Trois choses s'y lisent. L'en-tête, entre les deux lignes de tirets, porte
+le nom et la description : c'est la seule partie lue à chaque session. La
+description ne dit pas ce que fait la compétence mais sur quelles demandes elle
+part, avec vos mots entre guillemets, et sur lesquelles elle ne part pas. Et la
+procédure reconnaît ses sources par leur rôle : les noms de fichiers datés de
+votre dossier d'essai sont devenus des cases entre crochets, et ce qui manque
+se demande au lieu de se deviner.</p>
+
+<h2>Où elle se range</h2>
+
+<p>Anthropic documente deux endroits où une compétence peut vivre dans
+Claude Code. Le dossier personnel, <code>~/.claude/skills</code>, rangé dans
+votre compte utilisateur : la compétence sert dans tous vos dossiers de travail
+de cet ordinateur, mais ni dans Cowork ni dans les sessions et tâches
+planifiées qui tournent dans le nuage. Le dossier de projet,
+<code>.claude/skills</code>, à l'intérieur d'un dossier de travail : elle ne
+sert que là.</p>
+
+<p>Le prompt P19 retient le dossier personnel, parce qu'une procédure de travail
+vous appartient et vous suit d'un dossier à l'autre. Le dossier de projet est
+le bon choix dans un seul cas : quand la procédure appartient à un client
+plutôt qu'à vous. Ce sont des dossiers techniques, que vous n'aurez jamais à
+ouvrir vous-même.</p>
+
+<h2>Ce que vous relisez avant d'accepter</h2>
+
+<p>Claude Code vous montre le nom, la description et la procédure avant
+d'écrire, puis vous donne le chemin où il a rangé le fichier. Notez ce chemin
+quelque part : il ne servira que le jour où quelque chose ne se déclenche pas.
+Deux points seulement vous concernent à cet instant. Le premier est la
+procédure : ce doit être la vôtre, avec vos règles. Si l'une a disparu,
+demandez qu'elle soit remise, car c'est cette rédaction-là que vous avez
+éprouvée au Chapitre 19.</p>
 
 <p>Le second est la description. Relisez-la à voix haute et demandez-vous si
 elle emploie vos mots. Une description écrite dans le vocabulaire de la
@@ -795,10 +813,9 @@ en cours contient déjà tout ce qu'il faut, et vous ne testez rien. Le contrôl
 qui compte se fait à la session suivante, dans quatre gestes.</p>
 
 <ol class="etapes">
-<li>Ouvrez Claude Code sur votre dossier de travail, celui qui contient vos
-sources du mois et où vous avez fabriqué la compétence. Ce n'est pas le
-sous-dossier technique où le fichier a été rangé : celui-là, vous ne l'ouvrez
-jamais.</li>
+<li>Ouvrez Claude Code sur le dossier de travail du mois, celui qui contient
+vos sources. Ce n'est pas le dossier technique où le fichier a été rangé :
+celui-là, vous ne l'ouvrez jamais.</li>
 <li>Formulez votre demande avec vos mots, sans nommer le fichier
 <code>instruction.md</code> ni la compétence.</li>
 <li>Avant de le laisser produire quoi que ce soit, demandez-lui : « quelles
@@ -812,14 +829,14 @@ compte vraiment.</li>
 <p>Si la réponse ne cite pas votre compétence, vérifiez d'abord le fichier avant
 d'accuser la description. Demandez-le en une phrase : « où as-tu déposé la
 compétence, et est-elle disponible depuis ce dossier ? » Un fichier écrit
-ailleurs que dans le <code>.claude/skills</code> de ce dossier, ou un dossier
-renommé depuis, suffit à expliquer le silence. Faites-la redéposer ici et
-reprenez l'essai.</p>
+ailleurs que dans votre dossier personnel de compétences, ou une session
+ouverte dans le nuage plutôt que sur votre ordinateur, suffit à expliquer le
+silence. Faites-la ranger au bon endroit et reprenez l'essai.</p>
 
 <p>Si le fichier est bien là où il doit être, c'est alors la description qui est
-en cause, et non votre procédure. Rouvrez <code>SKILL.md</code>, remplacez la description par la
-phrase exacte que vous venez de taper, et refaites l'essai à la session
-suivante. En attendant, vous ne perdez rien : votre fichier
+en cause, et non votre procédure. Demandez à Claude Code de remplacer la
+description par la phrase exacte que vous venez de taper, et refaites l'essai à
+la session suivante. En attendant, vous ne perdez rien : votre fichier
 <code>instruction.md</code> n'a pas bougé, et vous le désignez comme au
 Chapitre 19.</p>
 
@@ -841,38 +858,15 @@ l'interface de programmation.</p>
 </div>
 
 <div class="encadre">
-<p>📅 Information vérifiée en août 2026 auprès de la documentation Anthropic.
+<p>📅 Information vérifiée en octobre 2026 auprès de la documentation Anthropic.
 L'état du jour figure dans la rubrique
 <a href="donnees.html">« Les informations qui vieillissent »</a>.</p>
 </div>
 
 </main>
 
-<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><span aria-current="page">Compétences</span></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à <a href="mailto:ccletempsduncafe@lbi1.anonaddy.com">ccletempsduncafe@lbi1.anonaddy.com</a>.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 30/10/2026</p></footer>
+<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><span aria-current="page">Compétences</span></li><li><a href="verifications.html">Vérifications</a></li><li><a href="feuillets.html">Feuillets à imprimer</a></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à <a href="mailto:ccletempsduncafe@lbi1.anonaddy.com">ccletempsduncafe@lbi1.anonaddy.com</a>.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 31/10/2026</p></footer>
 <script>
-document.querySelectorAll('.copier').forEach(function (bouton) {
-  bouton.addEventListener('click', function () {
-    var bloc = bouton.parentNode.querySelector('pre');
-    var fait = function () {
-      bouton.textContent = 'Copié, collez-le dans Claude Code';
-      window.setTimeout(function () { bouton.textContent = 'Copier le prompt'; }, 4000);
-    };
-    function selectionner() {
-      var plage = document.createRange();
-      plage.selectNodeContents(bloc);
-      var selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(plage);
-      bouton.textContent = 'Texte sélectionné, faites Ctrl+C ou Cmd+C';
-    }
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(bloc.textContent).then(fait, selectionner);
-    } else {
-      selectionner();
-    }
-  });
-});
-
 (function () {
   // Le bouton de retour en haut se construit lui-meme : aucune des onze pages
   // n'a besoin de le marquer dans son HTML. Il porte son libelle en toutes
