@@ -356,7 +356,7 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
   <div class="dedans">
     <span class="mot">Cas bonus, hors livre</span>
     <h1>Le questionnaire sécurité d'un client rempli depuis vos réponses passées</h1>
-    <p>Un treizième cas d'usage, produit et testé selon la même méthode que les douze du livre. Il n'est pas dans les pages imprimées.</p>
+    <p>Un treizième cas d'usage, testé selon la même méthode que les douze du livre. Il n'est pas dans les pages imprimées.</p>
     <a class="retour" href="index.html">← Retour aux prompts du livre</a>
   </div>
 </header>
@@ -368,10 +368,12 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 id="le-questionnaire-sécurité-dun-client-rempli-depuis-vos-réponses-passées">Le
 questionnaire sécurité d’un client rempli depuis vos réponses
 passées</h1>
-<p>Ce cas ne figure pas dans le livre imprimé. Il a été produit et testé
-selon la même méthode que les douze autres. Il est offert aux lecteurs
-qui sont allés jusqu’à cette page.</p>
-<p>Thomas reçoit un email de son contact chez Delcourt Assurances. Le
+<p>Ce cas ne figure pas dans le livre imprimé. Il a été testé selon la
+même méthode que les douze autres, sur des données fabriquées pour
+l’occasion. Son prompt, en revanche, est resté dans sa forme courte : il
+ne porte pas les huit sections des prompts du livre. Il est offert aux
+lecteurs qui sont allés jusqu’à cette page.</p>
+<p>Thomas reçoit un email de son contact chez Vaubrenoy Assurances. Le
 contrat est prêt à être signé, il ne manque qu’une formalité : le
 questionnaire fournisseur. Trente-sept questions dans un fichier
 tableur, à retourner sous huit jours. Gouvernance, hébergement,
@@ -442,10 +444,18 @@ vous avez besoin avant de commencer</h2>
 <p>Claude Code installé et un dossier contenant vos trois fichiers. Le
 questionnaire du client peut être un tableur, un document Word ou un PDF
 : gardez-le tel quel.</p>
+<p>Avant de les déposer, vérifiez que vous avez le droit de les confier.
+Une politique de sécurité interne et le questionnaire d’un client sont
+précisément les documents que vise la règle 3 de la section 6.3 : «
+est-ce que j’enverrais ce document par email à un prestataire de
+confiance ? ». Votre politique d’usage de l’intelligence artificielle
+doit l’autoriser (section 4.11). Le contrat du client, lui, ne doit pas
+l’interdire : certains réservent leurs questionnaires à un usage
+interne.</p>
 <p>Un conseil de rangement qui change le résultat : renommez vos
 dossiers passés en faisant figurer l’année dans le nom du fichier, par
-exemple <code>reponses-2025-groupe-tessier</code>. Le prompt demande à
-Claude Code de tenir compte de l’ancienneté d’une réponse ; il ne peut
+exemple <code>reponses-2025-groupe-prelouzard</code>. Le prompt demande
+à Claude Code de tenir compte de l’ancienneté d’une réponse ; il ne peut
 le faire que si la date est visible.</p>
 <h2 id="b.4-le-prompt-où-le-prendre-et-ce-quil-fait">B.4 Le prompt : où
 le prendre et ce qu’il fait</h2>
@@ -510,7 +520,7 @@ vous supervise depuis un pays tiers.</p>
 <h2 id="b.5-pas-à-pas">B.5 Pas à pas</h2>
 <ol type="1">
 <li><p>Créez un dossier, par exemple
-<code>questionnaire-Delcourt-2026</code>, et placez-y le questionnaire
+<code>questionnaire-Vaubrenoy-2026</code>, et placez-y le questionnaire
 reçu, votre politique de sécurité et vos dossiers des années
 précédentes.</p></li>
 <li><p>Ouvrez Claude Code sur ce dossier. Depuis l’application de
@@ -529,9 +539,9 @@ sourcées, mais c’est vous qui signez.</p></li>
 </ol>
 <h2 id="b.6-ce-que-ce-cas-a-donné-au-test">B.6 Ce que ce cas a donné au
 test</h2>
-<p>Le cas a été exécuté sur un questionnaire de 37 questions et trois
-documents sources : une politique de sécurité de janvier 2026 et un
-dossier client rempli en mars 2025.</p>
+<p>Le cas a été exécuté sur trois fichiers : un questionnaire de 37
+questions, une politique de sécurité de janvier 2026 et un dossier
+client rempli en mars 2025.</p>
 <p>Vingt-trois questions ont été renseignées et sourcées. Quatorze sont
 revenues avec une demande : huit en À CONFIRMER, trois en ABSENT, trois
 en ARBITRAGE.</p>
