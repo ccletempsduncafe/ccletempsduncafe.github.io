@@ -3442,9 +3442,10 @@ reste.
         <div class="corps">
           <h2><mark>Proposition commerciale structurée en 45 minutes</mark></h2>
           <p class="sous-titre">Le prompt de proposition commerciale prêt à l&#x27;emploi, celui vers lequel le P1 renvoie. Il produit une page de garde et six parties, chiffrage détaillé compris, destinée à un client qui la lira à côté de deux autres : le document doit donc se comprendre sans avoir assisté aux échanges. Les forfaits, les délais et les clauses sont ceux de l&#x27;employeur et ne s&#x27;inventent pas.</p>
+          <p class="sous-titre">Amélioré le 1er novembre 2026 depuis la version décrite dans le livre : la ligne « Taux journaliers » accepte un forfait, chiffré sur une seule ligne sans taux ni charge en jours</p>
           <button class="copier" type="button">Copier le prompt</button>
           <details class="bloc-prompt">
-            <summary>Lire le texte du prompt <span class="lignes">· 346 lignes</span></summary>
+            <summary>Lire le texte du prompt <span class="lignes">· 351 lignes</span></summary>
             <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. Je réponds à une demande
@@ -3509,7 +3510,8 @@ Ce que nous proposons : [description de la mission]
 Budget évoqué par le client : [montant ou fourchette]
 Délai de la mission : [durée estimée]
 Taux journaliers : [taux journalier de chaque profil qui
-intervient]
+intervient, ou « forfait » et son montant si je vends au
+forfait]
 Charge estimée : [nombre de jours prévu pour chaque
 intervenant]
 Intervenants pressentis : [prénom, rôle et expérience utile
@@ -3551,7 +3553,10 @@ dis-moi lesquelles, et n&#x27;écris aucun fichier.
   – additionner les charges en jours d&#x27;une colonne de
     chiffrage ;
   – additionner des montants déjà présents dans mes
-    fichiers.
+    fichiers ;
+  – si la ligne « Taux journaliers » porte un forfait,
+    reprendre son montant tel quel, sans le décomposer
+    en jours ni en taux.
   Aucune remise, aucune majoration, aucun prorata, aucun
   arrondi, aucune TVA et aucune conversion de monnaie, même
   si le résultat paraît plus présentable.
@@ -3726,7 +3731,8 @@ de page dans les réglages du document, et pas seulement
 
 Le chiffrage de la partie 5 est un tableau : une ligne par
 profil, le taux, la charge, le montant, puis la ligne de
-total. Si le chiffrage est [À COMPLÉTER], garde le tableau
+total. Au forfait, il n&#x27;a qu&#x27;une ligne, le forfait et son
+montant, sans taux ni charge en jours. Si le chiffrage est [À COMPLÉTER], garde le tableau
 et laisse la mention dans les cases manquantes.
 
 En plus, et seulement si mes fichiers le permettent :
@@ -5332,9 +5338,10 @@ reste.
         <div class="corps">
           <h2><mark>Préparer une négociation difficile en 30 minutes</mark></h2>
           <p class="sous-titre">La fiche que Sophie tient en main pendant l&#x27;entretien, et le seul livrable du livre qui n&#x27;est destiné à personne d&#x27;autre qu&#x27;à son auteur. Deux conséquences commandent tout le prompt : la feuille se consulte d&#x27;un coup d&#x27;œil, et elle ne contient rien que l&#x27;autre partie puisse lire par-dessus la table sans dommage. Elle ne porte donc ni logo, ni couverture, ni marge réelle.</p>
+          <p class="sous-titre">Amélioré le 1er novembre 2026 depuis la version décrite dans le livre : la fiche se garde en main et n&#x27;est plus dite posée sur la table ; la confidentialité renvoie à la liste des informations exclues</p>
           <button class="copier" type="button">Copier le prompt</button>
           <details class="bloc-prompt">
-            <summary>Lire le texte du prompt <span class="lignes">· 419 lignes</span></summary>
+            <summary>Lire le texte du prompt <span class="lignes">· 418 lignes</span></summary>
             <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. J&#x27;ai une négociation
@@ -5374,8 +5381,8 @@ la section « Règles de fond » dit comment les traiter.
 
 En cas de conflit entre deux consignes, tranche dans cet
 ordre :
-1. la confidentialité : rien dans le document que je ne
-   puisse laisser lire à la personne d&#x27;en face ;
+1. la confidentialité : aucune des informations que je
+   t&#x27;interdis plus bas d&#x27;écrire ;
 2. l&#x27;exactitude par rapport à mes fichiers, et la
    séparation des faits et des hypothèses ;
 3. la consultation d&#x27;un coup d&#x27;œil : la page un se
@@ -5443,10 +5450,9 @@ mes notes. Le format n&#x27;a pas d&#x27;importance.
   de mes fichiers prête au client, comme un résultat
   acquis.
 
-Ce document est strictement privé, et il sera posé sur une
-table pendant l&#x27;entretien. N&#x27;y fais figurer que ce que je
-pourrais laisser lire à la personne d&#x27;en face sans dommage.
-Ne l&#x27;écris donc nulle part dans le document :
+Ce document est strictement privé. Je le garderai en main
+pendant l&#x27;entretien, à portée de regard de la personne d&#x27;en
+face. N&#x27;écris donc nulle part dans le document :
 - ma marge, en pourcentage comme en montant ;
 - la limite que je t&#x27;ai donnée en « ce que je suis prête
   à accepter » ;
@@ -5742,9 +5748,9 @@ reste.
 
 Puis, en plus, et toujours dans ta réponse :
 5. Relis le document en te demandant, phrase par phrase,
-   si je pourrais la laisser lire à la personne d&#x27;en
-   face. Cite-moi les phrases dont tu as douté, et ce
-   que tu en as fait.
+   si elle livre une des informations que je t&#x27;ai
+   interdit d&#x27;écrire. Cite-moi les phrases dont tu as
+   douté, et ce que tu en as fait.
 6. Relis la page un seule et dis-moi ce qui me manquerait
    si je n&#x27;avais qu&#x27;elle.
 7. Vérifie qu&#x27;aucune espace ordinaire ne précède
@@ -6409,9 +6415,10 @@ reste.
         <div class="corps">
           <h2><mark>Outiller vos propres tâches répétitives, second prompt</mark></h2>
           <p class="sous-titre">L&#x27;essai du mois suivant. Il rejoue sur de nouvelles sources l&#x27;instruction que le P17 a produite, pour vérifier qu&#x27;elle tient quand les fichiers changent de nom et de contenu. Son livrable est donc celui de l&#x27;instruction testée, et non un document propre : ce que le lecteur attend vraiment, c&#x27;est un verdict, la liste des fichiers retenus pour chaque entrée, et les corrections à apporter à instruction.md.</p>
+          <p class="sous-titre">Amélioré le 1er novembre 2026 depuis la version décrite dans le livre : au second tour, l&#x27;essai s&#x27;écrit dans resultat-essai-2.md au lieu de buter sur le premier</p>
           <button class="copier" type="button">Copier le prompt</button>
           <details class="bloc-prompt">
-            <summary>Lire le texte du prompt <span class="lignes">· 215 lignes</span></summary>
+            <summary>Lire le texte du prompt <span class="lignes">· 216 lignes</span></summary>
             <pre>## Contexte
 
 Le fichier instruction.md de ce dossier décrit une tâche que
@@ -6523,7 +6530,8 @@ Suis son ordre de sections, ses intitulés et ses longueurs
 en mots, même si un autre ordre te paraît meilleur.
 
 Écris le résultat dans un fichier resultat-essai.md de ce
-dossier, même si instruction.md nomme un autre fichier de
+dossier, ou resultat-essai-2.md, puis -3, si un essai
+précédent y a déjà laissé le sien, même si instruction.md nomme un autre fichier de
 sortie : je veux pouvoir distinguer cet essai de mes vrais
 documents. Si instruction.md nomme un autre fichier, ne
 l&#x27;écris pas, et dis-le-moi.
@@ -6636,9 +6644,10 @@ Si tu t&#x27;es arrêté sans écrire de fichier, passe le point
         <div class="corps">
           <h2><mark>Ranger une instruction éprouvée en compétence</mark></h2>
           <p class="sous-titre">Le troisième prompt du chapitre, à coller dans le dossier où vit l&#x27;instruction mise au point par le P17 et éprouvée par le P18. Il ne produit pas un document mais une compétence : une procédure nommée, rangée une fois, appelable d&#x27;un mot dans tous les dossiers de travail. Trois choses s&#x27;y jouent et aucune n&#x27;est de la rédaction. La description, parce que c&#x27;est elle qui déclenche la compétence et qu&#x27;une description vague ne part jamais, ou part à contretemps. La généralisation, parce qu&#x27;une instruction mise au point dans un dossier porte les noms de fichiers de ce dossier. Et le contrôle qui précède l&#x27;écriture : une instruction jamais rejouée sur de nouvelles sources ne se range pas, parce que ranger une erreur la rend disponible partout.</p>
+          <p class="sous-titre">Amélioré le 1er novembre 2026 depuis la version décrite dans le livre : lit le dernier essai, et le plafond de la procédure passe de 600 à 3 000 mots pour ranger la veille du chapitre 10</p>
           <button class="copier" type="button">Copier le prompt</button>
           <details class="bloc-prompt">
-            <summary>Lire le texte du prompt <span class="lignes">· 254 lignes</span></summary>
+            <summary>Lire le texte du prompt <span class="lignes">· 255 lignes</span></summary>
             <pre>## Contexte
 
 Je suis [mon métier, en une phrase]. J&#x27;ai mis au point
@@ -6693,12 +6702,13 @@ celui qui l&#x27;a produite, et son résultat comparé à un
 document que j&#x27;avais déjà validé. Ranger en compétence
 une instruction jamais rejouée fige une erreur et la
 rend disponible dans tous mes dossiers.
-- Cherche dans ce dossier le fichier resultat-essai.md,
+- Cherche dans ce dossier le plus récent des fichiers
+  resultat-essai.md, resultat-essai-2.md et suivants,
   que l&#x27;essai laisse derrière lui. À défaut, des sources
   qui ne sont pas celles que instruction.md cite, en
   sachant qu&#x27;une instruction bien écrite n&#x27;en cite
   aucune par son nom. Dis-moi ce que tu as trouvé.
-- Si resultat-essai.md conclut que l&#x27;instruction n&#x27;a
+- Si ce dernier essai conclut que l&#x27;instruction n&#x27;a
   pas tenu, n&#x27;écris aucun fichier : dis-moi la consigne
   qu&#x27;il met en cause, et arrête-toi là. Un essai raté
   est une trace d&#x27;essai, pas une instruction éprouvée.
@@ -6811,7 +6821,7 @@ La procédure, enfin, reprend instruction.md dans son
 ordre : ses sections, ses longueurs en mots, et ses
 règles de signalement de ce qui manque.
 - jamais plus d&#x27;un quart de mots en plus que
-  instruction.md, et 600 au plus : généraliser ajoute
+  instruction.md, et 3 000 au plus : généraliser ajoute
   des lignes, cela n&#x27;en retire pas. Compte les mots des
   deux et dis-moi les deux nombres.
 - Une règle par ligne, une phrase par règle, 25 mots au
