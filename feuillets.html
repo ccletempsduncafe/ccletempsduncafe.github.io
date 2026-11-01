@@ -3,8 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Les deux feuillets à imprimer — Claude Code pour vos dossiers</title>
-<meta name="description" content="Les deux feuillets du livre en version imprimable.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Les deux feuillets à imprimer · Claude Code pour vos dossiers</title>
+<meta name="description" content="Le feuillet de l&#x27;équipe et la page à présenter à votre responsable informatique, repris du livre Claude Code pour vos dossiers, prêts à imprimer.">
+<meta name="author" content="Laurent Benedetti">
+<link rel="canonical" href="https://ccletempsduncafe.github.io/feuillets.html">
+<link rel="icon" type="image/png" href="icone.png">
+<link rel="apple-touch-icon" href="icone.png">
+<meta name="theme-color" content="#16161a">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Claude Code pour vos dossiers">
+<meta property="og:title" content="Les deux feuillets à imprimer · Claude Code pour vos dossiers">
+<meta property="og:description" content="Le feuillet de l&#x27;équipe et la page à présenter à votre responsable informatique, repris du livre Claude Code pour vos dossiers, prêts à imprimer.">
+<meta property="og:url" content="https://ccletempsduncafe.github.io/feuillets.html">
+<meta property="og:image" content="https://ccletempsduncafe.github.io/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 /* La page reprend les trois couleurs de la couverture, et rien d'autre : le
    noir d'encre du fond, le creme du titre, l'orange du sous-titre. Le lecteur
@@ -644,6 +661,55 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
    collee : la marge de defilement vaut la hauteur de .pages, prise large. */
 :target { scroll-margin-top: 64px; }
 
+/* Le guide : un bouton en bas a gauche (le retour en haut tient la droite),
+   et un panneau de conversation au-dessus. Construit par SCRIPT_NAV ; sans
+   JavaScript, rien ne s'affiche. */
+.guide-bouton {
+  position: fixed; left: 20px; bottom: 20px; z-index: 61;
+  background: var(--orange); color: var(--encre);
+  border: 0; border-radius: 999px; padding: 11px 18px;
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 6px 18px rgba(22, 22, 26, 0.25);
+}
+.guide-bouton:focus-visible, .guide-panneau button:focus-visible,
+.guide-panneau a:focus-visible { outline: 3px solid var(--encre); outline-offset: 2px; }
+.guide-panneau {
+  position: fixed; left: 16px; bottom: 76px; z-index: 61;
+  width: min(380px, calc(100vw - 32px)); max-height: min(72vh, 600px);
+  display: flex; flex-direction: column;
+  background: var(--carte); color: var(--encre);
+  border: 1px solid var(--trait); border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(22, 22, 26, 0.28);
+  font-size: 15px; line-height: 1.45; text-align: left;
+}
+.guide-panneau[hidden] { display: none; }
+.guide-tete { display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 12px 14px; background: var(--encre); color: var(--papier);
+  border-radius: 13px 13px 0 0; }
+.guide-tete p { margin: 0; font-weight: 600; }
+.guide-tete button { background: transparent; color: var(--papier);
+  border: 1px solid #5f574e; border-radius: 8px; padding: 4px 10px;
+  font: inherit; font-size: 13px; cursor: pointer; }
+.guide-fil { overflow-y: auto; padding: 14px; display: flex;
+  flex-direction: column; gap: 8px; }
+.guide-bulle { margin: 0; padding: 9px 12px; border-radius: 12px; max-width: 88%; }
+.guide-livre { background: var(--papier); align-self: flex-start;
+  border-bottom-left-radius: 4px; }
+.guide-vous { background: var(--surligneur); align-self: flex-end;
+  border-bottom-right-radius: 4px; }
+.guide-liens { list-style: none; margin: 0; padding: 0; display: flex;
+  flex-direction: column; gap: 6px; }
+.guide-liens a { display: block; padding: 9px 12px; border: 1px solid var(--trait);
+  border-radius: 10px; color: var(--lien); text-decoration: none; background: #fff; }
+.guide-liens a:hover { border-color: var(--orange); }
+.guide-liens small { display: block; color: var(--encre-douce); font-size: 13px; }
+.guide-choix { padding: 0 14px 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+.guide-choix button { background: #fff; color: var(--encre);
+  border: 1px solid var(--orange); border-radius: 999px; padding: 7px 12px;
+  font: inherit; font-size: 14px; cursor: pointer; text-align: left; }
+.guide-choix button:hover { background: var(--surligneur); }
+@media print { .guide-bouton, .guide-panneau { display: none !important; } }
+
 #contenu p,
 #contenu li,
 #contenu dd {
@@ -709,7 +775,7 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
 
 </main>
 
-<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><span aria-current="page">Feuillets à imprimer</span></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à <a href="mailto:ccletempsduncafe@lbi1.anonaddy.com">ccletempsduncafe@lbi1.anonaddy.com</a>.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 31/10/2026</p></footer>
+<footer><div class="carte"><div class="groupe"><p class="famille-nom">Les prompts du livre</p><ul><li><a href="index.html">Les prompts</a></li><li><a href="adapter-les-prompts.html">Adapter les prompts</a></li><li><a href="bonus-questionnaire-securite.html">Cas bonus</a></li></ul></div><div class="groupe"><p class="famille-nom">Ce qui bouge</p><ul><li><a href="donnees.html">Ce qui vieillit</a></li><li><a href="installer.html">Installer</a></li><li><a href="sources.html">Sources officielles</a></li><li><a href="errata.html">Corrections</a></li></ul></div><div class="groupe"><p class="famille-nom">Pour aller plus loin</p><ul><li><a href="automatisations.html">Automatisations</a></li><li><a href="competences.html">Compétences</a></li><li><a href="verifications.html">Vérifications</a></li><li><span aria-current="page">Feuillets à imprimer</span></li></ul></div></div><p class="contact">Une erreur, une question, un passage qui ne se comporte plus comme le livre l'annonce&nbsp;: écrivez à <a href="mailto:ccletempsduncafe@lbi1.anonaddy.com">ccletempsduncafe@lbi1.anonaddy.com</a>.</p><p class="cloture">ccletempsduncafe.github.io · mis à jour le 01/11/2026</p></footer><script type="application/json" id="guide-donnees">{"debut": "accueil", "etapes": {"accueil": {"message": "Bonjour ! Je vous aide à trouver le bon prompt ou la bonne page du livre. Qu'est-ce qui vous amène ?", "choix": [{"libelle": "Je débute avec Claude Code", "vers": "debuter"}, {"libelle": "Je cherche le prompt d'une tâche", "vers": "familles"}, {"libelle": "Je veux qu'une tâche revienne toute seule", "vers": "automatiser"}, {"libelle": "Mon installation coince", "vers": "installer"}]}, "debuter": {"message": "Bonne nouvelle : deux prompts suffisent pour démarrer. Le premier fait votre connaissance et écrit votre fichier de contexte, le second vous montre les quatre principes d'un bon prompt.", "cibles": ["P2", "P1", "installer.html"]}, "installer": {"message": "Les gestes qui vieillissent vite vivent en ligne : la ligne de commande, Linux et la clé API. Le dépannage, lui, reste au chapitre 4 du livre.", "cibles": ["installer.html", "donnees.html"]}, "automatiser": {"message": "Dix-sept tâches sont prêtes à régler sur la page Automatisations. Le livre en montre une, le tri de la boîte mail, et un prompt fait pour être relancé chaque lundi.", "cibles": ["automatisations.html", "P20", "P16"]}, "familles": {"message": "Avec plaisir. Quel genre de tâche ?", "choix": [{"libelle": "Un document à partir de mes fichiers", "vers": "documents"}, {"libelle": "Un client, une vente, un appel d'offres", "vers": "commerce"}, {"libelle": "Suivre une activité ou une équipe", "vers": "suivi"}, {"libelle": "Ma tâche n'est pas dans le livre", "vers": "introuvable"}]}, "documents": {"message": "Lequel ?", "choix": [{"libelle": "Un rapport à partir d'exports", "cibles": ["P4"]}, {"libelle": "Les suites d'une réunion Teams", "cibles": ["P6"]}, {"libelle": "Une note de veille", "cibles": ["P7"]}, {"libelle": "Un livret d'accueil pour un nouvel arrivant", "cibles": ["P14"]}]}, "commerce": {"message": "À quelle étape en êtes-vous ?", "choix": [{"libelle": "Repérer des prospects", "cibles": ["P8", "P9"]}, {"libelle": "Tout savoir d'un compte", "cibles": ["P5"]}, {"libelle": "Comparer des concurrents", "cibles": ["P12"]}, {"libelle": "Analyser un appel d'offres", "cibles": ["P11"]}, {"libelle": "Rédiger une proposition commerciale", "cibles": ["P10"]}, {"libelle": "Préparer une négociation", "cibles": ["P15"]}]}, "suivi": {"message": "Que voulez-vous suivre ?", "choix": [{"libelle": "Des chiffres, dans un tableau de bord", "cibles": ["P13"]}, {"libelle": "Un portefeuille de projets", "cibles": ["P16"]}, {"libelle": "Ma boîte mail", "cibles": ["P20"]}, {"libelle": "Un objectif à plusieurs étapes", "cibles": ["P21"]}]}, "introuvable": {"message": "C'est prévu : le chapitre 19 vous apprend à écrire le prompt de votre propre tâche, puis à le ranger en compétence. Si une question reste sans réponse, écrivez à l'auteur.", "cibles": ["P17", "competences.html", "contact"]}}, "liens": {"P1": {"libelle": "P1 · Les quatre principes d'un bon prompt", "detail": "Chapitre 3", "href": "index.html#prompt-p1"}, "P10": {"libelle": "P10 · Proposition commerciale structurée en 45 minutes", "detail": "Chapitre 12", "href": "index.html#prompt-p10"}, "P11": {"libelle": "P11 · Appel d'offres : extraire les critères importants en une heure", "detail": "Chapitre 13", "href": "index.html#prompt-p11"}, "P12": {"libelle": "P12 · Benchmark concurrentiel depuis des sources externes", "detail": "Chapitre 14", "href": "index.html#prompt-p12"}, "P13": {"libelle": "P13 · Tableau de bord interactif dans votre navigateur, sans logiciel payant", "detail": "Chapitre 15", "href": "index.html#prompt-p13"}, "P14": {"libelle": "P14 · Dossier d'accueil personnalisé pour chaque nouvel arrivant", "detail": "Chapitre 16", "href": "index.html#prompt-p14"}, "P15": {"libelle": "P15 · Préparer une négociation difficile en 30 minutes", "detail": "Chapitre 17", "href": "index.html#prompt-p15"}, "P16": {"libelle": "P16 · Tableau de bord de portefeuille depuis vos comptes-rendus Teams", "detail": "Chapitre 18", "href": "index.html#prompt-p16"}, "P17": {"libelle": "P17 · Outiller vos propres tâches répétitives", "detail": "Chapitre 19", "href": "index.html#prompt-p17"}, "P2": {"libelle": "P2 · Quinze minutes pour que Claude Code vous connaisse", "detail": "Chapitre 4", "href": "index.html#prompt-p2"}, "P20": {"libelle": "P20 · Trier votre boîte mail chaque matin, sans vous", "detail": "Chapitre 20", "href": "index.html#prompt-p20"}, "P21": {"libelle": "P21 · Les agents : donnez un objectif complexe, Claude Code fait tout le reste", "detail": "Chapitre 21", "href": "index.html#prompt-p21"}, "P4": {"libelle": "P4 · Rapport consolidé depuis vos systèmes métier", "detail": "Chapitre 7", "href": "index.html#prompt-p4"}, "P5": {"libelle": "P5 · Fiche compte complète depuis vos sources dispersées", "detail": "Chapitre 8", "href": "index.html#prompt-p5"}, "P6": {"libelle": "P6 · Du compte-rendu Teams aux livrables opérationnels", "detail": "Chapitre 9", "href": "index.html#prompt-p6"}, "P7": {"libelle": "P7 · Votre synthèse de veille du lundi en dix minutes", "detail": "Chapitre 10", "href": "index.html#prompt-p7"}, "P8": {"libelle": "P8 · Détecter et qualifier des prospects à partir de signaux publics", "detail": "Chapitre 11", "href": "index.html#prompt-p8"}, "P9": {"libelle": "P9 · Détecter et qualifier des prospects à partir de signaux publics, second prompt", "detail": "Chapitre 11", "href": "index.html#prompt-p9"}, "automatisations.html": {"libelle": "Automatisations", "detail": "Dix-sept tâches qui reviennent toutes seules.", "href": "automatisations.html"}, "competences.html": {"libelle": "Compétences", "detail": "Ranger une instruction en compétence réutilisable.", "href": "competences.html"}, "contact": {"libelle": "Écrire à l'auteur", "detail": "ccletempsduncafe@lbi1.anonaddy.com", "href": "mailto:ccletempsduncafe@lbi1.anonaddy.com"}, "donnees.html": {"libelle": "Ce qui vieillit", "detail": "Tarifs, modèles et autres informations datées du livre.", "href": "donnees.html"}, "installer.html": {"libelle": "Installer", "detail": "Ligne de commande, Linux et clé API : les gestes que le livre renvoie ici.", "href": "installer.html"}}}</script>
 
 <script>
 (function () {
@@ -827,6 +893,120 @@ footer .carte [aria-current] { color: var(--encre); font-weight: 600; }
   for (var i = 0; i < fiches.length; i++) {
     observateurFiches.observe(fiches[i]);
   }
+})();
+
+(function () {
+  // Le guide lit ses donnees dans un bloc JSON inerte pose apres le pied.
+  // Tout texte passe par textContent : aucune chaine n'est lue comme du HTML.
+  var source = document.getElementById('guide-donnees');
+  if (!source) { return; }
+  var g = JSON.parse(source.textContent);
+
+  function el(balise, classe, texte) {
+    var n = document.createElement(balise);
+    if (classe) { n.className = classe; }
+    if (texte) { n.textContent = texte; }
+    return n;
+  }
+
+  var bouton = el('button', 'guide-bouton', 'Que voulez-vous faire\u202f?');
+  bouton.type = 'button';
+  bouton.setAttribute('aria-expanded', 'false');
+  bouton.setAttribute('aria-controls', 'guide-panneau');
+
+  var panneau = el('section', 'guide-panneau');
+  panneau.id = 'guide-panneau';
+  panneau.hidden = true;
+  panneau.setAttribute('role', 'dialog');
+  panneau.setAttribute('aria-label', 'Le guide du livre');
+  var tete = el('div', 'guide-tete');
+  tete.appendChild(el('p', '', 'Le guide du livre'));
+  var fermer = el('button', '', 'Fermer');
+  fermer.type = 'button';
+  tete.appendChild(fermer);
+  var fil = el('div', 'guide-fil');
+  fil.setAttribute('aria-live', 'polite');
+  var actions = el('div', 'guide-choix');
+  panneau.appendChild(tete);
+  panneau.appendChild(fil);
+  panneau.appendChild(actions);
+
+  function bulle(texte, qui) {
+    fil.appendChild(el('p', 'guide-bulle guide-' + qui, texte));
+    fil.scrollTop = fil.scrollHeight;
+  }
+
+  function bouton_choix(libelle, action) {
+    var b = el('button', '', libelle);
+    b.type = 'button';
+    b.addEventListener('click', action);
+    actions.appendChild(b);
+    return b;
+  }
+
+  function liens(cibles) {
+    var liste = el('ul', 'guide-liens');
+    cibles.forEach(function (cle) {
+      var c = g.liens[cle];
+      var li = el('li');
+      var a = el('a', '', c.libelle);
+      a.href = c.href;
+      a.appendChild(el('small', '', c.detail));
+      a.addEventListener('click', function () { ouvrir(false); });
+      li.appendChild(a);
+      liste.appendChild(li);
+    });
+    fil.appendChild(liste);
+    fil.scrollTop = fil.scrollHeight;
+    actions.textContent = '';
+    bouton_choix('Recommencer', recommencer);
+    var premier = liste.querySelector('a');
+    if (premier) { premier.focus(); }
+  }
+
+  function etape(nom) {
+    var e = g.etapes[nom];
+    bulle(e.message, 'livre');
+    actions.textContent = '';
+    if (e.cibles) { liens(e.cibles); return; }
+    var premier = null;
+    e.choix.forEach(function (c) {
+      var b = bouton_choix(c.libelle, function () {
+        bulle(c.libelle, 'vous');
+        if (c.vers) { etape(c.vers); return; }
+        bulle(c.cibles.length > 1 ? 'Voici les prompts qu\u2019il vous faut\u00a0:'
+                                  : 'Voici le prompt qu\u2019il vous faut\u00a0:', 'livre');
+        liens(c.cibles);
+      });
+      if (!premier) { premier = b; }
+    });
+    if (premier) { premier.focus(); }
+  }
+
+  function recommencer() {
+    fil.textContent = '';
+    etape(g.debut);
+  }
+
+  function ouvrir(oui) {
+    panneau.hidden = !oui;
+    bouton.setAttribute('aria-expanded', oui ? 'true' : 'false');
+    if (oui) {
+      if (!fil.firstChild) { etape(g.debut); }
+      else {
+        var cible = actions.querySelector('button') || fil.querySelector('a');
+        if (cible) { cible.focus(); }
+      }
+    }
+  }
+
+  bouton.addEventListener('click', function () { ouvrir(panneau.hidden); });
+  fermer.addEventListener('click', function () { ouvrir(false); bouton.focus(); });
+  panneau.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape') { ouvrir(false); bouton.focus(); }
+  });
+  document.body.appendChild(panneau);
+  document.body.appendChild(bouton);
 })();
 </script>
 </body>
